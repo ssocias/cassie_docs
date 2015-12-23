@@ -58,6 +58,7 @@ Stephanie's Reminders
 * Make sure Personal polls are not showing up anywhere
 * Make sure to evaluate booleans correctly, as they might get passed as strings
 
+
 * Endpoints left to do:
 
   * Forgot password
