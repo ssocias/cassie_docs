@@ -59,6 +59,7 @@ Stephanie's Reminders
 * Make sure to evaluate booleans correctly, as they might get passed as strings
 
 * Endpoints left to do:
+
   * Forgot password
   * Leaderboards (also leaderboard from group section)
   * Activity tab
