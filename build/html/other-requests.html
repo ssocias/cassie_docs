@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Other Requests &mdash; Cassie API 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Cassie API 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Post Requests" href="post-requests.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="other-requests">
+<h1>Other Requests<a class="headerlink" href="#other-requests" title="Permalink to this headline">¶</a></h1>
+<p>These endpoints accept both GET and POST requests, depending on what action is being taken. For POST requests, all data should be sent in the body of the request as key:value pairs of type <code class="docutils literal"><span class="pre">application/x-www-form-urlencoded</span></code>.</p>
+<div class="section" id="answer-castie">
+<h2>Answer Castie<a class="headerlink" href="#answer-castie" title="Permalink to this headline">¶</a></h2>
+<p>Input the correct answer for an ended Castie.</p>
+<p>Use a <code class="docutils literal"><span class="pre">GET</span></code> request to retrieve the available answer options for the Castie. Answer options are available only for Casties that had set answer options. If the Castie accepted write-in answers, there are no answer options to choose from and the <code class="docutils literal"><span class="pre">GET</span></code> response will return only the appropriate Castie data.</p>
+<p>Use a <code class="docutils literal"><span class="pre">POST</span></code> request to save the correct answer/answer-keyword. If the Castie allowed write-in answers, the User inputs a keyword that all correct forecasts must contain. If the Castie consists of set answer options, the User selects the correct Answer from the list of options.</p>
+<div class="section" id="get">
+<h3>GET<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h3>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/answer/</span></code></p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
+<li><strong>question:</strong> <em>string</em>, question text</li>
+<li><strong>group:</strong> <em>string</em>, group to which the Castie belongs</li>
+<li><strong>allowWriteIn:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie allows write-in forecasts</li>
+<li><strong>forecastsCount:</strong> <em>integer</em>, number of total forecasts for the Castie</li>
+<li><strong>answer_options:</strong> <em>dictionary</em>, this field is present only for the Casties that have set answer options. it maps an answer option&#8217;s unique ID to the answer option text</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<p>For a write-in castie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;forecastCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;subtest&quot;</span><span class="p">,</span>
+  <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Who will become president?&quot;</span><span class="p">,</span>
+  <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;227e85f969874a50988301966ecdb1fa&quot;</span><span class="p">,</span>
+  <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For a set answer option castie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;forecastCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;subtest&quot;</span><span class="p">,</span>
+  <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Who will become president?&quot;</span><span class="p">,</span>
+  <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;227e85f969874a50988301966ecdb1fa&quot;</span><span class="p">,</span>
+  <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+  <span class="s">&quot;answer_options&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;818&quot;</span><span class="p">:</span> <span class="s">&quot;Jack&quot;</span><span class="p">,</span>
+    <span class="s">&quot;819&quot;</span><span class="p">:</span> <span class="s">&quot;Amy&quot;</span><span class="p">,</span>
+    <span class="s">&quot;820&quot;</span><span class="p">:</span> <span class="s">&quot;Ana&quot;</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="post">
+<h3>POST<a class="headerlink" href="#post" title="Permalink to this headline">¶</a></h3>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/answer/</span></code></p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
+</ul>
+<p>If it&#8217;s a write-in Castie, include the correct answer &#8220;keyword&#8221; in the request body:</p>
+<ul class="simple">
+<li><strong>keyword:</strong> <em>string</em>, the keyword a forecast must contain in order to be considered correct</li>
+</ul>
+<p>If it&#8217;s a Castie with set answer optoins only, include the ID of the correct answer request body:</p>
+<ul class="simple">
+<li><strong>answer_id:</strong> <em>integer</em>, the Castie&#8217;s correct answer ID</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>A successfull request returns a <a class="reference internal" href="get-requests.html#detailed-castie-object"><span>Detailed Castie Object</span></a> so the User can now see the results of the Castie they just answered.</p>
+<p><strong>Sample Response</strong></p>
+<p>See <a class="reference internal" href="get-requests.html#detailed-castie-object"><span>Detailed Castie Object</span></a></p>
+</div>
+</div>
+<div class="section" id="edit-profile">
+<h2>Edit Profile<a class="headerlink" href="#edit-profile" title="Permalink to this headline">¶</a></h2>
+<p>Use this request to update any of the fields on the &#8220;Edit Profile&#8221; page. The GET request to this endpoint will show data for:
+handle, first name, last name, city, state, profile picture, and background picture.</p>
+<p>Users may edit any one of the fields right on the page. Therefore, a POST to the endpoint will check to see which fields have changed and will save those new fields.</p>
+<div class="section" id="id1">
+<h3>GET<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>View the &#8220;Edit Profile&#8221; landing page, with all editable fields displayed.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/edit</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<ul class="simple">
+<li><strong>handle</strong>: <em>string</em>, User&#8217;s unique identifier- must be at least three characters long, ASCII only, no /&#64; characters</li>
+<li><strong>firstName</strong>: <em>string</em>, User&#8217;s first name</li>
+<li><strong>lastName</strong>: <em>string</em>, User&#8217;s last name</li>
+<li><strong>city</strong>: <em>string</em>, city</li>
+<li><strong>state</strong>: <em>string</em>, state or country</li>
+<li><strong>profPic</strong>: <em>string</em>, location of User&#8217;s profile picture</li>
+<li><strong>backgroundPic</strong>: <em>string</em>, location of User&#8217;s background picture</li>
+</ul>
+<p>Fields that have no value are returned as &#8220;&#8221;, see &#8220;backgroundPic&#8221; in the sample below.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandle&quot;</span><span class="p">,</span>
+  <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;bradley&quot;</span><span class="p">,</span>
+  <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;cooper&quot;</span><span class="p">,</span>
+  <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Los Angeles&quot;</span><span class="p">,</span>
+  <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;CA&quot;</span><span class="p">,</span>
+  <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;static/images/user1/prof.png&quot;</span><span class="p">,</span>
+  <span class="s">&quot;backgroundPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>POST<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Save changes to any fields that were edited. Perform basic validation client-side (ASCII only, image type/size, etc.).</p>
+<p>All fields passed in the request will be compared to their present values. Any fields that have changed will be updated in the DB. So, you can always pass all the fields and I will check to see which ones have changed.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/edit</span></code></p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>handle</strong>: <em>string</em>, User&#8217;s unique identifier- must be at least three characters long, ASCII only, no /&#64; characters</li>
+<li><strong>firstName</strong>: <em>string</em>, User&#8217;s first name</li>
+<li><strong>lastName</strong>: <em>string</em>, User&#8217;s last name</li>
+<li><strong>city</strong>: <em>string</em>, city</li>
+<li><strong>state</strong>: <em>string</em>, state or country</li>
+<li><strong>profPic</strong>: <em>string</em>, location of User&#8217;s profile picture</li>
+<li><strong>backgroundPic</strong>: <em>string</em>, location of User&#8217;s background picture</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Returns a success message if updates were successfully made. If the &#8220;handle&#8221; is already taken (handle must be unique), an error message will be returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+<span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+<span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;handle_not_unique&quot;</span><span class="p">,</span>
+<span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the hanlde provided is already associated with a Cassie account&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="topic">
+<p class="topic-title first">Real-time Handle Uniqueness Validation</p>
+<p>It would be great to perform a uniqueness check on the handle as the user is typing so that they don&#8217;t have to submit the form and then wait for a response. If I send over a list of existing handles, can you perform the uniqueness validation right there on the app?</p>
+</div>
+<p><strong>Sample Response</strong></p>
+<p>If data was updated, the response indicates what changes were made:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;data has been successfully updated&quot;</span><span class="p">,</span>
+  <span class="s">&quot;updated_fields&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">&quot;firstName&quot;</span><span class="p">,</span>
+    <span class="s">&quot;lastName&quot;</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If no updates were made becuase the data did not change:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;nothing has changed- no data to update&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="preferences-main">
+<h2>Preferences- Main<a class="headerlink" href="#preferences-main" title="Permalink to this headline">¶</a></h2>
+<p>The preferences page contains sections to &#8216;edit profile&#8217;, &#8216;change password&#8217;, and &#8216;change email&#8217;. Use a <code class="docutils literal"><span class="pre">GET</span></code> request to view this main Preferences page. To actually make changes to the data fields, the User must click the desired field. When that occurs, use the appropriate requests described below.</p>
+<p>The &#8216;private account&#8217; field, however, can be changed right from this Preferences page. When the User changes the &#8216;private account&#8217; toggle, perform a <code class="docutils literal"><span class="pre">POST</span></code> request to update the field.</p>
+<div class="section" id="id3">
+<h3>GET<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>View the main &#8220;Preferences&#8221; landing page, with &#8220;is_private&#8221; boolean field displayed.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/preferences</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>Returns the status of the &#8220;is_private&#8221; field, since that is the only piece of data shown on the main Preferences page.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>POST<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Change the status of the &#8220;is_private&#8221; boolean on the main preferences page.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/preferences</span></code></p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><strong>is_private:</strong> <em>boolean</em>, True if the account should be private</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>Returns the status of the newly updated &#8220;is_private&#8221; field.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>{
+  &quot;status&quot;: 200,
+  &quot;message&quot;: &quot;data has been successfully updated&quot;
+  &quot;is_private&quot;: True
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="preferences-email">
+<h2>Preferences- Email<a class="headerlink" href="#preferences-email" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>GET<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>View the existing email associated with the account.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/preferences/edit/email/</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p><strong>email:</strong> <em>string</em>, email associated with the account</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;myemail@me.com&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>POST<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Change the the existing email associated with the account. The email address must be unique. If the User tries to change the email to an email already associated with a Cassie account, an error message will be returned.</p>
+<div class="topic">
+<p class="topic-title first">Changing Email Address Changes the Username</p>
+<p>The email address associated with an account is also the User&#8217;s username. When the User changes their email, the username is also changed.</p>
+</div>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/preferences/edit/email/</span></code></p>
+<p><strong>Parameters</strong></p>
+<p><strong>email:</strong> <em>string</em>, the new email</p>
+<p><strong>Returns</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;email has been successfully updated&quot;</span><span class="p">,</span>
+  <span class="s">&quot;new_email&quot;</span><span class="p">:</span> <span class="s">&quot;newemail@me.com&quot;</span><span class="p">,</span>
+  <span class="s">&quot;new_username&quot;</span><span class="p">:</span> <span class="s">&quot;myusername&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>If the email is not unique:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;email_not_unique&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the email address provided is already associated with a Cassie account. it cannot be used again.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="preferences-password">
+<h2>Preferences- Password<a class="headerlink" href="#preferences-password" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>GET<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>&#8220;View&#8221; the existing password associated with the account- it will be encoded though so there is really nothing to see.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/preferences/edit/password/</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p><strong>password:</strong> <em>string</em>, encrypted associated with the account</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;encryptedstuff&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>POST<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Change the the existing password associated with the account.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/preferences/edit/password/</span></code></p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><strong>password:</strong> <em>string</em>, the new password</div></blockquote>
+<p><strong>Returns</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;password has been successfully updated&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Other Requests</a><ul>
+<li><a class="reference internal" href="#answer-castie">Answer Castie</a><ul>
+<li><a class="reference internal" href="#get">GET</a></li>
+<li><a class="reference internal" href="#post">POST</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#edit-profile">Edit Profile</a><ul>
+<li><a class="reference internal" href="#id1">GET</a></li>
+<li><a class="reference internal" href="#id2">POST</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preferences-main">Preferences- Main</a><ul>
+<li><a class="reference internal" href="#id3">GET</a></li>
+<li><a class="reference internal" href="#id4">POST</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preferences-email">Preferences- Email</a><ul>
+<li><a class="reference internal" href="#id5">GET</a></li>
+<li><a class="reference internal" href="#id6">POST</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preferences-password">Preferences- Password</a><ul>
+<li><a class="reference internal" href="#id7">GET</a></li>
+<li><a class="reference internal" href="#id8">POST</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="post-requests.html" title="previous chapter">Post Requests</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/other-requests.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stephanie Socias.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/other-requests.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

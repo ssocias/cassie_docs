@@ -1,0 +1,1323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Get Requests &mdash; Cassie API 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Cassie API 1.0 documentation" href="index.html" />
+    <link rel="next" title="Post Requests" href="post-requests.html" />
+    <link rel="prev" title="Pagination" href="pagination.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="get-requests">
+<h1>Get Requests<a class="headerlink" href="#get-requests" title="Permalink to this headline">¶</a></h1>
+<p>Here you will find the list of possible GET requests. A valid username and password must be included in the body of every request. See the <a class="reference internal" href="authentication.html#authentication"><span>Authentication</span></a> and <a class="reference internal" href="errors.html#errors"><span>Errors</span></a> sections for more information on handling authentication and errors.</p>
+<p>A User&#8217;s username is the email address associated with their account. The email/username is unique across all Users. Additionally, we use the &#8220;handle&#8221; attribute to uniquely identify Profiles.</p>
+<div class="section" id="initialize">
+<span id="id1"></span><h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
+<p>This must be called anytime a User opens the app. It returns the number of notifications the User has not yet seen and indicates if the User has Casties that can be answered.</p>
+<p>In order to get the number of notifications, the date of the most recent notification the user has seen should be sent in the request.</p>
+<p>Before/after making this request, make a request to <a class="reference internal" href="#home">Home</a> to get the home Castie data.</p>
+<p>If, however, you are making a request to <a class="reference internal" href="post-requests.html#log-in"><span>Log In</span></a> (found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section), there is no need to call <a class="reference internal" href="#initialize">Initialize</a> or <a class="reference internal" href="#home">Home</a> because <a class="reference internal" href="post-requests.html#log-in"><span>Log In</span></a> does it already.</p>
+<div class="topic">
+<p class="topic-title first">Periodaclly Updating Notifications Count</p>
+<p>You might need to make periodic requests to this &#8220;Initialize&#8221; endpoint or to the &#8220;Needs Answer&#8221; endpoint below in order to alert the User when they have a new notification while they are using the app.</p>
+<p>If I am able to implement a node.js notification system, this will change so that the system sends notifications to the client app as they come in....Stay tuned!</p>
+</div>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code></p>
+<p><strong>Parameters (sent as key:value pairs in the request)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>seen_date:</strong> <em>string</em>, date of the notification the User last saw; YYYY-MM-DD format</li>
+<li><strong>seen_time:</strong> <em>string</em>, time of the notification the User last saw; Hour:Minute:Second format</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>number_notifications:</strong> <em>integer</em>, number of notifications the User has</li>
+<li><strong>needs_answer:</strong> <em>boolean</em>, True if the User has a Castie(s) that is ready to be answered</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="needs-answer">
+<h2>Needs Answer<a class="headerlink" href="#needs-answer" title="Permalink to this headline">¶</a></h2>
+<p>A boolean to denote if the User has a Catie(s) that can be answered.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/needsanswer</span></code></p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p><code class="docutils literal"><span class="pre">True</span></code> is the User has Casties that need to be answered. Otherwise, it returns <code class="docutils literal"><span class="pre">False</span></code>.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="home">
+<span id="id2"></span><h2>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h2>
+<p>Returns a dictionary of Castie objects for the Cassie home page. The home page (accessed via the Home tab on the footer nav bar) is divided into three tabs- &#8220;following&#8221;, &#8220;spicy&#8221;, and &#8220;new&#8221;. By default, this request returns data for the &#8220;following&#8221; tab unless otherwise specified in the URL.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/home/{which_tab}</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>which_tab (<em>optional</em>, default=&#8221;following&#8221;): <em>string</em>, indicates which tab of the home page is being requested- &#8220;following&#8221;, &#8220;spicy&#8221;, or &#8220;new&#8221;</li>
+</ul>
+<div class="topic">
+<p class="topic-title first">Filtering Groups from the Side Menu</p>
+<p>The side hamburger menu of the home page can be used to filter which Group&#8217;s Casties should be shown on the &#8220;following&#8221; tab. By default, Casties for all Groups the User follows are shown.</p>
+<p>When the User has filtered by Groups in the side bar, those Groups should be passed in the request query string using the &#8216;groups&#8217; parameter and the group&#8217;s slug as the value (ex. <code class="docutils literal"><span class="pre">/?groups=sports&amp;groups=politics&amp;groups=pop-culture</span></code>)</p>
+<p>Sample URL:</p>
+<p><code class="docutils literal"><span class="pre">https://cassieapp.com/api/home/following/?groups=politics&amp;groups=music</span></code></p>
+<p>If the User has de-selected all Groups (i.e. does not want to show any Casties), pass the &#8216;groups&#8217; parameter in the request but leave the value blank (ex. <code class="docutils literal"><span class="pre">/?groups=</span></code>).</p>
+</div>
+<p><strong>Returns</strong></p>
+<p>Returns a dictionary, entitled &#8216;casties&#8217;, of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If &#8220;following&#8221; was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If &#8220;spicy&#8221; was specified, Casties are ordered by most recently forecasted. If &#8220;new&#8221; was specified, Casties are ordered by most newly created.</p>
+<p>If the &#8220;following&#8221; tab has been specified but the User is not following any groups, there is no Castie data to display. The response will then include a <code class="docutils literal"><span class="pre">following</span></code> key that is set to <code class="docutils literal"><span class="pre">False</span></code>, and an appropriate message should be displayed to the User instucting them to Follow groups- &#8220;You need to follow gropus before you can see Casties. Click on that sweet Octopus up top to get going.&#8221;</p>
+<p>Sample response for a User that has selected the &#8220;Following&#8221; tab but is not following any groups:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If, however, the &#8216;castie&#8217; dictionary is returned empty, that means there are no Casties that meet the criteria requested. An appropriate message should be displayed- &#8220;Oh snap, there aren&#8217;t any Casties. You should go create one of your own.&#8221;</p>
+<p id="castie-object"><strong>The Castie Object</strong></p>
+<blockquote>
+<div><p><strong>Attributes</strong></p>
+<ul>
+<li><p class="first"><strong>uuid:</strong> <em>string</em>, unique id for the Castie</p>
+</li>
+<li><p class="first"><strong>question:</strong> <em>string</em>, question text</p>
+</li>
+<li><p class="first"><strong>group:</strong> <em>string</em>, group to which the Castie belongs</p>
+</li>
+<li><p class="first"><strong>groupIcon:</strong> <em>string</em>, location of the group icon image</p>
+</li>
+<li><p class="first"><strong>showUsername:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie creator&#8217;s handle should be displayed</p>
+</li>
+<li><p class="first"><strong>submitter:</strong> <em>string</em>, handle of the User that created the Castie</p>
+</li>
+<li><p class="first"><strong>createdAtDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie was created</p>
+</li>
+<li><p class="first"><strong>createdAtTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the Castie was created</p>
+</li>
+<li><p class="first"><strong>allowWriteIn:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie allows write-in forecasts</p>
+</li>
+<li><p class="first"><strong>setAnswered:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie consists of set answer options</p>
+</li>
+<li><p class="first"><strong>openEnded:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie has no end date</p>
+</li>
+<li><p class="first"><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
+</li>
+<li><p class="first"><strong>endTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
+</li>
+<li><p class="first"><strong>userForecast:</strong> <em>dictionary</em>, this dictionary contains data about the User&#8217;s forecast. If the User did not forecast this Castie, this dictionary does not exist. Keys in the dictionary include:</p>
+<ul class="simple">
+<li><strong>forecast_text:</strong> <em>string</em>, the text of the forecast</li>
+<li><strong>forecast_id:</strong> <em>integer</em>, the unique id of the forecast object</li>
+<li><strong>is_correct:</strong> <em>boolean</em>, designates if the User&#8217;s forecast was correct or not (if the Castie has not been answered, this will still be False)</li>
+<li><strong>answer_id:</strong> <em>integer</em>, if this forecast is for a Castie that has set answer options, this answer_id is the unique id of the answer option chosen. If the Castie consists of write-in answers only, this field does not exist.</li>
+</ul>
+</li>
+<li><p class="first"><strong>friendCount:</strong> <em>integer</em>, number of friends that have forecasted the Castie</p>
+</li>
+<li><p class="first"><strong>friendPics:</strong> <em>list</em>, list of strings of friends that have forecasted the Castie</p>
+</li>
+<li><p class="first"><strong>answerSubmitted:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie has been answered</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>correctIndex:</strong> <em>string</em>, correct answer text; <code class="docutils literal"><span class="pre">None</span></code> if no answer has been provided</dt>
+<dd><ul class="first last simple">
+<li><strong>NOTE:</strong> if the Castie allowed write-in forecasts, the &#8216;correctIndex&#8217; is the keyword the forecast must contain in order to be considered correct. If the Castie did not allow write-in answers, &#8216;correctIndex&#8217; is the text of the correct forecast.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><strong>forecastsCount:</strong> <em>integer</em>, number of total forecasts for the Castie</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>forecast_options:</strong> <em>list</em>, list of dictionaries for every forecast option</dt>
+<dd><dl class="first last docutils">
+<dt><strong>Forecasts Dictionary Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>answer_id</strong>: <em>integer</em>, for Casties that have set answer options, every Forecast corresponds to one of those answer options. This &#8216;answer_id&#8217; is the unique ID for the forecasted answer option. If the Castie had only write-in answers, this field does not exist and the forecasts can be grouped using the &#8216;answer_text&#8217; field.</li>
+<li><strong>answer_text</strong>: <em>string</em> text of the forecast</li>
+<li><strong>percentage</strong>: <em>integer</em>, percent of users that have made this forecast</li>
+<li><strong>is_correct</strong>: <em>boolean</em>, if the Castie has been answered and the forecast has been designated correct, this key exists in the dictionary and is set to <code class="docutils literal"><span class="pre">True</span></code>. Otherwise, this key does not exist.</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s">&quot;profile_handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;casties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;929559bf4dba4049b01efa673b8b85bf&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+          <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+          <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-12&quot;</span><span class="p">,</span>
+          <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;Around Campus&quot;</span><span class="p">,</span>
+          <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/campus_pic.png&quot;</span><span class="p">,</span>
+          <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;929559bf4dba4049b01efa673b8b85bf&quot;</span><span class="p">,</span>
+          <span class="s">&quot;friendPics&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s">&quot;profiles/user-159/image_Fbr8GSY.jpg&quot;</span><span class="p">,</span>
+            <span class="s">&quot;profiles/user-11/image_2M3365a.jpg&quot;</span><span class="p">,</span>
+            <span class="s">&quot;&quot;</span>
+          <span class="p">],</span>
+          <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;03:37:24.295700&quot;</span><span class="p">,</span>
+          <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+          <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;How many students will join Cassie after the first week of school?&quot;</span><span class="p">,</span>
+          <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+          <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+          <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">827</span><span class="p">,</span>
+            <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;greater than 50&quot;</span><span class="p">,</span>
+            <span class="s">&quot;forecast_id&quot;</span><span class="p">:</span> <span class="mi">1853</span>
+          <span class="p">},</span>
+          <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;forecasts&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">827</span><span class="p">,</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;between 10 and 50&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mf">21.73913043478261</span><span class="p">,</span>
+              <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">828</span><span class="p">,</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;greater than 50&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mf">78.26086956521739</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-21&quot;</span><span class="p">,</span>
+          <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="s">&quot;between 10 and 50&quot;</span><span class="p">,</span>
+          <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;23:00:00&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+          <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-13&quot;</span><span class="p">,</span>
+          <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;Around Campus&quot;</span><span class="p">,</span>
+          <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/campus_pic.png&quot;</span><span class="p">,</span>
+          <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">,</span>
+          <span class="s">&quot;friendPics&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s">&quot;profiles/user-280/image.jpg&quot;</span><span class="p">,</span>
+            <span class="s">&quot;profiles/user-159/image_Fbr8GSY.jpg&quot;</span><span class="p">,</span>
+            <span class="s">&quot;&quot;</span>
+          <span class="p">],</span>
+          <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;03:37:08.153640&quot;</span><span class="p">,</span>
+          <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+          <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Which company will have the most Q4 revenue?&quot;</span><span class="p">,</span>
+          <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+          <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">827</span><span class="p">,</span>
+            <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;Best Buy&quot;</span><span class="p">,</span>
+            <span class="s">&quot;forecast_id&quot;</span><span class="p">:</span> <span class="mi">1853</span>
+          <span class="p">},</span>
+          <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;forecasts&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Visa&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">48</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Starbucks&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">16</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;American Express&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-31&quot;</span><span class="p">,</span>
+          <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+          <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;11:20:00&quot;</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="castie-detail">
+<h2>Castie Detail<a class="headerlink" href="#castie-detail" title="Permalink to this headline">¶</a></h2>
+<p>Returns detailed information about a given Castie. This should be called anytime a User clicks on a specific Castie to view its information.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>uuid: <em>string</em>, the unique id of the castie</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Returns a Detailed Castie Object (expands upon the basic <a class="reference internal" href="#castie-object">Castie Object</a> returned as part of the <a class="reference internal" href="#home">Home</a> request). In addition to basic Castie details, this Castie object contains information on Friends forecasts (i.e. what each of the User&#8217;s friends forecasted).</p>
+<p>If the requested Castie cannot be found, the response will indicate a <code class="docutils literal"><span class="pre">404</span> <span class="pre">Error</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested castie could not be found. make sure you are sending a valid uuid&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p id="detailed-castie-object"><strong>The Detailed Castie Object</strong></p>
+<p>This object is the same as <a class="reference internal" href="#castie-object">Castie Object</a>  described above in the <a class="reference internal" href="#home">Home</a> section, but instead of a <code class="docutils literal"><span class="pre">friendPics</span></code> attribute, there is a <code class="docutils literal"><span class="pre">friendForecasts</span></code> attribute that lists each friend and their forecast.</p>
+<ul>
+<li><p class="first"><strong>friendForecasts:</strong> <em>dictionary</em> a dictionary of dictionaries indexed by the forecast <code class="docutils literal"><span class="pre">id</span></code> of every forecast made by a User&#8217;s friend</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><strong>friendForecasts Dictionary Attributes:</strong></dt>
+<dd><ul class="first">
+<li><p class="first"><strong>handle</strong>: <em>string</em>, the friend&#8217;s handle</p>
+</li>
+<li><p class="first"><strong>lastName</strong>: <em>string</em>, the friend&#8217;s last name</p>
+</li>
+<li><p class="first"><strong>firstName</strong>: <em>string</em>, the friend&#8217;s last name</p>
+</li>
+<li><p class="first"><strong>profPic</strong>: <em>string</em>, location of the friend&#8217;s profile picture</p>
+</li>
+<li><p class="first"><strong>forecast_text</strong>: <em>string</em>, the friend&#8217;s forecast text</p>
+</li>
+<li><p class="first"><strong>answer_id</strong>: <em>integer</em>, If the Forecast is for a Castie with pre-defined answer options, this is the ID of the Answer option chosen</p>
+<p>Whenever a User forecasts a Castie, a new Forecast object is created. For pre-defined Casties, this Forecast object is tied to an Answer object. There is one Answer object for each answer option on the Castie. There may be X number of Forecast objects for any of the Answer objects.</p>
+</li>
+<li><p class="first"><strong>is_correct</strong>: <em>boolean</em>, if the Castie has ended and the forecast was correct, this key exists in the dict and is set to <code class="docutils literal"><span class="pre">True</span></code>. Otherwise, the key does not exist.</p>
+</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="last highlight-python"><div class="highlight"><pre>&quot;friendForecasts&quot;: {
+  &quot;222&quot;: {
+    &quot;handle&quot;: &quot;Lizzyswanson&quot;,
+    &quot;lastName&quot;: &quot;Swanson&quot;,
+    &quot;profPic&quot;: &quot;profiles/user-38/image.jpg&quot;,
+    &quot;firstName&quot;: &quot;Lizzy&quot;,
+    &quot;forecast_text&quot;: &quot;Female&quot;,
+    &quot;answer_id&quot;: 209,
+    &quot;is_correct&quot;: true
+  },
+  &quot;343&quot;: {
+    &quot;handle&quot;: &quot;user-18&quot;,
+    &quot;lastName&quot;: &quot;Sevinsky&quot;,
+    &quot;profPic&quot;: &quot;profiles/user-18/image.jpg&quot;,
+    &quot;firstName&quot;: &quot;Amanda&quot;,
+    &quot;answer_id&quot;: 210,
+    &quot;forecast_text&quot;: &quot; Male&quot;
+  },
+  &quot;45&quot;: {
+    &quot;handle&quot;: &quot;jennysmith&quot;,
+    &quot;lastName&quot;: &quot;Smith&quot;,
+    &quot;profPic&quot;: &quot;profiles/user-33/image_sOlgfKm.jpg&quot;,
+    &quot;firstName&quot;: &quot;Jennifer&quot;,
+    &quot;forecast_text&quot;: &quot;Female&quot;,
+    &quot;answer_id&quot;: 209,
+    &quot;is_correct&quot;: true
+  }
+},
+</pre></div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;castie&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;friendForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;34&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;Lizzyswanson&quot;</span><span class="p">,</span>
+        <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Swanson&quot;</span><span class="p">,</span>
+        <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-38/image.jpg&quot;</span><span class="p">,</span>
+        <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Lizzy&quot;</span><span class="p">,</span>
+        <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;Female&quot;</span><span class="p">,</span>
+        <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">209</span><span class="p">,</span>
+        <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span>
+      <span class="p">},</span>
+      <span class="s">&quot;323&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-18&quot;</span><span class="p">,</span>
+        <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Sevinsky&quot;</span><span class="p">,</span>
+        <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-18/image.jpg&quot;</span><span class="p">,</span>
+        <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Amanda&quot;</span><span class="p">,</span>
+        <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
+        <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot; Male&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;44&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;jennysmith&quot;</span><span class="p">,</span>
+        <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Smith&quot;</span><span class="p">,</span>
+        <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-33/image_sOlgfKm.jpg&quot;</span><span class="p">,</span>
+        <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Jennifer&quot;</span><span class="p">,</span>
+        <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;Female&quot;</span><span class="p">,</span>
+        <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">209</span><span class="p">,</span>
+        <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="s">&quot;Female&quot;</span><span class="p">,</span>
+    <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;05:29:28.893629&quot;</span><span class="p">,</span>
+    <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
+    <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_cul.png&quot;</span><span class="p">,</span>
+    <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="s">&quot; Male&quot;</span><span class="p">,</span>
+    <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;open&quot;</span><span class="p">,</span>
+    <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-04-07&quot;</span><span class="p">,</span>
+    <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;What will be the royal baby&#39;s gender?&quot;</span><span class="p">,</span>
+    <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;open&quot;</span><span class="p">,</span>
+    <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="s">&quot;forecasts&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">827</span><span class="p">,</span>
+        <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Female&quot;</span><span class="p">,</span>
+        <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mf">64.28571428571429</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">828</span><span class="p">,</span>
+        <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot; Male&quot;</span><span class="p">,</span>
+        <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mf">35.714285714285715</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="leaders">
+<h2>Leaders<a class="headerlink" href="#leaders" title="Permalink to this headline">¶</a></h2>
+<p>COMING SOOON</p>
+<p>Data for the Leaderboard pages. If no <em>group_slug</em> attribute is passed in the URL, data for the &#8220;overall&#8221; leaderboard is returned. If a <em>group_slug</em> is included, return leaderboard data for that group.</p>
+<div class="topic">
+<p class="topic-title first">Filtering by Frodads</p>
+<p>Leaderboards can be filtered to show only the User&#8217;s friends. This filtering hould be done client side. The request to <cite>/leaderboard/</cite> will return data for all Users in the leaderboard.</p>
+<p>(let me know if we should do this differently...)</p>
+</div>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/leaderboard/{group_slug}</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>group_slug (<em>optional</em>): <em>string</em>, indicates which Group&#8217;s leaderboard to return. If no group_slug is given, will return data for the overall Cassie leaderboard</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A dictionary containing a &#8220;leaderboard_options&#8221; and a &#8220;leaderboard_data&#8221; field, where &#8220;leaderboard_options&#8221; is a list of all the groups the User follows and  &#8220;leaderboard_data&#8221; ??? TBD...of User objects ordered by highest to lowest ranked in the Leaderboard. Each User object is the same as a <a class="reference internal" href="#frodad-object">Frodad Object</a>.</p>
+</div>
+<div class="section" id="profile">
+<h2>Profile<a class="headerlink" href="#profile" title="Permalink to this headline">¶</a></h2>
+<p>The Profile tab contains four main subdividions: <a class="reference internal" href="#my-casties">My Casties</a>, <a class="reference internal" href="#stats">Stats</a>, <a class="reference internal" href="#groups">Groups</a>, and <a class="reference internal" href="#frodads">Frodads</a>. These subdivisions are visible under the User&#8217;s basic profile data (picture, name, location, etc.). When a User clicks on any of these subdivisions, the top part of the screen remains the same while the bottom part &#8220;switches&#8221; out to reveal the appropriate data. <strong>To view another User&#8217;s profile, place the handle of the profile to be viewed in the URL. To view your own profile, do not put a handle in the URL.</strong></p>
+<p>If the requested profile cannot be found, the following response is returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested user could not be found&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the requested profile is inactive, the following response is returned</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;inactive_user&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the profile you requested is not active&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Profiles are uniquely defined by their <code class="docutils literal"><span class="pre">handle</span></code> attribute.</p>
+<p>There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a profile object.</p>
+<p><strong>The Profile Object</strong></p>
+<blockquote>
+<div><p><strong>Attributes</strong></p>
+<ul>
+<li><p class="first"><strong>handle:</strong> <em>string</em>, unique identifier for the profile</p>
+</li>
+<li><p class="first"><strong>firstName:</strong> <em>string</em>, first name of the user</p>
+</li>
+<li><p class="first"><strong>lastName:</strong> <em>string</em>, last name of the user</p>
+</li>
+<li><p class="first"><strong>city:</strong> <em>string</em>, city</p>
+</li>
+<li><p class="first"><strong>state:</strong> <em>string</em>, state</p>
+</li>
+<li><p class="first"><strong>profPic:</strong> <em>string</em>, location where the User&#8217;s profile picture is stored</p>
+</li>
+<li><p class="first"><strong>level:</strong> <em>integer</em>, the profile&#8217;s level</p>
+</li>
+<li><p class="first"><strong>adjective:</strong> <em>string</em>, part of the User&#8217;s ranking title (ranking title can include an adjective followed by a noun- ex. &#8220;rookie benchwarmer&#8221; )</p>
+</li>
+<li><p class="first"><strong>noun:</strong> <em>string</em>, part of the User&#8217;s ranking title (ranking title can include an adjective followed by a noun- ex. &#8220;rookie benchwarmer&#8221; )</p>
+</li>
+<li><p class="first"><strong>is_private:</strong> <em>boolean</em>, indicates wheter profile data should be visible to non-friends</p>
+<ul class="simple">
+<li>If <code class="docutils literal"><span class="pre">True</span></code>, do not show any data below the four subdivision numbers. Instead, display a message saying &#8220;This account is private.&#8221;</li>
+</ul>
+</li>
+<li><p class="first"><strong>percentCorrect:</strong> <em>integer</em>, percentage of correct forecasts</p>
+</li>
+<li><p class="first"><strong>myCastiesNumber:</strong> <em>integer</em>, number of Casties the User has created</p>
+</li>
+<li><p class="first"><strong>groupsNumber:</strong> <em>integer</em>, number of Groups the User follows</p>
+</li>
+<li><p class="first"><strong>frodadsNumber:</strong> <em>integer</em>, number of Frodads the User has</p>
+</li>
+<li><p class="first"><strong>forecastsNumber:</strong> <em>integer</em>, number of Forecasts the User has made</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>friend_status:</strong> <em>string</em>, indicates the relationship of the profile being returned to the authenticated user. this field will be one of five options-</dt>
+<dd><ul class="first last simple">
+<li><strong>self</strong>: the authenticated User and the profile being requested are the same</li>
+<li><strong>friend</strong>: the authenticated User and the profile being requested are friends</li>
+<li><strong>pending</strong>: the authenticated User has sent a friend request to the profile; friendship awaiting the profile&#8217;s response</li>
+<li><strong>respond</strong>: the profile has sent a request to the authenticated User; the autheticated User can click this button to accept/reject the request</li>
+<li><strong>not-friends</strong>: the authenticated User and the profile being requested are not friends</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="my-casties">
+<h3>My Casties<a class="headerlink" href="#my-casties" title="Permalink to this headline">¶</a></h3>
+<p>This is the &#8220;main&#8221; Profile subsection shown when &#8220;Profile&#8221; is selected from the bottom nav bar. It contains information on all Casties the User has created, including whether or not the Castie is ready to be answered. A Castie is ready to be answered if the Castie end date has passed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When looking at another user&#8217;s profile (not your own), the &#8220;Answer&#8221; button for the individual Casties the user has created should NOT be visible.</p>
+</div>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/mycaties</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed; leave blank if viewing your own profile</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myCasties&#8221; entry mapping to a dictionary of Casties indexed by <code class="docutils literal"><span class="pre">uuid</span></code>. Each Castie in the myCasties dictionary contains a &#8220;question&#8221; attribute and an &#8220;answerable&#8221; attribute. &#8220;answerable&#8221; is set to <code class="docutils literal"><span class="pre">True</span></code> if the Castie is ready to be answered.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;profileInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span>
+    <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+    <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+    <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+    <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;myCasties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;1c68c6227af14adcae3aece67ac42c64&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;asdf&quot;</span><span class="p">,</span>
+      <span class="s">&quot;answerable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="s">&quot;43b9bb04a4d24126ab16a558250cbafe&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Who will win the Boston Marathon?&quot;</span><span class="p">,</span>
+      <span class="s">&quot;answerable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="s">&quot;e96c251cf07d45a6a4bae3d620513bd9&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;NC State v. Louisville&quot;</span><span class="p">,</span>
+      <span class="s">&quot;answerable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="s">&quot;6ce0072752ae4026acad97a8ce96ffb3&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Who will win the Masters?&quot;</span><span class="p">,</span>
+      <span class="s">&quot;answerable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stats">
+<h3>Stats<a class="headerlink" href="#stats" title="Permalink to this headline">¶</a></h3>
+<p>The Stats subdivision includes two stats, percent correct and percent incorrect, followed by a dictionary of all forecasts placed by the User.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/stats</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed; leave blank if viewing your own profile</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myForecasts&#8221; entry mapping to a dictionary of forecast objects indexed by the ID of the forecast.</p>
+<p id="forecast-object"><strong>The Forecast Object</strong></p>
+<blockquote>
+<div><p><strong>Attributes</strong></p>
+<ul class="simple">
+<li><strong>question:</strong> <em>string</em>, the question text of the Castie being forecasted</li>
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
+<li><strong>forecast:</strong> <em>string</em>, the text of the User&#8217;s forecast for the Castie</li>
+<li><strong>is_active:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if Castie is still open for forecasting (i.e. end date/time have not passed)</li>
+<li><strong>answerSubmitted:</strong> <em>boolean</em>, indicates if the correct answer has been submitted. this field is only present if the Castie has ended (<code class="docutils literal"><span class="pre">is_active</span></code> would be <code class="docutils literal"><span class="pre">False</span></code>)</li>
+<li><strong>is_correct:</strong> <em>boolean</em>, if the castie has ended, this indicates if the User&#8217;s forecast was correct- <code class="docutils literal"><span class="pre">True</span></code> if correct, <code class="docutils literal"><span class="pre">False</span></code> if incorrect. this field is only present if the Castie has ended.</li>
+<li><strong>points_earned</strong>: <em>integer</em>, number of points the User was awarded if they were correct</li>
+<li><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</li>
+<li><strong>endTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;profileInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+    <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;self&quot;</span><span class="p">,</span>
+    <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span>
+    <span class="s">&quot;myCastiesNumber&quot;</span><span class="p">:</span> <span class="mi">138</span><span class="p">,</span>
+    <span class="s">&quot;groupsNumber&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+    <span class="s">&quot;percentCorrect&quot;</span><span class="p">:</span> <span class="mf">63.1578947368421</span><span class="p">,</span>
+    <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span>
+    <span class="s">&quot;forecastsNumber&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
+    <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;frodadsNumber&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
+    <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;myForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;6&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;22:36:00&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-12-09&quot;</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Who will become the next prez?&quot;</span><span class="p">,</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;8b2f08bb4cd64c98bab5e87efdf32b24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="s">&quot;111&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Tampa Bay Lightning v. Detroit Red Wings in the playoffs&quot;</span><span class="p">,</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;8b2f08bb4cd64c98bab5e87ef98u2b24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;Lightning&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;88&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Will Zayn Malik ever return to One Direction?&quot;</span><span class="p">,</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;8b2f08bb4cd64c98bab5e87efdf32b24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;lol no&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;342&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;20:49:00&quot;</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Kentucky v. Wisconsin&quot;</span><span class="p">,</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;8b2f08bb4cd64c98bab5e87efdf32b24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-04-04&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;Kentucky&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="groups">
+<span id="id3"></span><h3>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h3>
+<p>The Groups subdivision contains a listing of all Groups the User follows.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/groups</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed, leave blank if viewing your own profile</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myGroups&#8221; entry mapping to a dictionary of Groups the user follows indexed by the slug of the group name. The items in the &#8220;myGroups&#8221; dictionary are Group Objects (see the <a class="reference internal" href="#group-object">Group Object</a> in the general Groups section below).</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;profileInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;myCastiesNumber&quot;</span><span class="p">:</span> <span class="mi">138</span><span class="p">,</span>
+    <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span>
+    <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+    <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;percentCorrect&quot;</span><span class="p">:</span> <span class="mf">63.1578947368421</span><span class="p">,</span>
+    <span class="s">&quot;frodadsNumber&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
+    <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+    <span class="s">&quot;forecastsNumber&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
+    <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+    <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span>
+    <span class="s">&quot;groupsNumber&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;self&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;myGroups&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;politics&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;accessDeniedMessage&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="s">&quot;granted&quot;</span><span class="p">,</span>
+      <span class="s">&quot;followersCount&quot;</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span>
+      <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/palm_trees.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;general-stuff&quot;</span><span class="p">,</span>
+      <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;requiresApproval&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;groupInfoText&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;General Stuff&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;pop-culture&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;accessDeniedMessage&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;followersCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final.png&quot;</span><span class="p">,</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;pop-culture&quot;</span><span class="p">,</span>
+      <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;requiresApproval&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;groupInfoText&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;Pop Culture&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="frodads">
+<span id="id4"></span><h3>Frodads<a class="headerlink" href="#frodads" title="Permalink to this headline">¶</a></h3>
+<p>The Frodads subdivision consists a listing of the User&#8217;s friends.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/handle/frodads</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed, leave blank if viewing your own profile</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myFrodads&#8221; entry mapping to a dictionary of Frodad objects indexed by <code class="docutils literal"><span class="pre">handle</span></code>.</p>
+<p id="frodad-object"><strong>The Frodad Object</strong></p>
+<blockquote>
+<div><p><strong>Attributes</strong></p>
+<ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the user&#8217;s handle; uniquely identifies the friend</li>
+<li><strong>lastName:</strong> <em>string</em>, the user&#8217;s last name</li>
+<li><strong>firstName:</strong> <em>string</em>, the user&#8217;s first name</li>
+<li><strong>profPic:</strong> <em>string</em>, location of the friend&#8217;s profile picture</li>
+<li><strong>city:</strong> <em>string</em>, the user&#8217;s city</li>
+<li><strong>state:</strong> <em>string</em>, the user&#8217;s state</li>
+<li><strong>friend_status:</strong> <em>string</em>, indicates if this user is the requesting user&#8217;s friend- possible values are &#8220;friends&#8221;, &#8220;not-friends&#8221;, &#8220;pending&#8221;, &#8220;respond&#8221;, and &#8220;self&#8221;</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;profileInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;percentCorrect&quot;</span><span class="p">:</span> <span class="mf">63.1578947368421</span><span class="p">,</span>
+    <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span>
+    <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;forecastsNumber&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
+    <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span>
+    <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+    <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;frodadsNumber&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
+    <span class="s">&quot;myCastiesNumber&quot;</span><span class="p">:</span> <span class="mi">138</span><span class="p">,</span>
+    <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+    <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+    <span class="s">&quot;groupsNumber&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;self&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;myFrodads&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;Fmswizard&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-50/image.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;Fmswizard&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Fernando&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;majesty227&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;majesty227&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Patti&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Alvarez&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;pending&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;JAldersonSmith-280&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-280/image.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;JAldersonSmith-280&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;James&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Alderson Smith&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;not-friends&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>Groups<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Returns a dictionary of all Group objects indexed be the Group&#8217;s slug attribute. This request is called when the User clicks on the &#8220;Groups&#8221; button (i.e. the Octopus icon) in the top nav bar.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups</span></code></p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>Returns a dictionary, entitled &#8216;groups&#8217;, of Group objects. Groups are indexed by the Group&#8217;s slug (the slug is a shortened form of its name). The Group objects are not ordered in any way.</p>
+<p id="group-object"><strong>The Group Object</strong></p>
+<blockquote>
+<div><p><strong>Attributes</strong></p>
+<ul class="simple">
+<li><strong>slug:</strong> <em>string</em>, a shortened Group name, used as a unique identifier for the Group</li>
+<li><strong>groupName:</strong> <em>string</em>, the name of the group</li>
+<li><strong>groupInfoText:</strong> <em>string</em>, a short text string providing info on the group</li>
+<li><strong>groupIcon:</strong> <em>string</em>, location of the Group&#8217;s icon image</li>
+<li><strong>requiresApproval:</strong> <em>boolean</em>, if the Group requires approval before it can be followed, this is set to <code class="docutils literal"><span class="pre">True</span></code></li>
+<li><strong>accessDeniedMessage:</strong> <em>string</em>, if the Group requires approval before it can be followed, this is the message that shoudl be displayed when the User clicks the &#8220;Follow&#8221; button</li>
+<li><strong>followersCount:</strong> <em>integer</em>, number of Users that &#8220;Follow&#8221; the given group</li>
+<li><strong>friendsCount:</strong> <em>integer</em>, number of the User&#8217;s friends that &#8220;Follow&#8221; the given group</li>
+<li><strong>accuracy:</strong> <em>integer</em>, percent correct for the User&#8217;s forecasts in the Group</li>
+<li><strong>access:</strong> <em>string</em>, set to either &#8220;granted&#8221;, &#8220;pending&#8221;, or <code class="docutils literal"><span class="pre">None</span></code>. &#8220;granted&#8221; indicates that the User has been approved and is &#8220;following&#8221; the Group (therefore the &#8220;following&#8221; field is always <code class="docutils literal"><span class="pre">True</span></code> if this &#8220;access&#8221; field is &#8220;granted&#8221;). &#8220;pending&#8221; indicates that the User has requested access but has not yet been approved. If the User is &#8220;pending&#8221;, the &#8220;following&#8221; field is <code class="docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>following:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the User is following the Group, <code class="docutils literal"><span class="pre">False</span></code> if the User is not following the Group</li>
+<li><strong>numberCasties:</strong> <em>integer</em>, number of total casties in the Group</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;uf-weekly-matchups&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;requiresApproval&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;uf-weekly-matchups&quot;</span><span class="p">,</span>
+      <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/uf1.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;followersCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;groupInfoText&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;UF Weekly Matchups&quot;</span><span class="p">,</span>
+      <span class="s">&quot;accessDeniedMessage&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;numberCasties&quot;</span><span class="p">:</span> <span class="mi">14</span>
+    <span class="p">},</span>
+    <span class="s">&quot;academy-holy-names&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="s">&quot;granted&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="s">&quot;requiresApproval&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;academy-holy-names&quot;</span><span class="p">,</span>
+      <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/AHN.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;followersCount&quot;</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span>
+      <span class="s">&quot;groupInfoText&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;Academy of the Holy Names&quot;</span><span class="p">,</span>
+      <span class="s">&quot;accessDeniedMessage&quot;</span><span class="p">:</span> <span class="s">&quot;&lt;h3&gt;Do you even go here?&lt;/h3&gt;</span><span class="se">\r\n\r\n</span><span class="s">&lt;p&gt;This is a private group for AHN students only.&lt;/p&gt;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;numberCasties&quot;</span><span class="p">:</span> <span class="mi">94</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="followers">
+<h3>Followers<a class="headerlink" href="#followers" title="Permalink to this headline">¶</a></h3>
+<p>View a listing of followers for a given group. This is accessed by clicking on &#8220;Followers&#8221; from the Groups section.</p>
+<p>If the requested Group cannot be found, the response will indicate a <code class="docutils literal"><span class="pre">404</span></code> error:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested group could not be found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/followers</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Returns a dictionary, entitled &#8216;followers&#8217;, of User objects. these are the Users that follow the Group. Users are indexed by handle. The User object is the same as the <a class="reference internal" href="#frodad-object">Frodad Object</a>.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>{
+  &quot;followers&quot;: {
+    &quot;TJakubiec-298&quot;: {
+      &quot;firstName&quot;: &quot;Tess&quot;,
+      &quot;lastName&quot;: &quot;Jakubiec&quot;,
+      &quot;profPic&quot;: &quot;&quot;,
+      &quot;friend_status&quot;: &quot;friends&quot;,
+      &quot;handle&quot;: &quot;TJakubiec-298&quot;
+    },ndle&quot;: &quot;SBahr-313&quot;
+    },
+    &quot;CPaman-312&quot;: {
+      &quot;firstName&quot;: &quot;Chloe &quot;,
+      &quot;lastName&quot;: &quot;Paman&quot;,
+      &quot;profPic&quot;: &quot;&quot;,
+      &quot;friend_status&quot;: &quot;respond&quot;,
+      &quot;handle&quot;: &quot;CPaman-312&quot;
+    },
+    &quot;LCruz-314&quot;: {
+      &quot;firstName&quot;: &quot;Lisette&quot;,
+      &quot;lastName&quot;: &quot;Cruz&quot;,
+      &quot;profPic&quot;: &quot;&quot;,
+      &quot;friend_status&quot;: &quot;pending&quot;,
+      &quot;handle&quot;: &quot;LCruz-314&quot;
+    }
+  }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="accuracy">
+<h3>Accuracy<a class="headerlink" href="#accuracy" title="Permalink to this headline">¶</a></h3>
+<p>View your accuracy in a given group. This is accessed by clicking on &#8220;Accuracy&#8221; from the Groups section. Includes percent correct, leaderboard ranking, and your forecasts in the Group.</p>
+<p>If the requested Group cannot be found, the response will indicate a <code class="docutils literal"><span class="pre">404</span></code> error:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested group could not be found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/accuracy</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Returns a dictionary entitled &#8216;accuracy&#8217; that contains the following fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>percentCorrect</strong>: <em>integer</em>, the User&#8217;s accuracy in the Group</li>
+<li><strong>ranking</strong>: <em>string</em>, the User&#8217;s ranking in the Group leaderboard (ex. &#8220;2/34&#8221;)</li>
+<li><strong>myForecasts</strong>: <em>dictionary</em>, dictionary of <a class="reference internal" href="#forecast-object">Forecast Object</a> entries indexed by Castie uuid of the Castie that was forecasted</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;percentCorrect&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+    <span class="s">&quot;myForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;c1c575633585472faa1373582146b1c5&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;16:00:00&quot;</span><span class="p">,</span>
+        <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Bucs to win their season opener vs the Titans?&quot;</span><span class="p">,</span>
+        <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-09-13&quot;</span><span class="p">,</span>
+        <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+        <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+        <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;Yes&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;a1f318a5c9ab4858a15996f69f851938&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Taylor Swift and Calvin Harris getting engaged?&quot;</span><span class="p">,</span>
+        <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;No way&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s">&quot;ranking&quot;</span><span class="p">:</span> <span class="s">&quot;2/443&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>Frodads<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>View a listing of friends that are followers for a given group. This is accessed by clicking on &#8220;Frodads&#8221; from the Groups section.</p>
+<p>If the requested Group cannot be found, the response will indicate a <code class="docutils literal"><span class="pre">404</span></code> error:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested group could not be found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/followers/frodads</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Returns a dictionary, entitled &#8216;friendFollowers&#8217;, of User objects- these are followers of the group that are also the requesting User&#8217;s friends. Users are indexed by handle. The User object is the same as the <a class="reference internal" href="#frodad-object">Frodad Object</a>.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;friendFollowers&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;JAldersonSmith-280&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-280/image.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Alderson Smith&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;James&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;JAldersonSmith-280&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;csocias&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-4/image_QPZAEEG.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="activity">
+<h2>Activity<a class="headerlink" href="#activity" title="Permalink to this headline">¶</a></h2>
+<p>Data for the Activity tab</p>
+<div class="section" id="frodad-feed">
+<h3>Frodad Feed<a class="headerlink" href="#frodad-feed" title="Permalink to this headline">¶</a></h3>
+<p>Coming Soon</p>
+</div>
+<div class="section" id="notifications">
+<h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="section" id="search">
+<h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p>The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.</p>
+<p>NOTE: For now, each request shouldn&#8217;t take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/{search_type}</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><strong>search_type</strong> (<em>optional</em>, default=&#8221;people&#8221;): <em>string</em>, indicates which tab of the search page is being requested- &#8220;people&#8221;, &#8220;groups&#8221;, or &#8220;casties&#8221;</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Either a list of dictionaries (for peopla and casties) or a dictionary of dictionaries, indexed by group slug, for groups. The main list/dictionary is entitled either &#8220;people&#8221;, &#8220;groups&#8221;, or &#8220;casties&#8221; depedning on what tab was selected. The people objects are ordered by last name. The group and castie objects are not ordered to save time.</p>
+<p><strong>Sample Response</strong></p>
+<p>For <strong>people</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;people&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Alvarez&quot;</span><span class="p">,</span>
+      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Mark&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;pending&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;markey&quot;</span>
+    <span class="p">},</span>
+   <span class="p">{</span>
+      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Swanson&quot;</span><span class="p">,</span>
+      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Lizzy&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;lizzyswan&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Tanner&quot;</span><span class="p">,</span>
+      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Gretchen&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;respond&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;tgretch&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Weitz&quot;</span><span class="p">,</span>
+      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Helen&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;not-friends&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;weitzup&quot;</span>
+    <span class="p">},</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For <strong>groups</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;uf-weekly-matchups&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/uf1.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;UF Weekly Matchups&quot;</span><span class="p">,</span>
+      <span class="s">&quot;requiresApproval&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;numberCasties&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="mi">65</span><span class="p">,</span>
+      <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;accessDeniedMessage&quot;</span><span class="p">:</span> <span class="s">&quot;You need approval to join this group.&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupInfoText&quot;</span><span class="p">:</span> <span class="s">&quot;All about UF football&quot;</span><span class="p">,</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;uf-weekly-matchups&quot;</span><span class="p">,</span>
+      <span class="s">&quot;followersCount&quot;</span><span class="p">:</span> <span class="mi">91</span><span class="p">,</span>
+      <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="s">&quot;granted&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;general-stuff&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/palm_trees.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;General Stuff&quot;</span><span class="p">,</span>
+      <span class="s">&quot;requiresApproval&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;numberCasties&quot;</span><span class="p">:</span> <span class="mi">29</span><span class="p">,</span>
+      <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="mi">87</span><span class="p">,</span>
+      <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;accessDeniedMessage&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupInfoText&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;general-stuff&quot;</span><span class="p">,</span>
+      <span class="s">&quot;followersCount&quot;</span><span class="p">:</span> <span class="mi">56</span><span class="p">,</span>
+      <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="n">null</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For <strong>casties</strong>:</p>
+<p>If the User has forecasted the Castie and the Castie has been answered, use a green or red box to indicate if they were correct/incorrect.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;casties&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;cd993ecff27c46fa80bda9e3571e580c&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
+      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final_jcGNqfM.png&quot;</span><span class="p">,</span>
+      <span class="s">&quot;userCorrect&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Another sample castie with set answer options, open&quot;</span><span class="p">,</span>
+      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;371083f1c4694d30b8f2de0f3812a3e8&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
+      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final_jcGNqfM.png&quot;</span><span class="p">,</span>
+      <span class="s">&quot;userCorrect&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;testing write-in answer forecasts&quot;</span><span class="p">,</span>
+      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;f9428a64bf3642cc9e1f64e7314ed9ee&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
+      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final_jcGNqfM.png&quot;</span><span class="p">,</span>
+      <span class="s">&quot;userCorrect&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;testing set answer option forecasts&quot;</span><span class="p">,</span>
+      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hamburger-side-menu">
+<span id="hamburger"></span><h2>Hamburger Side Menu<a class="headerlink" href="#hamburger-side-menu" title="Permalink to this headline">¶</a></h2>
+<p>The side menu is accessed via the &#8220;hamburger&#8221; icon on the home page. In addition to various settings, this side menu displays a list of Groups the User follows. A request to this &#8220;hamburger&#8221; endpoint returns a list of Groups in alphabetical order. The User&#8217;s handle is also provided (the handle is needed when a User clicks on Preferences or Log Out).</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/hamburger</span></code></p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>An alphabetical list of (group name, group slug) tuples for Groups the User follows (the slug is the unique identifier for a group). Additionally, the User&#8217;s handle is provided in the &#8220;handle&#8221; field.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+  <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span>
+      <span class="s">&quot;Politics&quot;</span><span class="p">,</span>
+      <span class="s">&quot;politics&quot;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+      <span class="s">&quot;Pop Culture&quot;</span><span class="p">,</span>
+      <span class="s">&quot;pop-culture&quot;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+      <span class="s">&quot;European Sports&quot;</span><span class="p">,</span>
+      <span class="s">&quot;european-sports&quot;</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-castie-group-list">
+<h2>Create Castie- Group List<a class="headerlink" href="#create-castie-group-list" title="Permalink to this headline">¶</a></h2>
+<p>The request to actually save a Castie being created can be found in the <a class="reference internal" href="post-requests.html#create-castie"><span>Create Castie</span></a> section of the POST requests docs. This request will return a list of groups for the User to choose from in the process of createing their Castie.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/create/groups</span></code></p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>An alphabetical list of (group name, group slug) tuples for all existing Groups (the slug is the unique identifier for a group).</p>
+<p>This is similar to the <a class="reference internal" href="#hamburger"><span>Hamburger Side Menu</span></a> request but returns data for all existing Groups, not just the ones the User follows.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span>
+      <span class="s">&quot;Politics&quot;</span><span class="p">,</span>
+      <span class="s">&quot;politics&quot;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+      <span class="s">&quot;Pop Culture&quot;</span><span class="p">,</span>
+      <span class="s">&quot;pop-culture&quot;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+      <span class="s">&quot;European Sports&quot;</span><span class="p">,</span>
+      <span class="s">&quot;european-sports&quot;</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="view-all-frodad-requests">
+<h2>View All Frodad Requests<a class="headerlink" href="#view-all-frodad-requests" title="Permalink to this headline">¶</a></h2>
+<p>All of the User&#8217;s current frodad requests. This returns a list of profile handles that have friend requested the User.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/frodad-requests</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>The number of pending friend requests and, if there are any, a list of profile handles that have friend requested the User.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;number_friend_requests&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s">&quot;friend_requests_from&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+    <span class="s">&quot;Luly&quot;</span>
+  <span class="p">],</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If there are no friend requests:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;number_friend_requests&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s">&quot;friend_requests_from&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Get Requests</a><ul>
+<li><a class="reference internal" href="#initialize">Initialize</a></li>
+<li><a class="reference internal" href="#needs-answer">Needs Answer</a></li>
+<li><a class="reference internal" href="#home">Home</a></li>
+<li><a class="reference internal" href="#castie-detail">Castie Detail</a></li>
+<li><a class="reference internal" href="#leaders">Leaders</a></li>
+<li><a class="reference internal" href="#profile">Profile</a><ul>
+<li><a class="reference internal" href="#my-casties">My Casties</a></li>
+<li><a class="reference internal" href="#stats">Stats</a></li>
+<li><a class="reference internal" href="#groups">Groups</a></li>
+<li><a class="reference internal" href="#frodads">Frodads</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">Groups</a><ul>
+<li><a class="reference internal" href="#followers">Followers</a></li>
+<li><a class="reference internal" href="#accuracy">Accuracy</a></li>
+<li><a class="reference internal" href="#id6">Frodads</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#activity">Activity</a><ul>
+<li><a class="reference internal" href="#frodad-feed">Frodad Feed</a></li>
+<li><a class="reference internal" href="#notifications">Notifications</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#search">Search</a></li>
+<li><a class="reference internal" href="#hamburger-side-menu">Hamburger Side Menu</a></li>
+<li><a class="reference internal" href="#create-castie-group-list">Create Castie- Group List</a></li>
+<li><a class="reference internal" href="#view-all-frodad-requests">View All Frodad Requests</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="pagination.html" title="previous chapter">Pagination</a></li>
+      <li>Next: <a href="post-requests.html" title="next chapter">Post Requests</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/get-requests.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stephanie Socias.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/get-requests.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

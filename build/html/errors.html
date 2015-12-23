@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Errors &mdash; Cassie API 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Cassie API 1.0 documentation" href="index.html" />
+    <link rel="next" title="Image Paths" href="image-paths.html" />
+    <link rel="prev" title="Authentication" href="authentication.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="errors">
+<span id="id1"></span><h1>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
+<p>Every response includes a &#8220;status&#8221; key that indicates the success or failure of an API request. The &#8220;status&#8221; codes follow conventional HTTP response codes. Status 200 indicates a successful request. In the event of an error (any status code other than 200), <code class="docutils literal"><span class="pre">error_type</span></code> and <code class="docutils literal"><span class="pre">error_message</span></code> keys are also included in the request.</p>
+<div class="section" id="error-codes">
+<h2>Error Codes<a class="headerlink" href="#error-codes" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>200- OK</td>
+<td>Successful request</td>
+</tr>
+<tr class="row-even"><td>400- Bad Request</td>
+<td>Unacceptable Request</td>
+</tr>
+<tr class="row-odd"><td>401- Unauthorized</td>
+<td>User could not be authenticated</td>
+</tr>
+<tr class="row-even"><td>404- Not Found</td>
+<td>Requested resource does not exist</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="error-types-and-messages">
+<h2>Error Types and Messages<a class="headerlink" href="#error-types-and-messages" title="Permalink to this headline">¶</a></h2>
+<p>If the response status is anything other than 200, <code class="docutils literal"><span class="pre">error_type</span></code> and <code class="docutils literal"><span class="pre">error_message</span></code> keys are included in the request. The <code class="docutils literal"><span class="pre">error_message</span></code> includes more specific information about the error type.</p>
+<p><strong>Possible error types include:</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">authentication_failed</span></code> user could not be authenticated</li>
+<li><code class="docutils literal"><span class="pre">object_not_found</span></code> requested object (usually a Castie, Group, or User) could not be found</li>
+<li><code class="docutils literal"><span class="pre">inactive_user</span></code> the requested profile is not active</li>
+<li><code class="docutils literal"><span class="pre">castie_not_created</span></code> castie could not be created/saved to database</li>
+<li><code class="docutils literal"><span class="pre">account_not_created</span></code> new Cassie account could not be created/saved to database</li>
+<li><code class="docutils literal"><span class="pre">email_not_unique</span></code> email address is already associated with an existing account</li>
+<li><code class="docutils literal"><span class="pre">handle_not_unique</span></code> handle is already associated with an existing account</li>
+<li><code class="docutils literal"><span class="pre">incorrect_request_type</span></code> making a GET request when it should be POST and vice versa</li>
+<li><code class="docutils literal"><span class="pre">improper_group_request</span></code> trying to follow/unfollow a group you already follow/unfollow</li>
+<li><code class="docutils literal"><span class="pre">missing_request_data</span></code> the expected POST/GET data was not found in the request</li>
+<li><code class="docutils literal"><span class="pre">castie_not_answerable</span></code> the Castie is not accepting the correct answer (either the end date has not passed or it is already answered)</li>
+<li><code class="docutils literal"><span class="pre">cannot_forecast</span></code> the User cannot submit a forecast becuase they have already done so (a User can only forecast each Castie one time)</li>
+<li><code class="docutils literal"><span class="pre">cannot_add_frodad</span></code> the User is trying to send a friend request to another User that is already a friend</li>
+<li><code class="docutils literal"><span class="pre">improper_frodad_response</span></code> the only acceptable actions for responding to a friend request are &#8220;accept&#8221; and &#8220;reject&#8221;</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Errors</a><ul>
+<li><a class="reference internal" href="#error-codes">Error Codes</a></li>
+<li><a class="reference internal" href="#error-types-and-messages">Error Types and Messages</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="authentication.html" title="previous chapter">Authentication</a></li>
+      <li>Next: <a href="image-paths.html" title="next chapter">Image Paths</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/errors.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stephanie Socias.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/errors.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

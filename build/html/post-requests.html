@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Post Requests &mdash; Cassie API 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Cassie API 1.0 documentation" href="index.html" />
+    <link rel="next" title="Other Requests" href="other-requests.html" />
+    <link rel="prev" title="Get Requests" href="get-requests.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="post-requests">
+<span id="id1"></span><h1>Post Requests<a class="headerlink" href="#post-requests" title="Permalink to this headline">¶</a></h1>
+<p>Endpoints for posting data (making forecasts, adding friends, creating casties, etc.) can be found below. All data should be sent in the body of the request as key:value pairs of type <code class="docutils literal"><span class="pre">application/x-www-form-urlencoded</span></code>.</p>
+<p>Each endpoint is expecting certain parameters. I don&#8217;t always check to make sure these keys exist in the request...So, make sure to include the correct parameters!!</p>
+<div class="section" id="sign-up-create-account">
+<h2>Sign Up (create account)<a class="headerlink" href="#sign-up-create-account" title="Permalink to this headline">¶</a></h2>
+<p>The sign up process occurs over a series of steps as the User inputs the various pieces of data needed to create their account. Each step requires a separate request. No authentication required until after the final step and the account has been created.</p>
+<div class="topic">
+<p class="topic-title first">Abandoning the Account Creation Process</p>
+<p>If the User terminates the account creation process at any time after they have inputted a password, make a request to the following endpoint so any temporary data can be deleted:</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/incomplete</span></code></p>
+<p><strong>Parameters:</strong></p>
+<p><strong>email:</strong> <em>string</em>, the User&#8217;s email address</p>
+<p><strong>Response:</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;user data has been deleted&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<p><strong>1. Email Address</strong></p>
+<blockquote>
+<div><p>Perform basic validation client-side (that it is indeed an email) and then send the email address to the backend to verify that it is not already associated with an account. The email address becomes the User&#8217;s username.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/email</span></code></p>
+<p><strong>Parameters (sent as key:value pairs)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>email:</strong> <em>string</em>, the validated email address inputted by the User</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>If the email is already in use, an error message will be returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;email_not_unique&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the email address provided is already associated with a Cassie account. it cannot be used to create a new account.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the email is valid, it will be returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;myemail@gmail.com&quot;</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;email is unique- proceed to the password screen&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>2. Password</strong></p>
+<blockquote>
+<div><p>Perform basic validation client-side to ensure that the two passwords match and that they contain only alphanumeric characters (no spaces). Then, send the email address (provided in the response of the previous request) and password in the request.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/password</span></code></p>
+<p><strong>Parameters (sent as key:value pairs)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>password:</strong> <em>string</em>, the validated password inputted by the User</li>
+<li><strong>email:</strong> <em>string</em>, the validated email address inputted by the User</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>A success message once the email and password have been used to create an initial User object.</p>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;myemail@gmail.com&quot;</span><span class="p">,</span>
+  <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;myemail@gmail.com&quot;</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;User has been created. proceed to the name screen.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>3. Name and Handle</strong></p>
+<blockquote>
+<div><p>The User inputs their name and then their Handle on distinct sign-up screens. Perform basic validation client-side to ensure that the Names and Handle contain only alphanumberic characters (ASCII characters only). Additionally, the handle must be at least three characters long and cannot contain the following characters: &#64; /.
+Once this client-side validation is complete, send the handle to the backend so uniqueness can be verified.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/handle</span></code></p>
+<p><strong>Parameters (sent as key:value pairs)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>first_name:</strong> <em>string</em>, the User&#8217;s first name</li>
+<li><strong>last_name:</strong> <em>string</em>, the User&#8217;s last name</li>
+<li><strong>handle:</strong> <em>string</em>, the User&#8217;s unique handle; this is used to identify the User</li>
+<li><strong>email:</strong> <em>string</em>, the email address</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>If the handle is already in use, an error message will be returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;handle_not_unique&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the hanlde provided is already associated with a Cassie account&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the handle is valid, it will be returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myhandle&quot;</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;proceed to the picture screen&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>4. Picture</strong></p>
+<blockquote>
+<div><p>User uploads a profile picture. Images must be jpg, jpeg, png, or gif.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/picture</span></code></p>
+<p><strong>Parameters (sent as key:value pairs)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the User&#8217;s unique handle; this is used to identify the User</li>
+<li><strong>email:</strong> <em>string</em>, the User&#8217;s email address</li>
+<li><strong>profile_picture:</strong> optional (if no profile picture, do not include this field in the request) COMING SOON since I don&#8217;t know how to handle this yet!</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>A success message.</p>
+<p>The User should then be directed to their Home page. Since the Home page will be empty (as the User has not followed any groups on their own yet), display a message instructing the User to click on the Octopus in the top bar to follow groups and start forecasting.</p>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;myemail@gmail.com&quot;</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myhandle&quot;</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Sign up complete- now show me the home page&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="log-in">
+<span id="id2"></span><h2>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h2>
+<p>Updates the User&#8217;s &#8220;last_login&#8221; date/time and returns all data needed to start the app. No additional calls to initialize the app are needed. One request to &#8220;Log In&#8221; will provide all data needed to display the home page, with notification indications.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/login</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>Data needed to display the home page (same data returned in <a class="reference internal" href="get-requests.html#home"><span>Home</span></a>), the number of notifications the user has never seen, and a boolean indicating if the User has any Casties that are ready to be answered.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>number_notifications:</strong> <em>integer</em>, number of notifications the User has</li>
+<li><strong>needs_answer:</strong> <em>boolean</em>, True if the User has a Castie(s) that is ready to be answered</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s">&quot;profile_handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;casties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+          <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-13&quot;</span><span class="p">,</span>
+          <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;Around Campus&quot;</span><span class="p">,</span>
+          <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">,</span>
+          <span class="s">&quot;friendPics&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s">&quot;profiles/user-280/image.jpg&quot;</span><span class="p">,</span>
+            <span class="s">&quot;profiles/user-159/image_Fbr8GSY.jpg&quot;</span><span class="p">,</span>
+            <span class="s">&quot;&quot;</span>
+          <span class="p">],</span>
+          <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;03:37:08.153640&quot;</span><span class="p">,</span>
+          <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+          <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;commentsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Which company will have the most Q4 revenue?&quot;</span><span class="p">,</span>
+          <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+          <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="s">&quot;Best Buy&quot;</span><span class="p">,</span>
+          <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s">&quot;forecasts&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Visa&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">48</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Starbucks&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">16</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;American Express&quot;</span><span class="p">,</span>
+              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-31&quot;</span><span class="p">,</span>
+          <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+          <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;11:20:00&quot;</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-out">
+<h2>Log Out<a class="headerlink" href="#log-out" title="Permalink to this headline">¶</a></h2>
+<p>Nothing needs to be done on the backend</p>
+</div>
+<div class="section" id="delete-account">
+<h2>Delete Account<a class="headerlink" href="#delete-account" title="Permalink to this headline">¶</a></h2>
+<p>Completely deletes a User&#8217;s Cassie account.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/delete</span></code></p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>A success message indicating the User has been deleted. If the User is not deleted because the User cannot be found, an error message is returned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the User requested could not be found- nothing could be deleted&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle_deleted&quot;</span><span class="p">:</span> <span class="s">&quot;myhandle&quot;</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Account has been deleted&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="make-a-forecast">
+<h2>Make a Forecast<a class="headerlink" href="#make-a-forecast" title="Permalink to this headline">¶</a></h2>
+<p>Place a forecast on any active Castie. Forecast can be made when the Castie&#8217;s end date/time have not yet passed (or it is an open-ended castie). A User can only place one forecast per Castie.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/forecast/</span></code></p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
+</ul>
+<p>If this is a write-in forecast, send the forecast_text in the request body:</p>
+<ul class="simple">
+<li><strong>forecast_text:</strong> <em>string</em>, the text of the User&#8217;s write-in forecast</li>
+</ul>
+<p>Otherwise, if it&#8217;s a forecast for a Castie with set answer optoins only, send the ID of the answer option chosen:</p>
+<ul class="simple">
+<li><strong>answer_id:</strong> <em>integer</em>, the ID of the answer option chosen</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>A successfull request returns a status 200, the uuid of the Castie, the User&#8217;s forecast text, and, for a set answer option forecast, the answer_id of the answer option chosen.</p>
+<p>For a write-in forecast, the answer_id field is None.</p>
+<p>Appropriate errors will be returned in a variety of circumstances-</p>
+<p>If the User has already forecasted the Castie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_forecast&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the User has already forecasted this Castie&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the Castie is not accepting forecasts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_forecast&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;this castie is not accepting forecasts- end date/time has passed&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the Castie does not exist:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested castie could not be found. make sure you are sending a valid uuid&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the request is missing required parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_forecast&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;answer_id was not sent in request&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the answer_id sent in the request does not correspond to an answer option for the Castie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_forecast&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the answer_id provided does not correspond to a valid answer option for this castie&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong></p>
+<p>Set answer option forecast:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;forecast successfully recorded&quot;</span><span class="p">,</span>
+  <span class="s">&quot;castie_uuid&quot;</span><span class="p">:</span> <span class="s">&quot;f9428a64bf3642cc9e1f64e7314ed9ee&quot;</span><span class="p">,</span>
+  <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">845</span><span class="p">,</span>
+  <span class="s">&quot;user_forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;Yes&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Write-in forecast:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;forecast successfully recorded&quot;</span><span class="p">,</span>
+  <span class="s">&quot;castie_uuid&quot;</span><span class="p">:</span> <span class="s">&quot;371083f1c4694d30b8f2de0f3812a3e8&quot;</span><span class="p">,</span>
+  <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">&quot;user_forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;howdy &quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="follow-a-group">
+<span id="follow"></span><h2>Follow a Group<a class="headerlink" href="#follow-a-group" title="Permalink to this headline">¶</a></h2>
+<p>Allows a User to &#8220;Follow&#8221; a Group so that the Group&#8217;s Casties appear on the User&#8217;s home page. This request should only be made if the User is NOT already following the Group. If the User is already following the Group, you should make a request to <a class="reference internal" href="#unfollow">Unfollow</a>.</p>
+<p>Some Groups are private, meaning that Users must be approved in order to follow it and thus forecast its Casties. If the User requests to follow a private Group, their request is pending until it&#8217;s approved.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/follow/</span></code></p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>group_slug</strong>: <em>string</em>, the slug of the group to be followed</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>If the Group cannot be found, the following error is returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested group could not be found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the Group is not private and the &#8220;follow&#8221; was successful:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+  <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the Group is private, the request will return a message indicating that the User&#8217;s access is pending approval:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;access_pending&quot;</span><span class="p">:</span> <span class="s">&quot;user has requested access to group&quot;</span><span class="p">,</span>
+  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="s">&quot;pending&quot;</span><span class="p">,</span>
+  <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the User is already following the Group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;improper_group_request&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;cannot follow the Group. user is already following&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unfollow-a-group">
+<span id="unfollow"></span><h2>Unfollow a Group<a class="headerlink" href="#unfollow-a-group" title="Permalink to this headline">¶</a></h2>
+<p>Unfollows a Group so that the Group&#8217;s Casties no longer appear on the User&#8217;s home page. A User must currently be following the Group in order to unfollow it. If the User is not currently following the Group, make the request to <a class="reference internal" href="#follow">Follow</a>.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/unfollow/</span></code></p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>group_slug</strong>: <em>string</em>, the slug of the group to be un-followed</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>If the Group cannot be found, the following error is returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_not_found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the requested group could not be found&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the User is already &#8220;not following&#8221; the Group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;improper_group_request&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;cannot un-follow the Group. user does not follow it yet&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the &#8220;un-follow&#8221; was successful:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
+  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+  <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-castie">
+<span id="id3"></span><h2>Create Castie<a class="headerlink" href="#create-castie" title="Permalink to this headline">¶</a></h2>
+<p>Save a newly created Castie to the database. All details pertinent to the Castie being created must be passed in the body of the request.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/casties/create/</span></code></p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><p><strong>Data needed to create a Castie, sent as key:value pairs:</strong></p>
+<ul>
+<li><p class="first"><strong>group_slug:</strong> <em>string</em>, the slug of the Group the Castie will belong to</p>
+</li>
+<li><p class="first"><strong>poll_type:</strong> <em>string</em>, either &#8220;Open&#8221; for open-ended Casties or &#8220;Regular&#8221; for those that have an end date</p>
+</li>
+<li><p class="first"><strong>closes_on_date:</strong> <em>string</em>, the date the Castie closes; in the format YYYY-MM-DD</p>
+</li>
+<li><p class="first"><strong>closes_on_time:</strong> <em>string</em>, the time the Castie closes; in the format Hour:Minute:Second</p>
+</li>
+<li><p class="first"><strong>question:</strong> <em>string</em>, the Castie question text</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>answer_type:</strong> <em>string</em>, either &#8220;Set answer options&#8221; if the User has inputted answer options or &#8220;Write-in answers&#8221; if Users can write-in their own</dt>
+<dd><ul class="first last simple">
+<li><strong>answer_option:</strong> <em>string</em>, if answer_type is &#8220;Set answer options&#8221;, include answer_option fields for each answer option provided</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><strong>display_created_by:</strong> <em>boolean</em>, True if the Castie creator&#8217;s handle should be displayed</p>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Returns</strong></p>
+<p>If the Castie is created successfully, the response is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;castie&quot;</span><span class="p">:</span> <span class="s">&quot;created successfully&quot;</span><span class="p">,</span>
+  <span class="s">&quot;castie_uuid&quot;</span><span class="p">:</span> <span class="s">&quot;a52560fa75f1403b9e635d01ad364111&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Otherwise, if the Castie was not created, the response looks something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;castie_not_created&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;more detailed info on what went wrong&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>That type of error resonpose will be returned for a variety of error conditions.</p>
+</div>
+<div class="section" id="add-frodad">
+<h2>Add Frodad<a class="headerlink" href="#add-frodad" title="Permalink to this headline">¶</a></h2>
+<p>Send a friend request to another User.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/add-frodad/{handle}/</span></code></p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the handle of the profile being friend requested</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Returns the status of the relationship between the two Users-</p>
+<p>If the two Users (the one sending and the one receiveing the friend request) are not yet friends, a success message is returned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;friend request sent&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If a friend request between the two Users is already pending:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;friend request is already pending&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_add_frodad&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the two Users are already friends:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;these Users are already friends&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_add_frodad&quot;</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;cannot frodad request yourself&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_add_frodad&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accept-or-reject-a-frodad-request">
+<h2>Accept or Reject a Frodad Request<a class="headerlink" href="#accept-or-reject-a-frodad-request" title="Permalink to this headline">¶</a></h2>
+<p>Accept or reject an existing friend request. To accept the request, pass &#8220;accept&#8221; in the URL. To reject the request, pass &#8220;reject&#8221; in the URL.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/frodad-requests/{handle}/{action}/</span></code></p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the handle of the profile being friend requested</li>
+<li><strong>action:</strong> <em>string</em>, either &#8220;accept&#8221; or &#8220;reject&#8221;</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An appropriate message indicating whether or not the request was successful.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;you and steph are now frodads&quot;</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;frodad request from steph has been rejected&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unfrdodad">
+<h2>Unfrdodad<a class="headerlink" href="#unfrdodad" title="Permalink to this headline">¶</a></h2>
+<p>Un-friend an existing friend.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/unfrodad/{handle}/</span></code></p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the handle of the profile being friend requested</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A success message:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;csocias has been unfriended&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="notification-has-been-read">
+<h2>Notification Has Been Read<a class="headerlink" href="#notification-has-been-read" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="forgot-password">
+<h2>Forgot Password<a class="headerlink" href="#forgot-password" title="Permalink to this headline">¶</a></h2>
+<p>Retrieve a forgotten password. This request will send the User an email with a link to reset their password.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Post Requests</a><ul>
+<li><a class="reference internal" href="#sign-up-create-account">Sign Up (create account)</a></li>
+<li><a class="reference internal" href="#log-in">Log In</a></li>
+<li><a class="reference internal" href="#log-out">Log Out</a></li>
+<li><a class="reference internal" href="#delete-account">Delete Account</a></li>
+<li><a class="reference internal" href="#make-a-forecast">Make a Forecast</a></li>
+<li><a class="reference internal" href="#follow-a-group">Follow a Group</a></li>
+<li><a class="reference internal" href="#unfollow-a-group">Unfollow a Group</a></li>
+<li><a class="reference internal" href="#create-castie">Create Castie</a></li>
+<li><a class="reference internal" href="#add-frodad">Add Frodad</a></li>
+<li><a class="reference internal" href="#accept-or-reject-a-frodad-request">Accept or Reject a Frodad Request</a></li>
+<li><a class="reference internal" href="#unfrdodad">Unfrdodad</a></li>
+<li><a class="reference internal" href="#notification-has-been-read">Notification Has Been Read</a></li>
+<li><a class="reference internal" href="#forgot-password">Forgot Password</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="get-requests.html" title="previous chapter">Get Requests</a></li>
+      <li>Next: <a href="other-requests.html" title="next chapter">Other Requests</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/post-requests.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Stephanie Socias.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/post-requests.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
