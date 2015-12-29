@@ -607,4 +607,9 @@ Notification Has Been Read
 Forgot Password
 ===============
 
-Retrieve a forgotten password. This request will send the User an email with a link to reset their password.
+Users must reset their password in a web browser (mobile browser is fine). Clicking on "Forgot Password" in the app should just take the User here:
+
+  ``https://cassieapp.com/password_reset/``
+
+They can then input their email address to receive an email with a link to reset their password.
+
