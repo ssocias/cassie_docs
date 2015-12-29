@@ -61,11 +61,13 @@ Stephanie's Reminders
 
 * Endpoints left to do:
 
-  * Forgot password
   * Leaderboards (also leaderboard from group section)
   * Activity tab
+    
     * Frodad Feed
+
     * Notifications
+    
   * Notification has been read
   * Delete notification
 
