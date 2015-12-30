@@ -477,7 +477,7 @@ Save a newly created Castie to the database. All details pertinent to the Castie
     * **group_slug:** *string*, the slug of the Group the Castie will belong to
     * **poll_type:** *string*, either "Open" for open-ended Casties or "Regular" for those that have an end date
     * **closes_on_date:** *string*, the date the Castie closes; in the format YYYY-MM-DD
-    * **closes_on_time:** *string*, the time the Castie closes; in the format Hour:Minute:Second
+    * **closes_on_time:** *string*, the time the Castie closes; in the format Hour:Minute (24 hour clock)
     * **question:** *string*, the Castie question text
     * **answer_type:** *string*, either "Set answer options" if the User has inputted answer options or "Write-in answers" if Users can write-in their own
         * **answer_option:** *string*, if answer_type is "Set answer options", include answer_option fields for each answer option provided
