@@ -82,7 +82,7 @@
 <h2>Needs Answer<a class="headerlink" href="#needs-answer" title="Permalink to this headline">¶</a></h2>
 <p>A boolean to denote if the User has a Catie(s) that can be answered.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/needsanswer</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/needsanswer/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
@@ -98,8 +98,9 @@
 <div class="section" id="home">
 <span id="id2"></span><h2>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h2>
 <p>Returns a dictionary of Castie objects for the Cassie home page. The home page (accessed via the Home tab on the footer nav bar) is divided into three tabs- &#8220;following&#8221;, &#8220;spicy&#8221;, and &#8220;new&#8221;. By default, this request returns data for the &#8220;following&#8221; tab unless otherwise specified in the URL.</p>
+<p>This response takes a very long time- trying to figure out why.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/home/{which_tab}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/home/{which_tab}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>which_tab (<em>optional</em>, default=&#8221;following&#8221;): <em>string</em>, indicates which tab of the home page is being requested- &#8220;following&#8221;, &#8220;spicy&#8221;, or &#8220;new&#8221;</li>
@@ -295,7 +296,7 @@
 <h2>Castie Detail<a class="headerlink" href="#castie-detail" title="Permalink to this headline">¶</a></h2>
 <p>Returns detailed information about a given Castie. This should be called anytime a User clicks on a specific Castie to view its information.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>uuid: <em>string</em>, the unique id of the castie</li>
@@ -447,17 +448,17 @@
 <p>(let me know if we should do this differently...)</p>
 </div>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/leaderboard/{group_slug}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/leaderboard/{group_slug}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>group_slug (<em>optional</em>): <em>string</em>, indicates which Group&#8217;s leaderboard to return. If no group_slug is given, will return data for the overall Cassie leaderboard</li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>A dictionary containing a &#8220;leaderboard_options&#8221; and a &#8220;leaderboard_data&#8221; field, where &#8220;leaderboard_options&#8221; is a list of all the groups the User follows and  &#8220;leaderboard_data&#8221; ??? TBD...of User objects ordered by highest to lowest ranked in the Leaderboard. Each User object is the same as a <a class="reference internal" href="#frodad-object">Frodad Object</a>.</p>
+<p>A dictionary containing a &#8220;leaderboard_groups&#8221; and a &#8220;leaderboard_data&#8221; field, where &#8220;leaderboard_groups&#8221; is a list of all the groups the User follows and  &#8220;leaderboard_data&#8221; ??? TBD...of User objects ordered by highest to lowest ranked in the Leaderboard. Each User object is the same as a <a class="reference internal" href="#frodad-object">Frodad Object</a>.</p>
 </div>
 <div class="section" id="profile">
 <h2>Profile<a class="headerlink" href="#profile" title="Permalink to this headline">¶</a></h2>
-<p>The Profile tab contains four main subdividions: <a class="reference internal" href="#my-casties">My Casties</a>, <a class="reference internal" href="#stats">Stats</a>, <a class="reference internal" href="#groups">Groups</a>, and <a class="reference internal" href="#frodads">Frodads</a>. These subdivisions are visible under the User&#8217;s basic profile data (picture, name, location, etc.). When a User clicks on any of these subdivisions, the top part of the screen remains the same while the bottom part &#8220;switches&#8221; out to reveal the appropriate data. <strong>To view another User&#8217;s profile, place the handle of the profile to be viewed in the URL. To view your own profile, do not put a handle in the URL.</strong></p>
+<p>The Profile tab contains four main subdividions: <a class="reference internal" href="#my-casties">My Casties</a>, <a class="reference internal" href="#stats">Stats</a>, <a class="reference internal" href="#groups">Groups</a>, and <a class="reference internal" href="#frodads">Frodads</a>. These subdivisions are visible under the User&#8217;s basic profile data (picture, name, location, etc.). When a User clicks on any of these subdivisions, the top part of the screen remains the same while the bottom part &#8220;switches&#8221; out to reveal the appropriate data. <strong>To view another User&#8217;s profile, place the handle of the profile to be viewed in the URL. To view your own profile, place your own handle in the URL.</strong></p>
 <p>If the requested profile cannot be found, the following response is returned:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
@@ -535,10 +536,10 @@
 <p class="last">When looking at another user&#8217;s profile (not your own), the &#8220;Answer&#8221; button for the individual Casties the user has created should NOT be visible.</p>
 </div>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/mycaties</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/mycasties/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed; leave blank if viewing your own profile</li>
+<li>handle: <em>string</em>, the handle of the profile to be viewed</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myCasties&#8221; entry mapping to a dictionary of Casties indexed by <code class="docutils literal"><span class="pre">uuid</span></code>. Each Castie in the myCasties dictionary contains a &#8220;question&#8221; attribute and an &#8220;answerable&#8221; attribute. &#8220;answerable&#8221; is set to <code class="docutils literal"><span class="pre">True</span></code> if the Castie is ready to be answered.</p>
@@ -579,10 +580,10 @@
 <h3>Stats<a class="headerlink" href="#stats" title="Permalink to this headline">¶</a></h3>
 <p>The Stats subdivision includes two stats, percent correct and percent incorrect, followed by a dictionary of all forecasts placed by the User.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/stats</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/stats/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed; leave blank if viewing your own profile</li>
+<li>handle: <em>string</em>, the handle of the profile to be viewed</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myForecasts&#8221; entry mapping to a dictionary of forecast objects indexed by the ID of the forecast.</p>
@@ -665,10 +666,10 @@
 <span id="id3"></span><h3>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h3>
 <p>The Groups subdivision contains a listing of all Groups the User follows.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/groups</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/groups/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed, leave blank if viewing your own profile</li>
+<li>handle: <em>string</em>, the handle of the profile to be viewed</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myGroups&#8221; entry mapping to a dictionary of Groups the user follows indexed by the slug of the group name. The items in the &#8220;myGroups&#8221; dictionary are Group Objects (see the <a class="reference internal" href="#group-object">Group Object</a> in the general Groups section below).</p>
@@ -725,10 +726,10 @@
 <span id="id4"></span><h3>Frodads<a class="headerlink" href="#frodads" title="Permalink to this headline">¶</a></h3>
 <p>The Frodads subdivision consists a listing of the User&#8217;s friends.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/handle/frodads</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/frodads/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li>handle (<em>optional</em>, default=None): <em>string</em>, the handle of the profile to be viewed, leave blank if viewing your own profile</li>
+<li>handle: <em>string</em>, the handle of the profile to be viewed</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myFrodads&#8221; entry mapping to a dictionary of Frodad objects indexed by <code class="docutils literal"><span class="pre">handle</span></code>.</p>
@@ -740,52 +741,54 @@
 <li><strong>lastName:</strong> <em>string</em>, the user&#8217;s last name</li>
 <li><strong>firstName:</strong> <em>string</em>, the user&#8217;s first name</li>
 <li><strong>profPic:</strong> <em>string</em>, location of the friend&#8217;s profile picture</li>
-<li><strong>city:</strong> <em>string</em>, the user&#8217;s city</li>
-<li><strong>state:</strong> <em>string</em>, the user&#8217;s state</li>
 <li><strong>friend_status:</strong> <em>string</em>, indicates if this user is the requesting user&#8217;s friend- possible values are &#8220;friends&#8221;, &#8220;not-friends&#8221;, &#8220;pending&#8221;, &#8220;respond&#8221;, and &#8220;self&#8221;</li>
+<li><strong>level:</strong> <em>integer</em>, the User&#8217;s level</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-  <span class="s">&quot;profileInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">&quot;percentCorrect&quot;</span><span class="p">:</span> <span class="mf">63.1578947368421</span><span class="p">,</span>
-    <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span>
-    <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-    <span class="s">&quot;forecastsNumber&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
-    <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span>
-    <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
-    <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
-    <span class="s">&quot;frodadsNumber&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
-    <span class="s">&quot;myCastiesNumber&quot;</span><span class="p">:</span> <span class="mi">138</span><span class="p">,</span>
-    <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
-    <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
-    <span class="s">&quot;groupsNumber&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;self&quot;</span>
-  <span class="p">},</span>
-  <span class="s">&quot;myFrodads&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">&quot;Fmswizard&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-50/image.jpg&quot;</span><span class="p">,</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;Fmswizard&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Fernando&quot;</span><span class="p">,</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span>
-    <span class="p">},</span>
-    <span class="s">&quot;majesty227&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;majesty227&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Patti&quot;</span><span class="p">,</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Alvarez&quot;</span><span class="p">,</span>
-      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;pending&quot;</span>
-    <span class="p">},</span>
-    <span class="s">&quot;JAldersonSmith-280&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-280/image.jpg&quot;</span><span class="p">,</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;JAldersonSmith-280&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;James&quot;</span><span class="p">,</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Alderson Smith&quot;</span><span class="p">,</span>
-      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;not-friends&quot;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre>{
+  &quot;profileInfo&quot;: {
+    &quot;percentCorrect&quot;: 63.1578947368421,
+    &quot;state&quot;: &quot;MA&quot;,
+    &quot;is_private&quot;: false,
+    &quot;forecastsNumber&quot;: 210,
+    &quot;city&quot;: &quot;Boston&quot;,
+    &quot;lastName&quot;: &quot;Socias&quot;,
+    &quot;handle&quot;: &quot;steph&quot;,
+    &quot;frodadsNumber&quot;: 41,
+    &quot;myCastiesNumber&quot;: 138,
+    &quot;firstName&quot;: &quot;Stephanie&quot;,
+    &quot;profPic&quot;: &quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;,
+    &quot;groupsNumber&quot;: 3,
+    &quot;friend_status&quot;: &quot;self&quot;
+  },
+  &quot;myFrodads&quot;: {
+    &quot;Fmswizard&quot;: {
+      &quot;profPic&quot;: &quot;profiles/user-50/image.jpg&quot;,
+      &quot;handle&quot;: &quot;Fmswizard&quot;,
+      &quot;firstName&quot;: &quot;Fernando&quot;,
+      &quot;lastName&quot;: &quot;Socias&quot;,
+      &quot;friend_status&quot;: &quot;friends&quot;,
+      &quot;level&quot;: 31
+    },
+    &quot;majesty227&quot;: {
+      &quot;profPic&quot;: &quot;&quot;,
+      &quot;handle&quot;: &quot;majesty227&quot;,
+      &quot;firstName&quot;: &quot;Patti&quot;,
+      &quot;lastName&quot;: &quot;Alvarez&quot;,
+      &quot;friend_status&quot;: &quot;pending&quot;,
+      &quot;level&quot;: 3
+    },
+    &quot;JAldersonSmith-280&quot;: {
+      &quot;profPic&quot;: &quot;profiles/user-280/image.jpg&quot;,
+      &quot;handle&quot;: &quot;JAldersonSmith-280&quot;,
+      &quot;firstName&quot;: &quot;James&quot;,
+      &quot;lastName&quot;: &quot;Alderson Smith&quot;,
+      &quot;friend_status&quot;: &quot;not-friends&quot;
+      &quot;level&quot;: 21
+    }
+  }
+}
 </pre></div>
 </div>
 </div>
@@ -794,7 +797,7 @@
 <h2>Groups<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>Returns a dictionary of all Group objects indexed be the Group&#8217;s slug attribute. This request is called when the User clicks on the &#8220;Groups&#8221; button (i.e. the Octopus icon) in the top nav bar.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
@@ -865,7 +868,7 @@
 </pre></div>
 </div>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/followers</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/followers/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
@@ -914,7 +917,7 @@
 </pre></div>
 </div>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/accuracy</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/accuracy/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
@@ -967,7 +970,7 @@
 </pre></div>
 </div>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/followers/frodads</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/followers/frodads/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
@@ -1014,7 +1017,7 @@
 <p>The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.</p>
 <p>NOTE: For now, each request shouldn&#8217;t take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/{search_type}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/{search_type}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li><strong>search_type</strong> (<em>optional</em>, default=&#8221;people&#8221;): <em>string</em>, indicates which tab of the search page is being requested- &#8220;people&#8221;, &#8220;groups&#8221;, or &#8220;casties&#8221;</li>
@@ -1143,7 +1146,7 @@
 <span id="hamburger"></span><h2>Hamburger Side Menu<a class="headerlink" href="#hamburger-side-menu" title="Permalink to this headline">¶</a></h2>
 <p>The side menu is accessed via the &#8220;hamburger&#8221; icon on the home page. In addition to various settings, this side menu displays a list of Groups the User follows. A request to this &#8220;hamburger&#8221; endpoint returns a list of Groups in alphabetical order. The User&#8217;s handle is also provided (the handle is needed when a User clicks on Preferences or Log Out).</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/hamburger</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/hamburger/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
@@ -1174,7 +1177,7 @@
 <h2>Create Castie- Group List<a class="headerlink" href="#create-castie-group-list" title="Permalink to this headline">¶</a></h2>
 <p>The request to actually save a Castie being created can be found in the <a class="reference internal" href="post-requests.html#create-castie"><span>Create Castie</span></a> section of the POST requests docs. This request will return a list of groups for the User to choose from in the process of createing their Castie.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/create/groups</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/create/groups/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
@@ -1205,7 +1208,7 @@
 <h2>View All Frodad Requests<a class="headerlink" href="#view-all-frodad-requests" title="Permalink to this headline">¶</a></h2>
 <p>All of the User&#8217;s current frodad requests. This returns a list of profile handles that have friend requested the User.</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/frodad-requests</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/frodad-requests/</span></code></p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>

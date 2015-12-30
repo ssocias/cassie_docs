@@ -54,7 +54,7 @@ A boolean to denote if the User has a Catie(s) that can be answered.
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/casties/needsanswer``
+``GET https://cassieapp.com/api/casties/needsanswer/``
 
 **Arguments**
 
@@ -78,9 +78,11 @@ Home
 ====
 Returns a dictionary of Castie objects for the Cassie home page. The home page (accessed via the Home tab on the footer nav bar) is divided into three tabs- "following", "spicy", and "new". By default, this request returns data for the "following" tab unless otherwise specified in the URL. 
 
+This response takes a very long time- trying to figure out why.
+
 **Definition:** 
 
-``GET https://cassieapp.com/api/home/{which_tab}``
+``GET https://cassieapp.com/api/home/{which_tab}/``
 
 **Arguments**
 
@@ -260,7 +262,7 @@ Returns detailed information about a given Castie. This should be called anytime
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/casties/{uuid}``
+``GET https://cassieapp.com/api/casties/{uuid}/``
 
 **Arguments**
 
@@ -416,7 +418,7 @@ Data for the Leaderboard pages. If no *group_slug* attribute is passed in the UR
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/leaderboard/{group_slug}``
+``GET https://cassieapp.com/api/leaderboard/{group_slug}/``
 
 **Arguments**
 
@@ -424,11 +426,11 @@ Data for the Leaderboard pages. If no *group_slug* attribute is passed in the UR
 
 **Returns**
 
-A dictionary containing a "leaderboard_options" and a "leaderboard_data" field, where "leaderboard_options" is a list of all the groups the User follows and  "leaderboard_data" ??? TBD...of User objects ordered by highest to lowest ranked in the Leaderboard. Each User object is the same as a `Frodad Object`_.
+A dictionary containing a "leaderboard_groups" and a "leaderboard_data" field, where "leaderboard_groups" is a list of all the groups the User follows and  "leaderboard_data" ??? TBD...of User objects ordered by highest to lowest ranked in the Leaderboard. Each User object is the same as a `Frodad Object`_.
 
 Profile
 =======
-The Profile tab contains four main subdividions: `My Casties`_, `Stats`_, `Groups`_, and `Frodads`_. These subdivisions are visible under the User's basic profile data (picture, name, location, etc.). When a User clicks on any of these subdivisions, the top part of the screen remains the same while the bottom part "switches" out to reveal the appropriate data. **To view another User's profile, place the handle of the profile to be viewed in the URL. To view your own profile, do not put a handle in the URL.**
+The Profile tab contains four main subdividions: `My Casties`_, `Stats`_, `Groups`_, and `Frodads`_. These subdivisions are visible under the User's basic profile data (picture, name, location, etc.). When a User clicks on any of these subdivisions, the top part of the screen remains the same while the bottom part "switches" out to reveal the appropriate data. **To view another User's profile, place the handle of the profile to be viewed in the URL. To view your own profile, place your own handle in the URL.**
 
 If the requested profile cannot be found, the following response is returned::
 
@@ -488,11 +490,11 @@ This is the "main" Profile subsection shown when "Profile" is selected from the 
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/profile/{handle}/mycaties``
+``GET https://cassieapp.com/api/profile/{handle}/mycasties/``
 
 **Arguments**
 
-* handle (*optional*, default=None): *string*, the handle of the profile to be viewed; leave blank if viewing your own profile
+* handle: *string*, the handle of the profile to be viewed
 
 **Returns**
 
@@ -538,11 +540,11 @@ The Stats subdivision includes two stats, percent correct and percent incorrect,
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/profile/{handle}/stats``
+``GET https://cassieapp.com/api/profile/{handle}/stats/``
 
 **Arguments**
 
-* handle (*optional*, default=None): *string*, the handle of the profile to be viewed; leave blank if viewing your own profile
+* handle: *string*, the handle of the profile to be viewed
 
 **Returns**
 
@@ -633,11 +635,11 @@ The Groups subdivision contains a listing of all Groups the User follows.
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/profile/{handle}/groups``
+``GET https://cassieapp.com/api/profile/{handle}/groups/``
 
 **Arguments**
 
-* handle (*optional*, default=None): *string*, the handle of the profile to be viewed, leave blank if viewing your own profile
+* handle: *string*, the handle of the profile to be viewed
 
 **Returns**
 
@@ -701,11 +703,11 @@ The Frodads subdivision consists a listing of the User's friends.
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/profile/handle/frodads``
+``GET https://cassieapp.com/api/profile/{handle}/frodads/``
 
 **Arguments**
 
-* handle (*optional*, default=None): *string*, the handle of the profile to be viewed, leave blank if viewing your own profile
+* handle: *string*, the handle of the profile to be viewed
 
 **Returns**
 
@@ -721,9 +723,8 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
     * **lastName:** *string*, the user's last name 
     * **firstName:** *string*, the user's first name 
     * **profPic:** *string*, location of the friend's profile picture
-    * **city:** *string*, the user's city
-    * **state:** *string*, the user's state
     * **friend_status:** *string*, indicates if this user is the requesting user's friend- possible values are "friends", "not-friends", "pending", "respond", and "self"
+    * **level:** *integer*, the User's level
 
 **Sample Response** ::
   
@@ -749,14 +750,16 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
         "handle": "Fmswizard",
         "firstName": "Fernando",
         "lastName": "Socias",
-        "friend_status": "friends"
+        "friend_status": "friends",
+        "level": 31
       },
       "majesty227": {
         "profPic": "",
         "handle": "majesty227",
         "firstName": "Patti",
         "lastName": "Alvarez",
-        "friend_status": "pending"
+        "friend_status": "pending",
+        "level": 3
       },
       "JAldersonSmith-280": {
         "profPic": "profiles/user-280/image.jpg",
@@ -764,6 +767,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
         "firstName": "James",
         "lastName": "Alderson Smith",
         "friend_status": "not-friends"
+        "level": 21
       }
     }
   }
@@ -774,7 +778,7 @@ Returns a dictionary of all Group objects indexed be the Group's slug attribute.
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/groups``
+``GET https://cassieapp.com/api/groups/``
 
 **Arguments**
 
@@ -855,7 +859,7 @@ If the requested Group cannot be found, the response will indicate a ``404`` err
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/groups/{group_slug}/followers``
+``GET https://cassieapp.com/api/groups/{group_slug}/followers/``
 
 **Arguments**
 
@@ -911,7 +915,7 @@ If the requested Group cannot be found, the response will indicate a ``404`` err
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/groups/{group_slug}/accuracy``
+``GET https://cassieapp.com/api/groups/{group_slug}/accuracy/``
 
 **Arguments**
 
@@ -967,7 +971,7 @@ If the requested Group cannot be found, the response will indicate a ``404`` err
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/groups/{group_slug}/followers/frodads``
+``GET https://cassieapp.com/api/groups/{group_slug}/followers/frodads/``
 
 **Arguments**
 
@@ -1023,7 +1027,7 @@ NOTE: For now, each request shouldn't take too long. In the future, maybe we can
 
 **Definition**
 
-``GET https://cassieapp.com/api/search/{search_type}``
+``GET https://cassieapp.com/api/search/{search_type}/``
 
 **Arguments**
 
@@ -1162,7 +1166,7 @@ The side menu is accessed via the "hamburger" icon on the home page. In addition
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/hamburger``
+``GET https://cassieapp.com/api/hamburger/``
 
 **Arguments**
 
@@ -1200,7 +1204,7 @@ The request to actually save a Castie being created can be found in the :ref:`cr
 
 **Definition:** 
 
-``GET https://cassieapp.com/api/casties/create/groups``
+``GET https://cassieapp.com/api/casties/create/groups/``
 
 **Arguments**
 
@@ -1239,7 +1243,7 @@ All of the User's current frodad requests. This returns a list of profile handle
 
 **Definition**
 
-``GET https://cassieapp.com/api/frodad-requests``
+``GET https://cassieapp.com/api/frodad-requests/``
 
 **Parameters**
 
