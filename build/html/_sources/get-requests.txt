@@ -406,13 +406,15 @@ This object is the same as `Castie Object`_  described above in the `Home`_ sect
 Leaders
 =======
 
-Data for the Leaderboard pages. If no *group_slug* attribute is passed in the URL, data for the "overall" leaderboard is returned. If a *group_slug* is included, return leaderboard data for that group.
+Data for the Leaderboard pages. If no *group_slug* attribute is passed in the URL, data for the "overall" leaderboard is returned. If a *group_slug* is included, returns leaderboard data for that group.
+
+The number of top Users to be returned can be specified using the "limit" parameter in the GET request. If "limit" is not specified, the top 150 Users for the Leaderboard requested are returned by default.
 
 .. topic:: Filtering by Frodads
   
-  Leaderboards can be filtered to show only the User's friends. This filtering hould be done client side. The request to `/leaderboard/` will return data for all Users in the leaderboard. 
+  Leaderboards can be filtered to show only the User's friends. This filtering hould be done client side. The request to `/leaderboard/{group_slug}` will return data for all Users in the leaderboard. 
 
-  (let me know if we should do this differently...)
+  (Tim, let me know if we should do this differently...)
 
 **Definition:** 
 
@@ -421,6 +423,10 @@ Data for the Leaderboard pages. If no *group_slug* attribute is passed in the UR
 **Arguments**
 
 * group_slug (*optional*): *string*, indicates which Group's leaderboard to return. If no group_slug is given, will return data for the overall Cassie leaderboard
+
+**Parameters (sent as key:value pairs in the request)**
+
+  * **limit (*optional*):** *integer*, number of profiles to return; defaults to 150
 
 **Returns**
 
@@ -440,46 +446,43 @@ Each User object in the list contains:
   
   Although all Leaderboards are ranked by experience points, only the Group Specific Leaderboards will display each User's "xp" (experience points). The Overall Leaderboard should display a User's "level".
 
-**Sample Resopnse** 
+**Sample Resopnse**
 
-  * **Group Specific Leaderboard** ::
+**Group Specific Leaderboard** (Overal Leaderboard is the same except "xp" would be "level") ::
 
   {
     "status": 200,
-    "leaderboard_profiles": [
-      {
-        "city": "Boston",
-        "state": "MA",
-        "handle": "steph",
-        "xp": 700,
-        "lastName": "Socias",
-        "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
-        "firstName": "Stephanie"
-      },
-      {
-        "city": "New York",
-        "state": "NY",
-        "handle": "csocias",
-        "xp": 0,
-        "lastName": "Socias",
-        "profPic": "profiles/user-4/image_QPZAEEG.jpg",
-        "firstName": "Christina"
-      }
-    ],
     "leaderboard_groups": [
       {
-        "groupName": "Notre Dame",
-        "slug": "notre-dame"
+        "slug": "Politics",
+        "groupName": "politics"
       },
       {
-        "groupName": "Politics",
-        "slug": "politics"
+        "slug": "Basketball",
+        "groupName": "bball"
+      }
+    ],
+    "leaderboard_profiles": [
+      {
+        "handle": "steph",
+        "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
+        "firstName": "Stephanie",
+        "city": "Boston",
+        "xp": 700,
+        "lastName": "Socias",
+        "state": "MA"
       },
       {
-        "groupName": "Basketball",
-        "slug": "bball"
+        "handle": "csocias",
+        "profPic": "profiles/user-4/image_QPZAEEG.jpg",
+        "firstName": "Christina",
+        "city": "New York",
+        "xp": 0,
+        "lastName": "Socias",
+        "state": "NY"
       }
     ]
+  }
 
 
 Profile

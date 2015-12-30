@@ -440,11 +440,12 @@
 </div>
 <div class="section" id="leaders">
 <h2>Leaders<a class="headerlink" href="#leaders" title="Permalink to this headline">¶</a></h2>
-<p>Data for the Leaderboard pages. If no <em>group_slug</em> attribute is passed in the URL, data for the &#8220;overall&#8221; leaderboard is returned. If a <em>group_slug</em> is included, return leaderboard data for that group.</p>
+<p>Data for the Leaderboard pages. If no <em>group_slug</em> attribute is passed in the URL, data for the &#8220;overall&#8221; leaderboard is returned. If a <em>group_slug</em> is included, returns leaderboard data for that group.</p>
+<p>The number of top Users to be returned can be specified using the &#8220;limit&#8221; parameter in the GET request. If &#8220;limit&#8221; is not specified, the top 150 Users for the Leaderboard requested are returned by default.</p>
 <div class="topic">
 <p class="topic-title first">Filtering by Frodads</p>
-<p>Leaderboards can be filtered to show only the User&#8217;s friends. This filtering hould be done client side. The request to <cite>/leaderboard/</cite> will return data for all Users in the leaderboard.</p>
-<p>(let me know if we should do this differently...)</p>
+<p>Leaderboards can be filtered to show only the User&#8217;s friends. This filtering hould be done client side. The request to <cite>/leaderboard/{group_slug}</cite> will return data for all Users in the leaderboard.</p>
+<p>(Tim, let me know if we should do this differently...)</p>
 </div>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/leaderboard/{group_slug}/</span></code></p>
@@ -452,6 +453,12 @@
 <ul class="simple">
 <li>group_slug (<em>optional</em>): <em>string</em>, indicates which Group&#8217;s leaderboard to return. If no group_slug is given, will return data for the overall Cassie leaderboard</li>
 </ul>
+<p><strong>Parameters (sent as key:value pairs in the request)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>limit (*optional*):</strong> <em>integer</em>, number of profiles to return; defaults to 150</li>
+</ul>
+</div></blockquote>
 <p><strong>Returns</strong></p>
 <p>A dictionary with a &#8220;leaderboard_groups&#8221; list and a &#8220;leaderboard_profiles&#8221; dictionary. &#8220;leaderboard_groups&#8221; is a list of dictionaries containing the Group Name and Group Slug of all groups the User follows. &#8220;leaderboard_profiles&#8221; is a list of Users ordered by highest to lowest ranked in the Leaderboard.
 Each User object in the list contains:</p>
@@ -472,61 +479,42 @@ Each User object in the list contains:</p>
 <p>Although all Leaderboards are ranked by experience points, only the Group Specific Leaderboards will display each User&#8217;s &#8220;xp&#8221; (experience points). The Overall Leaderboard should display a User&#8217;s &#8220;level&#8221;.</p>
 </div>
 <p><strong>Sample Resopnse</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li><strong>Group Specific Leaderboard</strong></li>
-</ul>
-<dl class="docutils">
-<dt>{</dt>
-<dd><p class="first">&#8220;status&#8221;: 200,
-&#8220;leaderboard_profiles&#8221;: [</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>{</dt>
-<dd>&#8220;city&#8221;: &#8220;Boston&#8221;,
-&#8220;state&#8221;: &#8220;MA&#8221;,
-&#8220;handle&#8221;: &#8220;steph&#8221;,
-&#8220;xp&#8221;: 700,
-&#8220;lastName&#8221;: &#8220;Socias&#8221;,
-&#8220;profPic&#8221;: &#8220;profiles/user-2/socias_photo_wp1ENod.jpg&#8221;,
-&#8220;firstName&#8221;: &#8220;Stephanie&#8221;</dd>
-</dl>
-<p>},
-{</p>
-<blockquote>
-<div>&#8220;city&#8221;: &#8220;New York&#8221;,
-&#8220;state&#8221;: &#8220;NY&#8221;,
-&#8220;handle&#8221;: &#8220;csocias&#8221;,
-&#8220;xp&#8221;: 0,
-&#8220;lastName&#8221;: &#8220;Socias&#8221;,
-&#8220;profPic&#8221;: &#8220;profiles/user-4/image_QPZAEEG.jpg&#8221;,
-&#8220;firstName&#8221;: &#8220;Christina&#8221;</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>],
-&#8220;leaderboard_groups&#8221;: [</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>{</dt>
-<dd>&#8220;groupName&#8221;: &#8220;Notre Dame&#8221;,
-&#8220;slug&#8221;: &#8220;notre-dame&#8221;</dd>
-</dl>
-<p>},
-{</p>
-<blockquote>
-<div>&#8220;groupName&#8221;: &#8220;Politics&#8221;,
-&#8220;slug&#8221;: &#8220;politics&#8221;</div></blockquote>
-<p>},
-{</p>
-<blockquote>
-<div>&#8220;groupName&#8221;: &#8220;Basketball&#8221;,
-&#8220;slug&#8221;: &#8220;bball&#8221;</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p class="last">]</p>
-</dd>
-</dl>
-</div></blockquote>
+<p><strong>Group Specific Leaderboard</strong> (Overal Leaderboard is the same except &#8220;xp&#8221; would be &#8220;level&#8221;)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;leaderboard_groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;Politics&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;politics&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="s">&quot;Basketball&quot;</span><span class="p">,</span>
+      <span class="s">&quot;groupName&quot;</span><span class="p">:</span> <span class="s">&quot;bball&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s">&quot;leaderboard_profiles&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+      <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span>
+      <span class="s">&quot;xp&quot;</span><span class="p">:</span> <span class="mi">700</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-4/image_QPZAEEG.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;New York&quot;</span><span class="p">,</span>
+      <span class="s">&quot;xp&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;NY&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="profile">
 <h2>Profile<a class="headerlink" href="#profile" title="Permalink to this headline">¶</a></h2>
