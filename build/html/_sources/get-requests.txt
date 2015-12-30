@@ -980,35 +980,40 @@ If the requested Group cannot be found, the response will indicate a ``404`` err
 
 **Returns**
 
-Returns a dictionary entitled 'accuracy' that contains the following fields: 
+In addition to a "myForecasts" dictionary, returns a dictionary entitled 'accuracy' that contains the following fields: 
 
   * **percentCorrect**: *integer*, the User's accuracy in the Group
-  * **ranking**: *string*, the User's ranking in the Group leaderboard (ex. "2/34") 
-  * **myForecasts**: *dictionary*, dictionary of `Forecast Object`_ entries indexed by Castie uuid of the Castie that was forecasted
+  * **ranking**: *integer*, the User's ranking in the Group leaderboard
+  * **ranking_outOf**: *integer*, total number of Users used in ranking (ranking on the app should be displayed as ranking / ranking_outOf; ex. 1/189)
+  * **myForecasts**: *dictionary*, dictionary of `Forecast Object`_ entries indexed by forecast id 
 
 **Sample Response** ::
 
   {
+    "status": 200,
     "accuracy": {
       "percentCorrect": 34,
+      "ranking": 2,
+      "ranking_outOf": 189,
       "myForecasts": {
-        "c1c575633585472faa1373582146b1c5": {
+        "1517": {
           "endTime": "16:00:00",
           "question": "Bucs to win their season opener vs the Titans?",
           "endDate": "2015-09-13",
+          "uuid": "6fgt4f2f80c5460d9940f1f91c8caae6",
           "answerSubmitted": false,
           "is_active": false,
           "forecast": "Yes"
         },
-        "a1f318a5c9ab4858a15996f69f851938": {
+        "1525": {
           "question": "Taylor Swift and Calvin Harris getting engaged?",
           "endTime": null,
+          "uuid": "5af84f2f80c5460d9940f1f91c8caae6",
           "is_active": true,
           "endDate": null,
           "forecast": "No way"
         }
       },
-      "ranking": "2/443"
     }
   }
 

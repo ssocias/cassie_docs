@@ -1110,36 +1110,41 @@ Each User object in the list contains:</p>
 <li>group_slug: <em>string</em>, the slug of the group to be viewed</li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>Returns a dictionary entitled &#8216;accuracy&#8217; that contains the following fields:</p>
+<p>In addition to a &#8220;myForecasts&#8221; dictionary, returns a dictionary entitled &#8216;accuracy&#8217; that contains the following fields:</p>
 <blockquote>
 <div><ul class="simple">
 <li><strong>percentCorrect</strong>: <em>integer</em>, the User&#8217;s accuracy in the Group</li>
-<li><strong>ranking</strong>: <em>string</em>, the User&#8217;s ranking in the Group leaderboard (ex. &#8220;2/34&#8221;)</li>
-<li><strong>myForecasts</strong>: <em>dictionary</em>, dictionary of <a class="reference internal" href="#forecast-object">Forecast Object</a> entries indexed by Castie uuid of the Castie that was forecasted</li>
+<li><strong>ranking</strong>: <em>integer</em>, the User&#8217;s ranking in the Group leaderboard</li>
+<li><strong>ranking_outOf</strong>: <em>integer</em>, total number of Users used in ranking (ranking on the app should be displayed as ranking / ranking_outOf; ex. 1/189)</li>
+<li><strong>myForecasts</strong>: <em>dictionary</em>, dictionary of <a class="reference internal" href="#forecast-object">Forecast Object</a> entries indexed by forecast id</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;accuracy&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">&quot;percentCorrect&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+    <span class="s">&quot;ranking&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">&quot;ranking_outOf&quot;</span><span class="p">:</span> <span class="mi">189</span><span class="p">,</span>
     <span class="s">&quot;myForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">&quot;c1c575633585472faa1373582146b1c5&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;1517&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;16:00:00&quot;</span><span class="p">,</span>
         <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Bucs to win their season opener vs the Titans?&quot;</span><span class="p">,</span>
         <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-09-13&quot;</span><span class="p">,</span>
+        <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;6fgt4f2f80c5460d9940f1f91c8caae6&quot;</span><span class="p">,</span>
         <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
         <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
         <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;Yes&quot;</span>
       <span class="p">},</span>
-      <span class="s">&quot;a1f318a5c9ab4858a15996f69f851938&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;1525&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Taylor Swift and Calvin Harris getting engaged?&quot;</span><span class="p">,</span>
         <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;5af84f2f80c5460d9940f1f91c8caae6&quot;</span><span class="p">,</span>
         <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
         <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
         <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;No way&quot;</span>
       <span class="p">}</span>
     <span class="p">},</span>
-    <span class="s">&quot;ranking&quot;</span><span class="p">:</span> <span class="s">&quot;2/443&quot;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

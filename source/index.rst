@@ -35,18 +35,21 @@ Endpoints
    post-requests
    other-requests
 
+Endpoints left to do:
+---------------------
+* Activity tab
+  * Frodad Feed
+  * Notifications
+* Notification has been read
+* Delete notification
 
 Stephanie's Reminders
 ---------------------
 
-* Create Accuracy table to store a user's accuracy, to keep track of parent category stats- update it each time user makes a forecast and each time a castie is answered
-* Accuracy from the Group page will need to be fixed once accuracy methods are changed
-* Leaderboard ranking data in the Group -> Accuracy page get.get_group_accuracy()
 * Tables for every type of Notification
 * Tables for every type of Friend Activity
 * Versioning
 * Pagination
-* Error codes in every request
 * Generic 404 error responses if a requested URL does not exist
 * Home page takes way too long to load
 * What if too many requests are coming in at one time? No idea!!!
@@ -57,20 +60,6 @@ Stephanie's Reminders
 * Make sure to use only active Users, profile.is_active == True
 * Make sure Personal polls are not showing up anywhere
 * Make sure to evaluate booleans correctly, as they might get passed as strings
-
-
-* Endpoints left to do:
-
-  * Leaderboards (also leaderboard from group section)
-  * Activity tab
-    
-    * Frodad Feed
-
-    * Notifications
-    
-  * Notification has been read
-  * Delete notification
-
 
 Indices and tables
 ------------------
