@@ -406,8 +406,6 @@ This object is the same as `Castie Object`_  described above in the `Home`_ sect
 Leaders
 =======
 
-COMING SOOON
-
 Data for the Leaderboard pages. If no *group_slug* attribute is passed in the URL, data for the "overall" leaderboard is returned. If a *group_slug* is included, return leaderboard data for that group.
 
 .. topic:: Filtering by Frodads
@@ -426,7 +424,63 @@ Data for the Leaderboard pages. If no *group_slug* attribute is passed in the UR
 
 **Returns**
 
-A dictionary containing a "leaderboard_groups" and a "leaderboard_data" field, where "leaderboard_groups" is a list of all the groups the User follows and  "leaderboard_data" ??? TBD...of User objects ordered by highest to lowest ranked in the Leaderboard. Each User object is the same as a `Frodad Object`_.
+A dictionary with a "leaderboard_groups" list and a "leaderboard_profiles" dictionary. "leaderboard_groups" is a list of dictionaries containing the Group Name and Group Slug of all groups the User follows. "leaderboard_profiles" is a list of Users ordered by highest to lowest ranked in the Leaderboard.
+Each User object in the list contains:
+
+    * **handle:** *string*, the user's handle; uniquely identifies the friend
+    * **lastName:** *string*, the user's last name 
+    * **firstName:** *string*, the user's first name 
+    * **profPic:** *string*, location of the friend's profile picture
+    * **city:** *string*, the User's city
+    * **state:** *string*, the User's state
+    * **level:** *integer*, the User's level (used for Overall Leaderboard)
+    * **xp:** *integer*, the User's number of experience points (used for Group specific leaderboards)
+
+.. topic:: Level vs Points
+  
+  Although all Leaderboards are ranked by experience points, only the Group Specific Leaderboards will display each User's "xp" (experience points). The Overall Leaderboard should display a User's "level".
+
+**Sample Resopnse** 
+
+  * **Group Specific Leaderboard** ::
+
+  {
+    "status": 200,
+    "leaderboard_profiles": [
+      {
+        "city": "Boston",
+        "state": "MA",
+        "handle": "steph",
+        "xp": 700,
+        "lastName": "Socias",
+        "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
+        "firstName": "Stephanie"
+      },
+      {
+        "city": "New York",
+        "state": "NY",
+        "handle": "csocias",
+        "xp": 0,
+        "lastName": "Socias",
+        "profPic": "profiles/user-4/image_QPZAEEG.jpg",
+        "firstName": "Christina"
+      }
+    ],
+    "leaderboard_groups": [
+      {
+        "groupName": "Notre Dame",
+        "slug": "notre-dame"
+      },
+      {
+        "groupName": "Politics",
+        "slug": "politics"
+      },
+      {
+        "groupName": "Basketball",
+        "slug": "bball"
+      }
+    ]
+
 
 Profile
 =======
