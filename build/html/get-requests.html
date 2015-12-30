@@ -1115,7 +1115,7 @@ Each User object in the list contains:</p>
 <div><ul class="simple">
 <li><strong>percentCorrect</strong>: <em>integer</em>, the User&#8217;s accuracy in the Group</li>
 <li><strong>ranking</strong>: <em>integer</em>, the User&#8217;s ranking in the Group leaderboard</li>
-<li><strong>ranking_outOf</strong>: <em>integer</em>, total number of Users used in ranking (ranking on the app should be displayed as ranking / ranking_outOf; ex. 1/189)</li>
+<li><strong>ranking_outOf</strong>: <em>integer</em>, total number of Users used in ranking (ranking on the app should be displayed as &#8220;ranking / ranking_outOf&#8221;; ex. 1/189)</li>
 <li><strong>myForecasts</strong>: <em>dictionary</em>, dictionary of <a class="reference internal" href="#forecast-object">Forecast Object</a> entries indexed by forecast id</li>
 </ul>
 </div></blockquote>
@@ -1398,21 +1398,29 @@ Each User object in the list contains:</p>
 </div>
 <div class="section" id="view-all-frodad-requests">
 <h2>View All Frodad Requests<a class="headerlink" href="#view-all-frodad-requests" title="Permalink to this headline">¶</a></h2>
-<p>All of the User&#8217;s current frodad requests. This returns a list of profile handles that have friend requested the User.</p>
+<p>All of the User&#8217;s current frodad requests. This returns a list of dictionaries, where each dictionary contains info about a User that has friend requested the User.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/frodad-requests/</span></code></p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
-<p>The number of pending friend requests and, if there are any, a list of profile handles that have friend requested the User.</p>
+<p>The number of pending friend requests and, if there are any, a list of dictionaries with info on Users that have friend requested the User.</p>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;number_friend_requests&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
   <span class="s">&quot;friend_requests_from&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
-    <span class="s">&quot;Luly&quot;</span>
-  <span class="p">],</span>
-  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+    <span class="p">{</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>

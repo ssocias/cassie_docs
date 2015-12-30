@@ -984,7 +984,7 @@ In addition to a "myForecasts" dictionary, returns a dictionary entitled 'accura
 
   * **percentCorrect**: *integer*, the User's accuracy in the Group
   * **ranking**: *integer*, the User's ranking in the Group leaderboard
-  * **ranking_outOf**: *integer*, total number of Users used in ranking (ranking on the app should be displayed as ranking / ranking_outOf; ex. 1/189)
+  * **ranking_outOf**: *integer*, total number of Users used in ranking (ranking on the app should be displayed as "ranking / ranking_outOf"; ex. 1/189)
   * **myForecasts**: *dictionary*, dictionary of `Forecast Object`_ entries indexed by forecast id 
 
 **Sample Response** ::
@@ -1301,7 +1301,7 @@ This is similar to the :ref:`Hamburger` request but returns data for all existin
 View All Frodad Requests
 ========================
 
-All of the User's current frodad requests. This returns a list of profile handles that have friend requested the User.
+All of the User's current frodad requests. This returns a list of dictionaries, where each dictionary contains info about a User that has friend requested the User.
 
 **Definition**
 
@@ -1313,17 +1313,25 @@ None
 
 **Returns**
 
-The number of pending friend requests and, if there are any, a list of profile handles that have friend requested the User.
+The number of pending friend requests and, if there are any, a list of dictionaries with info on Users that have friend requested the User.
 
 **Sample Response** ::
 
   {
+    "status": 200,
     "number_friend_requests": 2,
     "friend_requests_from": [
-      "csocias",
-      "Luly"
-    ],
-    "status": 200
+      {
+        "lastName": "Socias",
+        "firstName": "Luly",
+        "handle": "Luly"
+      },
+      {
+        "lastName": "Socias",
+        "firstName": "Christina",
+        "handle": "csocias"
+      }
+    ]
   }
 
 If there are no friend requests: ::
