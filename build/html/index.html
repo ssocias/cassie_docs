@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Cassie API 1.0 documentation" href="#"/>
-        <link rel="next" title="Overview" href="overview.html"/> 
+        <link rel="next" title="Authentication" href="authentication.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +81,6 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
@@ -142,16 +141,15 @@
 <p class="topic-title first">API endpoint</p>
 <p><code class="docutils literal"><span class="pre">https://cassieapp.com/api</span></code></p>
 </div>
-<p>The API uses HTTP Basic Authentication to authenticate every request. A valid username (username is the email associated with the account) and password must be included with every request in order to retrieve or post data. See the <a class="reference internal" href="authentication.html#authentication"><span>Authentication</span></a> section for more details.</p>
+<p>The API uses HTTP Basic Authentication to authenticate every request. A valid username (username is the email associated with the account) and password must be included with every request in order to retrieve or post data. Additionally, a valid API key must also be sent with every request. See the <a class="reference internal" href="authentication.html#authentication"><span>Authentication</span></a> section for more details.</p>
 <div class="topic">
 <p class="topic-title first">Image Storage</p>
-<p><code class="docutils literal"><span class="pre">https://cassieapp.com/static/uploads/{image_location}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/static/uploads/{image_location}/</span></code></p>
 </div>
 <div class="section" id="topics">
 <h2>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="errors.html#error-codes">Error Codes</a></li>
@@ -247,7 +245,7 @@
 <div class="section" id="endpoints-left-to-do">
 <h2>Endpoints left to do:<a class="headerlink" href="#endpoints-left-to-do" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Activity tab
+<li>Activity tab- will probably condense into just a notifications tab (no Frodad Feed)
 * Frodad Feed
 * Notifications</li>
 <li>Notification has been read</li>
@@ -257,17 +255,14 @@
 <div class="section" id="stephanie-s-reminders">
 <h2>Stephanie&#8217;s Reminders<a class="headerlink" href="#stephanie-s-reminders" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Tables for every type of Notification</li>
-<li>Tables for every type of Friend Activity</li>
-<li>Versioning</li>
-<li>Pagination</li>
-<li>Generic 404 error responses if a requested URL does not exist</li>
+<li>Pagination- home page and others</li>
+<li>Replace &#64;csrf_exempt decorator</li>
+<li>How to best create/store notifications- Firebase?</li>
+<li>Versioning- not needed at this time</li>
 <li>Home page takes way too long to load</li>
 <li>What if too many requests are coming in at one time? No idea!!!</li>
-<li>How to make sure the request is authorized?? Not just authenticated....don&#8217;t want anybody to be able to get all our data</li>
-<li>initialize request</li>
-<li>uploading photos (on initial sign-up and when editing profile)</li>
-<li>I&#8217;m using &#64;csrf_exempt decorator for all post views??</li>
+<li>Initialize request- needs to return notifications as well</li>
+<li>Uploading photos (on initial sign-up and when editing profile)</li>
 <li>Make sure to use only active Users, profile.is_active == True</li>
 <li>Make sure Personal polls are not showing up anywhere</li>
 <li>Make sure to evaluate booleans correctly, as they might get passed as strings</li>
@@ -290,7 +285,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="authentication.html" class="btn btn-neutral float-right" title="Authentication" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

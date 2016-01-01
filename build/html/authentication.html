@@ -32,7 +32,7 @@
   
     <link rel="top" title="Cassie API 1.0 documentation" href="index.html"/>
         <link rel="next" title="Errors" href="errors.html"/>
-        <link rel="prev" title="Overview" href="overview.html"/> 
+        <link rel="prev" title="Cassie API Documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,7 +82,6 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
@@ -139,7 +138,7 @@
   <div class="section" id="authentication">
 <span id="id1"></span><h1>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h1>
 <p>HTTP Basic Authentication is used to authenticate every request. A valid username and password must be included in the <code class="docutils literal"><span class="pre">Authorization</span></code> header of every request.</p>
-<p>It will also be necessary to authorize every request so that only requests from the iOS app have access; probably using some type of token...this is still TBD!</p>
+<p>Every request must also contain a valid API key in order to &#8220;authorize&#8221; where the request is coming from. This key must be included in a &#8220;Api-Key&#8221; header.</p>
 </div>
 
 
@@ -152,7 +151,7 @@
         <a href="errors.html" class="btn btn-neutral float-right" title="Errors" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="overview.html" class="btn btn-neutral" title="Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Cassie API Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

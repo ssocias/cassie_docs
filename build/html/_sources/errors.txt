@@ -24,6 +24,7 @@ If the response status is anything other than 200, ``error_type`` and ``error_me
 **Possible error types include:**
 
 * ``authentication_failed`` user could not be authenticated
+* ``authorization_failed`` missing or invalid API key
 * ``object_not_found`` requested object (usually a Castie, Group, or User) could not be found
 * ``inactive_user`` the requested profile is not active
 * ``castie_not_created`` castie could not be created/saved to database

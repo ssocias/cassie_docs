@@ -7,11 +7,11 @@ This API is the "backend" for the Cassie v1.0 iOS app. All API access is over HT
 
     ``https://cassieapp.com/api``
 
-The API uses HTTP Basic Authentication to authenticate every request. A valid username (username is the email associated with the account) and password must be included with every request in order to retrieve or post data. See the :ref:`authentication` section for more details.
+The API uses HTTP Basic Authentication to authenticate every request. A valid username (username is the email associated with the account) and password must be included with every request in order to retrieve or post data. Additionally, a valid API key must also be sent with every request. See the :ref:`authentication` section for more details.
 
 .. topic:: Image Storage
 
-    ``https://cassieapp.com/static/uploads/{image_location}``
+    ``GET https://cassieapp.com/static/uploads/{image_location}/``
 
 Topics
 ---------
@@ -19,7 +19,6 @@ Topics
 .. toctree::
    :maxdepth: 2
    
-   overview
    authentication
    errors
    image-paths
@@ -37,7 +36,7 @@ Endpoints
 
 Endpoints left to do:
 ---------------------
-* Activity tab
+* Activity tab- will probably condense into just a notifications tab (no Frodad Feed)
   * Frodad Feed
   * Notifications
 * Notification has been read
@@ -46,17 +45,14 @@ Endpoints left to do:
 Stephanie's Reminders
 ---------------------
 
-* Tables for every type of Notification
-* Tables for every type of Friend Activity
-* Versioning
-* Pagination
-* Generic 404 error responses if a requested URL does not exist
+* Pagination- home page and others
+* Replace @csrf_exempt decorator
+* How to best create/store notifications- Firebase?
+* Versioning- not needed at this time
 * Home page takes way too long to load
 * What if too many requests are coming in at one time? No idea!!!
-* How to make sure the request is authorized?? Not just authenticated....don't want anybody to be able to get all our data
-* initialize request
-* uploading photos (on initial sign-up and when editing profile)
-* I'm using @csrf_exempt decorator for all post views??
+* Initialize request- needs to return notifications as well
+* Uploading photos (on initial sign-up and when editing profile)
 * Make sure to use only active Users, profile.is_active == True
 * Make sure Personal polls are not showing up anywhere
 * Make sure to evaluate booleans correctly, as they might get passed as strings

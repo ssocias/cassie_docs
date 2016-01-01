@@ -5,5 +5,5 @@ Authentication
 
 HTTP Basic Authentication is used to authenticate every request. A valid username and password must be included in the ``Authorization`` header of every request.
 
-It will also be necessary to authorize every request so that only requests from the iOS app have access; probably using some type of token...this is still TBD!
+Every request must also contain a valid API key in order to "authorize" where the request is coming from. This key must be included in a "Api-Key" header. 
 
