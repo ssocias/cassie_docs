@@ -101,6 +101,35 @@ This response takes a very long time- trying to figure out why.
 
   If the User has de-selected all Groups (i.e. does not want to show any Casties), pass the 'groups' parameter in the request but leave the value blank (ex. ``/?groups=``).
 
+.. topic:: Returning Castie IDs Only
+
+  Instead of requesting full Castie details at this point, you may include an "ids" parameter in the request to return only a list of Castie IDs. This makes the request much faster. You can still use any of the original parameters (i.e. groups to indicate which groups to include).
+
+  Sample URL: 
+
+  ``https://cassieapp.com/api/home/following/?ids=true``
+
+  Reponse:: 
+
+  {
+    "profile_handle": "steph",
+    "status": 200,
+    "castie_ids": [
+      "5af84f2f80c5460d9940f1f91c8caae6",
+      "d22c242ac27e4e5591db39880d2ad450",
+      "77306de040c247e9bffb140b650e0689",
+      "ec14686bc80c4d54bab69fed27902eef",
+      "d43676b36a364327a953f557fd279173",
+      "f98c8cac32184e5f93dda3f42d57f7b0",
+      "133cae1c81ef4f24901651acab8171af",
+      "687aaf49af1a43a4876b70e35b577c52",
+      "7d9c4797f2f54348bbd2971e379f7462",
+      "82c104c6b0dd423f99aeabb1322fdb34",
+      "d7329cc1a3ef4522933b867151ec9906",
+      "db1db36469f54ea3a0433a2e8421ed60"
+    ]
+  }
+
 **Returns**
 
 Returns a dictionary, entitled 'casties', of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If "following" was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If "spicy" was specified, Casties are ordered by most recently forecasted. If "new" was specified, Casties are ordered by most newly created.

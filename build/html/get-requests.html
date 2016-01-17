@@ -239,6 +239,36 @@
 <p><code class="docutils literal"><span class="pre">https://cassieapp.com/api/home/following/?groups=politics&amp;groups=music</span></code></p>
 <p>If the User has de-selected all Groups (i.e. does not want to show any Casties), pass the &#8216;groups&#8217; parameter in the request but leave the value blank (ex. <code class="docutils literal"><span class="pre">/?groups=</span></code>).</p>
 </div>
+<div class="topic">
+<p class="topic-title first">Returning Castie IDs Only</p>
+<p>Instead of requesting full Castie details at this point, you may include an &#8220;ids&#8221; parameter in the request to return only a list of Castie IDs. This makes the request much faster. You can still use any of the original parameters (i.e. groups to indicate which groups to include).</p>
+<p>Sample URL:</p>
+<p><code class="docutils literal"><span class="pre">https://cassieapp.com/api/home/following/?ids=true</span></code></p>
+<p>Reponse:</p>
+<div class="highlight-python"><div class="highlight"><pre>{
+</pre></div>
+</div>
+<blockquote>
+<div><p>&#8220;profile_handle&#8221;: &#8220;steph&#8221;,
+&#8220;status&#8221;: 200,
+&#8220;castie_ids&#8221;: [</p>
+<blockquote>
+<div>&#8220;5af84f2f80c5460d9940f1f91c8caae6&#8221;,
+&#8220;d22c242ac27e4e5591db39880d2ad450&#8221;,
+&#8220;77306de040c247e9bffb140b650e0689&#8221;,
+&#8220;ec14686bc80c4d54bab69fed27902eef&#8221;,
+&#8220;d43676b36a364327a953f557fd279173&#8221;,
+&#8220;f98c8cac32184e5f93dda3f42d57f7b0&#8221;,
+&#8220;133cae1c81ef4f24901651acab8171af&#8221;,
+&#8220;687aaf49af1a43a4876b70e35b577c52&#8221;,
+&#8220;7d9c4797f2f54348bbd2971e379f7462&#8221;,
+&#8220;82c104c6b0dd423f99aeabb1322fdb34&#8221;,
+&#8220;d7329cc1a3ef4522933b867151ec9906&#8221;,
+&#8220;db1db36469f54ea3a0433a2e8421ed60&#8221;</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+</div>
 <p><strong>Returns</strong></p>
 <p>Returns a dictionary, entitled &#8216;casties&#8217;, of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If &#8220;following&#8221; was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If &#8220;spicy&#8221; was specified, Casties are ordered by most recently forecasted. If &#8220;new&#8221; was specified, Casties are ordered by most newly created.</p>
 <p>If the &#8220;following&#8221; tab has been specified but the User is not following any groups, there is no Castie data to display. The response will then include a <code class="docutils literal"><span class="pre">following</span></code> key that is set to <code class="docutils literal"><span class="pre">False</span></code>, and an appropriate message should be displayed to the User instucting them to Follow groups- &#8220;You need to follow gropus before you can see Casties. Click on that sweet Octopus up top to get going.&#8221;</p>
