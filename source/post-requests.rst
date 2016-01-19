@@ -17,7 +17,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
   If the User terminates the account creation process at any time after they have inputted a password, make a request to the following endpoint so any temporary data can be deleted:
 
-    ``POST https://cassieapp.com/api/signup/incomplete``
+    ``POST https://cassieapp.com/api/signup/incomplete/``
 
     **Parameters:**
 
@@ -37,7 +37,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
   **Definition:**
 
-  ``POST https://cassieapp.com/api/signup/email``
+  ``POST https://cassieapp.com/api/signup/email/``
 
   **Parameters (sent as key:value pairs)**
 
@@ -67,7 +67,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
   **Definition:**
 
-  ``POST https://cassieapp.com/api/signup/password``
+  ``POST https://cassieapp.com/api/signup/password/``
 
   **Parameters (sent as key:value pairs)**
 
@@ -95,7 +95,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
   **Definition:**
 
-  ``POST https://cassieapp.com/api/signup/handle``
+  ``POST https://cassieapp.com/api/signup/handle/``
 
   **Parameters (sent as key:value pairs)**
 
@@ -128,7 +128,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
   **Definition:**
 
-  ``POST https://cassieapp.com/api/signup/picture``
+  ``POST https://cassieapp.com/api/signup/picture/``
 
   **Parameters (sent as key:value pairs)**
 
@@ -160,7 +160,7 @@ Updates the User's "last_login" date/time and returns all data needed to start t
 
 **Definition:**
 
-``POST https://cassieapp.com/api/login``
+``POST https://cassieapp.com/api/login/``
 
 **Parameters**
 
@@ -238,7 +238,7 @@ Completely deletes a User's Cassie account.
 
 **Definition:**
 
-``POST https://cassieapp.com/api/profile/delete``
+``POST https://cassieapp.com/api/profile/delete/``
 
 **Parameters**
 

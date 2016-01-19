@@ -161,7 +161,7 @@
 <p class="topic-title first">Abandoning the Account Creation Process</p>
 <p>If the User terminates the account creation process at any time after they have inputted a password, make a request to the following endpoint so any temporary data can be deleted:</p>
 <blockquote>
-<div><p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/incomplete</span></code></p>
+<div><p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/incomplete/</span></code></p>
 <p><strong>Parameters:</strong></p>
 <p><strong>email:</strong> <em>string</em>, the User&#8217;s email address</p>
 <p><strong>Response:</strong>:</p>
@@ -177,7 +177,7 @@
 <blockquote>
 <div><p>Perform basic validation client-side (that it is indeed an email) and then send the email address to the backend to verify that it is not already associated with an account. The email address becomes the User&#8217;s username.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/email</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/email/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -206,7 +206,7 @@
 <blockquote>
 <div><p>Perform basic validation client-side to ensure that the two passwords match and that they contain only alphanumeric characters (no spaces). Then, send the email address (provided in the response of the previous request) and password in the request.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/password</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/password/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -231,7 +231,7 @@
 <div><p>The User inputs their name and then their Handle on distinct sign-up screens. Perform basic validation client-side to ensure that the Names and Handle contain only alphanumberic characters (ASCII characters only). Additionally, the handle must be at least three characters long and cannot contain the following characters: &#64; /.
 Once this client-side validation is complete, send the handle to the backend so uniqueness can be verified.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/handle</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/handle/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -263,7 +263,7 @@ Once this client-side validation is complete, send the handle to the backend so 
 <blockquote>
 <div><p>User uploads a profile picture. Images must be jpg, jpeg, png, or gif.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/picture</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/picture/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -290,7 +290,7 @@ Once this client-side validation is complete, send the handle to the backend so 
 <span id="id2"></span><h2>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h2>
 <p>Updates the User&#8217;s &#8220;last_login&#8221; date/time and returns all data needed to start the app. No additional calls to initialize the app are needed. One request to &#8220;Log In&#8221; will provide all data needed to display the home page, with notification indications.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/login</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/login/</span></code></p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
@@ -360,7 +360,7 @@ Once this client-side validation is complete, send the handle to the backend so 
 <h2>Delete Account<a class="headerlink" href="#delete-account" title="Permalink to this headline">¶</a></h2>
 <p>Completely deletes a User&#8217;s Cassie account.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/delete</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/delete/</span></code></p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
