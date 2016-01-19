@@ -174,10 +174,11 @@
 <p>In order to get the number of notifications, the date of the most recent notification the user has seen should be sent in the request.</p>
 <p>Before/after making this request, make a request to <a class="reference internal" href="#home">Home</a> to get the home Castie data.</p>
 <p>If, however, you are making a request to <a class="reference internal" href="post-requests.html#log-in"><span>Log In</span></a> (found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section), there is no need to call <a class="reference internal" href="#initialize">Initialize</a> or <a class="reference internal" href="#home">Home</a> because <a class="reference internal" href="post-requests.html#log-in"><span>Log In</span></a> does it already.</p>
-<div class="topic">
-<p class="topic-title first">Periodaclly Updating Notifications Count</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Periodaclly Updating Notifications Count</strong></p>
 <p>You might need to make periodic requests to this &#8220;Initialize&#8221; endpoint or to the &#8220;Needs Answer&#8221; endpoint below in order to alert the User when they have a new notification while they are using the app.</p>
-<p>If I am able to implement a node.js notification system, this will change so that the system sends notifications to the client app as they come in....Stay tuned!</p>
+<p class="last">If I am able to implement a node.js notification system, this will change so that the system sends notifications to the client app as they come in....Stay tuned!</p>
 </div>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code></p>
@@ -193,13 +194,15 @@
 <div><ul class="simple">
 <li><strong>number_notifications:</strong> <em>integer</em>, number of notifications the User has</li>
 <li><strong>needs_answer:</strong> <em>boolean</em>, True if the User has a Castie(s) that is ready to be answered</li>
+<li><strong>number_needing_answer:</strong> <em>integer</em>, number of Casties needing to be answered</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">true</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+  <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">3</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -212,11 +215,12 @@
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
-<p><code class="docutils literal"><span class="pre">True</span></code> is the User has Casties that need to be answered. Otherwise, it returns <code class="docutils literal"><span class="pre">False</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">True</span></code> is the User has Casties that need to be answered. Otherwise, it returns <code class="docutils literal"><span class="pre">False</span></code>. Also returns the number of Casties needing to be answered.</p>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="bp">True</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+  <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">3</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -231,21 +235,23 @@
 <ul class="simple">
 <li>which_tab (<em>optional</em>, default=&#8221;following&#8221;): <em>string</em>, indicates which tab of the home page is being requested- &#8220;following&#8221;, &#8220;spicy&#8221;, or &#8220;new&#8221;</li>
 </ul>
-<div class="topic">
-<p class="topic-title first">Filtering Groups from the Side Menu</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Filtering Groups from the Side Menu</strong></p>
 <p>The side hamburger menu of the home page can be used to filter which Group&#8217;s Casties should be shown on the &#8220;following&#8221; tab. By default, Casties for all Groups the User follows are shown.</p>
-<p>When the User has filtered by Groups in the side bar, those Groups should be passed in the request query string using the &#8216;groups&#8217; parameter and the group&#8217;s slug as the value (ex. <code class="docutils literal"><span class="pre">/?groups=sports&amp;groups=politics&amp;groups=pop-culture</span></code>)</p>
+<p>When the User has filtered by Groups in the side bar, those Groups should be passed in the request query string using the &#8216;groups&#8217; parameter and the group&#8217;s slug as the value.</p>
 <p>Sample URL:</p>
 <p><code class="docutils literal"><span class="pre">https://cassieapp.com/api/home/following/?groups=politics&amp;groups=music</span></code></p>
-<p>If the User has de-selected all Groups (i.e. does not want to show any Casties), pass the &#8216;groups&#8217; parameter in the request but leave the value blank (ex. <code class="docutils literal"><span class="pre">/?groups=</span></code>).</p>
+<p class="last">If the User has de-selected all Groups (i.e. does not want to show any Casties), pass the &#8216;groups&#8217; parameter in the request but leave the value blank (ex. <code class="docutils literal"><span class="pre">/?groups=</span></code>).</p>
 </div>
-<div class="topic">
-<p class="topic-title first">Returning Castie IDs Only</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Returning Castie IDs Only</strong></p>
 <p>Instead of requesting full Castie details at this point, you may include an &#8220;ids&#8221; parameter in the request to return only a list of Castie IDs. This makes the request much faster. You can still use any of the original parameters (i.e. groups to indicate which groups to include).</p>
 <p>Sample URL:</p>
 <p><code class="docutils literal"><span class="pre">https://cassieapp.com/api/home/following/?ids=true</span></code></p>
 <p>Sample Response</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+<div class="last highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;profile_handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;castie_ids&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -595,10 +601,11 @@
 <h2>Leaders<a class="headerlink" href="#leaders" title="Permalink to this headline">¶</a></h2>
 <p>Data for the Leaderboard pages. If no <em>group_slug</em> attribute is passed in the URL, data for the &#8220;overall&#8221; leaderboard is returned. If a <em>group_slug</em> is included, returns leaderboard data for that group.</p>
 <p>The number of top Users to be returned can be specified using the &#8220;limit&#8221; parameter in the GET request. If &#8220;limit&#8221; is not specified, the top 150 Users for the Leaderboard requested are returned by default.</p>
-<div class="topic">
-<p class="topic-title first">Filtering by Frodads</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Filtering by Frodads</strong></p>
 <p>Leaderboards can be filtered to show only the User&#8217;s friends. This filtering hould be done client side. The request to <cite>/leaderboard/{group_slug}</cite> will return data for all Users in the leaderboard.</p>
-<p>(Tim, let me know if we should do this differently...)</p>
+<p class="last">(Let me know if we should do this differently...)</p>
 </div>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/leaderboard/{group_slug}/</span></code></p>
@@ -627,9 +634,10 @@ Each User object in the list contains:</p>
 <li><strong>xp:</strong> <em>integer</em>, the User&#8217;s number of experience points (used for Group specific leaderboards)</li>
 </ul>
 </div></blockquote>
-<div class="topic">
-<p class="topic-title first">Level vs Points</p>
-<p>Although all Leaderboards are ranked by experience points, only the Group Specific Leaderboards will display each User&#8217;s &#8220;xp&#8221; (experience points). The Overall Leaderboard should display a User&#8217;s &#8220;level&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Level vs Points</strong></p>
+<p class="last">Although all Leaderboards are ranked by experience points, only the Group Specific Leaderboards will display each User&#8217;s &#8220;xp&#8221; (experience points). The Overall Leaderboard should display a User&#8217;s &#8220;level&#8221;.</p>
 </div>
 <p><strong>Sample Resopnse</strong></p>
 <p><strong>Group Specific Leaderboard</strong> (Overal Leaderboard is the same except &#8220;xp&#8221; would be &#8220;level&#8221;)</p>

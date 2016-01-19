@@ -172,7 +172,7 @@ Returns a success message if updates were successfully made. If the "handle" is 
     "error_message": "the hanlde provided is already associated with a Cassie account"
     }
 
-.. topic:: Real-time Handle Uniqueness Validation
+.. note:: **Real-time Handle Uniqueness Validation**
 
     It would be great to perform a uniqueness check on the handle as the user is typing so that they don't have to submit the form and then wait for a response. If I send over a list of existing handles, can you perform the uniqueness validation right there on the app?
 
@@ -289,7 +289,7 @@ POST
 
 Change the the existing email associated with the account. The email address must be unique. If the User tries to change the email to an email already associated with a Cassie account, an error message will be returned.
 
-.. topic:: Changing Email Address Changes the Username
+.. note:: **Changing Email Address Changes the Username**
 
   The email address associated with an account is also the User's username. When the User changes their email, the username is also changed.
 

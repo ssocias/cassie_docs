@@ -157,10 +157,11 @@
 <div class="section" id="sign-up-create-account">
 <h2>Sign Up (create account)<a class="headerlink" href="#sign-up-create-account" title="Permalink to this headline">¶</a></h2>
 <p>The sign up process occurs over a series of steps as the User inputs the various pieces of data needed to create their account. Each step requires a separate request. No authentication required until after the final step and the account has been created.</p>
-<div class="topic">
-<p class="topic-title first">Abandoning the Account Creation Process</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Abandoning the Account Creation Process</strong></p>
 <p>If the User terminates the account creation process at any time after they have inputted a password, make a request to the following endpoint so any temporary data can be deleted:</p>
-<blockquote>
+<blockquote class="last">
 <div><p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/incomplete/</span></code></p>
 <p><strong>Parameters:</strong></p>
 <p><strong>email:</strong> <em>string</em>, the User&#8217;s email address</p>
@@ -299,6 +300,7 @@ Once this client-side validation is complete, send the handle to the backend so 
 <div><ul class="simple">
 <li><strong>number_notifications:</strong> <em>integer</em>, number of notifications the User has</li>
 <li><strong>needs_answer:</strong> <em>boolean</em>, True if the User has a Castie(s) that is ready to be answered</li>
+<li><strong>number_needing_answer:</strong> <em>integer</em>, number of Casties needing to be answered</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
@@ -307,6 +309,7 @@ Once this client-side validation is complete, send the handle to the backend so 
     <span class="s">&quot;profile_handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
     <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
     <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
     <span class="s">&quot;casties&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">:</span> <span class="p">{</span>
           <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>

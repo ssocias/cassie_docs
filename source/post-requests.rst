@@ -13,7 +13,7 @@ Sign Up (create account)
 
 The sign up process occurs over a series of steps as the User inputs the various pieces of data needed to create their account. Each step requires a separate request. No authentication required until after the final step and the account has been created.
 
-.. topic:: Abandoning the Account Creation Process
+.. note:: **Abandoning the Account Creation Process**
 
   If the User terminates the account creation process at any time after they have inputted a password, make a request to the following endpoint so any temporary data can be deleted:
 
@@ -172,6 +172,7 @@ Data needed to display the home page (same data returned in :ref:`Home`), the nu
 
   * **number_notifications:** *integer*, number of notifications the User has
   * **needs_answer:** *boolean*, True if the User has a Castie(s) that is ready to be answered
+  * **number_needing_answer:** *integer*, number of Casties needing to be answered
 
 
 **Sample Response** ::
@@ -181,6 +182,7 @@ Data needed to display the home page (same data returned in :ref:`Home`), the nu
         "profile_handle": "steph",
         "number_notifications": 4,
         "needs_answer": false,
+        "number_needing_answer": 2,
         "casties": {
             "6785577f160f45b0989dcee31bd762bf": {
               "answerSubmitted": false,

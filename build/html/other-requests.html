@@ -305,9 +305,10 @@ handle, first name, last name, city, state, profile picture, and background pict
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="topic">
-<p class="topic-title first">Real-time Handle Uniqueness Validation</p>
-<p>It would be great to perform a uniqueness check on the handle as the user is typing so that they don&#8217;t have to submit the form and then wait for a response. If I send over a list of existing handles, can you perform the uniqueness validation right there on the app?</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Real-time Handle Uniqueness Validation</strong></p>
+<p class="last">It would be great to perform a uniqueness check on the handle as the user is typing so that they don&#8217;t have to submit the form and then wait for a response. If I send over a list of existing handles, can you perform the uniqueness validation right there on the app?</p>
 </div>
 <p><strong>Sample Response</strong></p>
 <p>If data was updated, the response indicates what changes were made:</p>
@@ -393,9 +394,10 @@ handle, first name, last name, city, state, profile picture, and background pict
 <div class="section" id="id6">
 <h3>POST<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>Change the the existing email associated with the account. The email address must be unique. If the User tries to change the email to an email already associated with a Cassie account, an error message will be returned.</p>
-<div class="topic">
-<p class="topic-title first">Changing Email Address Changes the Username</p>
-<p>The email address associated with an account is also the User&#8217;s username. When the User changes their email, the username is also changed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Changing Email Address Changes the Username</strong></p>
+<p class="last">The email address associated with an account is also the User&#8217;s username. When the User changes their email, the username is also changed.</p>
 </div>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/preferences/edit/email/</span></code></p>

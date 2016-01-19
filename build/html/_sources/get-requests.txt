@@ -18,7 +18,7 @@ Before/after making this request, make a request to `Home`_ to get the home Cast
 
 If, however, you are making a request to :ref:`log in` (found in the :ref:`Post Requests` section), there is no need to call `Initialize`_ or `Home`_ because :ref:`log in` does it already.
 
-.. topic:: Periodaclly Updating Notifications Count
+.. note:: **Periodaclly Updating Notifications Count**
 
   You might need to make periodic requests to this "Initialize" endpoint or to the "Needs Answer" endpoint below in order to alert the User when they have a new notification while they are using the app. 
 
@@ -37,13 +37,15 @@ If, however, you are making a request to :ref:`log in` (found in the :ref:`Post 
 
   * **number_notifications:** *integer*, number of notifications the User has
   * **needs_answer:** *boolean*, True if the User has a Castie(s) that is ready to be answered
+  * **number_needing_answer:** *integer*, number of Casties needing to be answered
 
 **Sample Response** ::
 
     {
       "status": 200,
       "number_notifications": 7,
-      "needs_answer": true
+      "needs_answer": true,
+      "number_needing_answer": 3
     }
 
 
@@ -62,13 +64,14 @@ None
 
 **Returns**
 
-``True`` is the User has Casties that need to be answered. Otherwise, it returns ``False``.
+``True`` is the User has Casties that need to be answered. Otherwise, it returns ``False``. Also returns the number of Casties needing to be answered.
 
 **Sample Response** ::
 
     {
       "status": 200,
-      "needs_answer": True
+      "needs_answer": True,
+      "number_needing_answer": 3
     }
 
 
@@ -89,11 +92,11 @@ This response takes a very long time- trying to figure out why.
 * which_tab (*optional*, default="following"): *string*, indicates which tab of the home page is being requested- "following", "spicy", or "new"
 
 
-.. topic:: Filtering Groups from the Side Menu
+.. note:: **Filtering Groups from the Side Menu**
 
   The side hamburger menu of the home page can be used to filter which Group's Casties should be shown on the "following" tab. By default, Casties for all Groups the User follows are shown. 
 
-  When the User has filtered by Groups in the side bar, those Groups should be passed in the request query string using the 'groups' parameter and the group's slug as the value (ex. ``/?groups=sports&groups=politics&groups=pop-culture``)
+  When the User has filtered by Groups in the side bar, those Groups should be passed in the request query string using the 'groups' parameter and the group's slug as the value.
 
   Sample URL: 
 
@@ -101,7 +104,7 @@ This response takes a very long time- trying to figure out why.
 
   If the User has de-selected all Groups (i.e. does not want to show any Casties), pass the 'groups' parameter in the request but leave the value blank (ex. ``/?groups=``).
 
-.. topic:: Returning Castie IDs Only
+.. note:: **Returning Castie IDs Only**
 
   Instead of requesting full Castie details at this point, you may include an "ids" parameter in the request to return only a list of Castie IDs. This makes the request much faster. You can still use any of the original parameters (i.e. groups to indicate which groups to include).
 
@@ -440,11 +443,11 @@ Data for the Leaderboard pages. If no *group_slug* attribute is passed in the UR
 
 The number of top Users to be returned can be specified using the "limit" parameter in the GET request. If "limit" is not specified, the top 150 Users for the Leaderboard requested are returned by default.
 
-.. topic:: Filtering by Frodads
+.. note:: **Filtering by Frodads**
   
   Leaderboards can be filtered to show only the User's friends. This filtering hould be done client side. The request to `/leaderboard/{group_slug}` will return data for all Users in the leaderboard. 
 
-  (Tim, let me know if we should do this differently...)
+  (Let me know if we should do this differently...)
 
 **Definition:** 
 
@@ -472,7 +475,7 @@ Each User object in the list contains:
     * **level:** *integer*, the User's level (used for Overall Leaderboard)
     * **xp:** *integer*, the User's number of experience points (used for Group specific leaderboards)
 
-.. topic:: Level vs Points
+.. note:: **Level vs Points**
   
   Although all Leaderboards are ranked by experience points, only the Group Specific Leaderboards will display each User's "xp" (experience points). The Overall Leaderboard should display a User's "level".
 
