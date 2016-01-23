@@ -228,12 +228,17 @@
 <div class="section" id="home">
 <span id="id2"></span><h2>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h2>
 <p>Returns a dictionary of Castie objects for the Cassie home page. The home page (accessed via the Home tab on the footer nav bar) is divided into three tabs- &#8220;following&#8221;, &#8220;spicy&#8221;, and &#8220;new&#8221;. By default, this request returns data for the &#8220;following&#8221; tab unless otherwise specified in the URL.</p>
-<p>This response takes a very long time- trying to figure out why.</p>
+<p>This response takes a very long time. To cut back on load time, a list of Castie UUIDs may be requested in place of a list of Castie objects. By including an &#8220;ids&#8221; parameter in the request, a list of Castie UUIDs will be returned. Each Castie object can then be retrieved by making subsequent requests to <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/</span></code></p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/home/{which_tab}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
 <li>which_tab (<em>optional</em>, default=&#8221;following&#8221;): <em>string</em>, indicates which tab of the home page is being requested- &#8220;following&#8221;, &#8220;spicy&#8221;, or &#8220;new&#8221;</li>
+</ul>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li>ids (<em>optional</em>): <em>string</em>, set this to &#8216;true&#8217; to return only a list of Castie UUIDs, otherwise do not include this parameter in the request</li>
+<li>groups (<em>optional</em>): <em>string</em>, the group slug to which the Casties being returned must belong</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -247,7 +252,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>Returning Castie IDs Only</strong></p>
-<p>Instead of requesting full Castie details at this point, you may include an &#8220;ids&#8221; parameter in the request to return only a list of Castie IDs. This makes the request much faster. You can still use any of the original parameters (i.e. groups to indicate which groups to include).</p>
+<p>Instead of requesting full Castie details at this point, an &#8220;ids&#8221; parameter may be included in the request to return only a list of Castie UUIDs. This makes the request much faster. Any of the original parameters (i.e. filtering by &#8220;groups&#8221; using the &#8220;groups&#8221; parameter) can still be used.</p>
 <p>Sample URL:</p>
 <p><code class="docutils literal"><span class="pre">https://cassieapp.com/api/home/following/?ids=true</span></code></p>
 <p>Sample Response</p>
@@ -273,7 +278,7 @@
 </div>
 </div>
 <p><strong>Returns</strong></p>
-<p>Returns a dictionary, entitled &#8216;casties&#8217;, of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If &#8220;following&#8221; was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If &#8220;spicy&#8221; was specified, Casties are ordered by most recently forecasted. If &#8220;new&#8221; was specified, Casties are ordered by most newly created.</p>
+<p>Returns a dictionary, entitled &#8216;casties&#8217;, of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If &#8220;ids&#8221; was included in the request, only a list of Castie UUIDs will be returned. If &#8220;following&#8221; was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If &#8220;spicy&#8221; was specified, Casties are ordered by most recently forecasted. If &#8220;new&#8221; was specified, Casties are ordered by most newly created.</p>
 <p>If the &#8220;following&#8221; tab has been specified but the User is not following any groups, there is no Castie data to display. The response will then include a <code class="docutils literal"><span class="pre">following</span></code> key that is set to <code class="docutils literal"><span class="pre">False</span></code>, and an appropriate message should be displayed to the User instucting them to Follow groups- &#8220;You need to follow gropus before you can see Casties. Click on that sweet Octopus up top to get going.&#8221;</p>
 <p>Sample response for a User that has selected the &#8220;Following&#8221; tab but is not following any groups:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>

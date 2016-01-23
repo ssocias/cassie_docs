@@ -32,6 +32,7 @@ If the response status is anything other than 200, ``error_type`` and ``error_me
 * ``email_not_unique`` email address is already associated with an existing account
 * ``handle_not_unique`` handle is already associated with an existing account
 * ``incorrect_request_type`` making a GET request when it should be POST and vice versa
+* ``invalid_request`` request could not be completed
 * ``improper_group_request`` trying to follow/unfollow a group you already follow/unfollow
 * ``missing_request_data`` the expected POST/GET data was not found in the request 
 * ``castie_not_answerable`` the Castie is not accepting the correct answer (either the end date has not passed or it is already answered)

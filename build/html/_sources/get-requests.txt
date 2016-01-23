@@ -81,7 +81,7 @@ Home
 ====
 Returns a dictionary of Castie objects for the Cassie home page. The home page (accessed via the Home tab on the footer nav bar) is divided into three tabs- "following", "spicy", and "new". By default, this request returns data for the "following" tab unless otherwise specified in the URL. 
 
-This response takes a very long time- trying to figure out why.
+This response takes a very long time. To cut back on load time, a list of Castie UUIDs may be requested in place of a list of Castie objects. By including an "ids" parameter in the request, a list of Castie UUIDs will be returned. Each Castie object can then be retrieved by making subsequent requests to ``GET https://cassieapp.com/api/casties/{uuid}/``
 
 **Definition:** 
 
@@ -90,6 +90,11 @@ This response takes a very long time- trying to figure out why.
 **Arguments**
 
 * which_tab (*optional*, default="following"): *string*, indicates which tab of the home page is being requested- "following", "spicy", or "new"
+
+**Parameters**
+
+* ids (*optional*): *string*, set this to 'true' to return only a list of Castie UUIDs, otherwise do not include this parameter in the request
+* groups (*optional*): *string*, the group slug to which the Casties being returned must belong 
 
 
 .. note:: **Filtering Groups from the Side Menu**
@@ -106,7 +111,7 @@ This response takes a very long time- trying to figure out why.
 
 .. note:: **Returning Castie IDs Only**
 
-  Instead of requesting full Castie details at this point, you may include an "ids" parameter in the request to return only a list of Castie IDs. This makes the request much faster. You can still use any of the original parameters (i.e. groups to indicate which groups to include).
+  Instead of requesting full Castie details at this point, an "ids" parameter may be included in the request to return only a list of Castie UUIDs. This makes the request much faster. Any of the original parameters (i.e. filtering by "groups" using the "groups" parameter) can still be used.
 
   Sample URL: 
 
@@ -132,11 +137,10 @@ This response takes a very long time- trying to figure out why.
           "db1db36469f54ea3a0433a2e8421ed60"
         ]
       }
-    
 
 **Returns**
 
-Returns a dictionary, entitled 'casties', of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If "following" was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If "spicy" was specified, Casties are ordered by most recently forecasted. If "new" was specified, Casties are ordered by most newly created.
+Returns a dictionary, entitled 'casties', of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If "ids" was included in the request, only a list of Castie UUIDs will be returned. If "following" was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If "spicy" was specified, Casties are ordered by most recently forecasted. If "new" was specified, Casties are ordered by most newly created.
 
 If the "following" tab has been specified but the User is not following any groups, there is no Castie data to display. The response will then include a ``following`` key that is set to ``False``, and an appropriate message should be displayed to the User instucting them to Follow groups- "You need to follow gropus before you can see Casties. Click on that sweet Octopus up top to get going."
 
