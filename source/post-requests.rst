@@ -158,7 +158,7 @@ Log In
 
 Updates the User's "last_login" date/time and returns all data needed to start the app. No additional calls to initialize the app are needed. One request to "Log In" will provide all data needed to display the home page, with notification indications.
 
-Similar to the "home" endpoint, where either a list of Castie objects or a list of Castie UUIDs may be returned, an "ids" parameter may be included to indicate that only Castie UUIDs shoudld be returned.
+Similar to the "home" endpoint, where either a list of Castie objects or a list of Castie UUIDs may be returned, an "ids" parameter may be included to indicate that only Castie UUIDs should be returned.
 
 **Definition:**
 
@@ -167,7 +167,7 @@ Similar to the "home" endpoint, where either a list of Castie objects or a list 
 **Parameters (sent as key:value pairs)**
 
 * **ids:** *string*, set this to 'true' to return only a list of Castie UUIDs, otherwise do not include this parameter in the request
-* groups (*optional*): *string*, the group slug to which the Casties being returned must belong; include a key:value entry of "groups" to "group slug" for every group desired (do not include this parameter if no filtering is needed)
+* **groups** (*optional*): *string*, the group slug to which the Casties being returned must belong; include a key:value entry of "groups" to "group slug" for every group desired (do not include this parameter if no filtering is needed)
 
 **Returns**
 

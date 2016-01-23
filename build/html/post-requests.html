@@ -290,13 +290,13 @@ Once this client-side validation is complete, send the handle to the backend so 
 <div class="section" id="log-in">
 <span id="id2"></span><h2>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h2>
 <p>Updates the User&#8217;s &#8220;last_login&#8221; date/time and returns all data needed to start the app. No additional calls to initialize the app are needed. One request to &#8220;Log In&#8221; will provide all data needed to display the home page, with notification indications.</p>
-<p>Similar to the &#8220;home&#8221; endpoint, where either a list of Castie objects or a list of Castie UUIDs may be returned, an &#8220;ids&#8221; parameter may be included to indicate that only Castie UUIDs shoudld be returned.</p>
+<p>Similar to the &#8220;home&#8221; endpoint, where either a list of Castie objects or a list of Castie UUIDs may be returned, an &#8220;ids&#8221; parameter may be included to indicate that only Castie UUIDs should be returned.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/login/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
 <ul class="simple">
 <li><strong>ids:</strong> <em>string</em>, set this to &#8216;true&#8217; to return only a list of Castie UUIDs, otherwise do not include this parameter in the request</li>
-<li>groups (<em>optional</em>): <em>string</em>, the group slug to which the Casties being returned must belong; include a key:value entry of &#8220;groups&#8221; to &#8220;group slug&#8221; for every group desired (do not include this parameter if no filtering is needed)</li>
+<li><strong>groups</strong> (<em>optional</em>): <em>string</em>, the group slug to which the Casties being returned must belong; include a key:value entry of &#8220;groups&#8221; to &#8220;group slug&#8221; for every group desired (do not include this parameter if no filtering is needed)</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>Data needed to display the home page (same data returned in <a class="reference internal" href="get-requests.html#home"><span>Home</span></a>), the number of notifications the user has never seen, and a boolean indicating if the User has any Casties that are ready to be answered.</p>
