@@ -140,7 +140,7 @@ This response takes a very long time. To cut back on load time, a list of Castie
 
 **Returns**
 
-Returns a dictionary, entitled 'casties', of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If "ids" was included in the request, only a list of Castie UUIDs will be returned. If "following" was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If "spicy" was specified, Casties are ordered by most recently forecasted. If "new" was specified, Casties are ordered by most newly created.
+Returns a dictionary, entitled 'casties', of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If "ids" was included in the request, only a list of Castie UUIDs will be returned. If "following" was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If "spicy" was specified, Casties are ordered by most recently forecasted (not limited only to Groups the User follows). If "new" was specified, Casties are ordered by most newly created (not limited only to Groups the User follows).
 
 If the "following" tab has been specified but the User is not following any groups, there is no Castie data to display. The response will then include a ``following`` key that is set to ``False``, and an appropriate message should be displayed to the User instucting them to Follow groups- "You need to follow gropus before you can see Casties. Click on that sweet Octopus up top to get going."
 
@@ -870,6 +870,12 @@ Groups
 ======
 Returns a dictionary of all Group objects indexed be the Group's slug attribute. This request is called when the User clicks on the "Groups" button (i.e. the Octopus icon) in the top nav bar. 
 
+.. note:: To return ONLY a list of group slugs for the given user, use this endpoint: ``GET https://cassieapp.com/api/profile/{handle}/groups/?slugs_only`` 
+
+
+.. note:: To return information on only one group at a time, use this endpoint: ``GET https://cassieapp.com/api/groups/{group_slug}/?casties=`` By default, this request will also include a list of all Casties within the Group. Set the 'casties' parameter to False to omit this list and only return the Group Object.
+
+
 **Definition:** 
 
 ``GET https://cassieapp.com/api/groups/``
@@ -1122,7 +1128,7 @@ Search
 
 The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.
 
-NOTE: For now, each request shouldn't take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).
+.. note:: For now, each request shouldn't take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).
 
 **Definition**
 

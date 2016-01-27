@@ -278,7 +278,7 @@
 </div>
 </div>
 <p><strong>Returns</strong></p>
-<p>Returns a dictionary, entitled &#8216;casties&#8217;, of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If &#8220;ids&#8221; was included in the request, only a list of Castie UUIDs will be returned. If &#8220;following&#8221; was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If &#8220;spicy&#8221; was specified, Casties are ordered by most recently forecasted. If &#8220;new&#8221; was specified, Casties are ordered by most newly created.</p>
+<p>Returns a dictionary, entitled &#8216;casties&#8217;, of Castie objects to be displayed on the homepage. Casties are indexed by uuid. If &#8220;ids&#8221; was included in the request, only a list of Castie UUIDs will be returned. If &#8220;following&#8221; was specified, the returned dictionary of Casties is sorted by most recently forecasted and includes only Casties in groups the User follows. If &#8220;spicy&#8221; was specified, Casties are ordered by most recently forecasted (not limited only to Groups the User follows). If &#8220;new&#8221; was specified, Casties are ordered by most newly created (not limited only to Groups the User follows).</p>
 <p>If the &#8220;following&#8221; tab has been specified but the User is not following any groups, there is no Castie data to display. The response will then include a <code class="docutils literal"><span class="pre">following</span></code> key that is set to <code class="docutils literal"><span class="pre">False</span></code>, and an appropriate message should be displayed to the User instucting them to Follow groups- &#8220;You need to follow gropus before you can see Casties. Click on that sweet Octopus up top to get going.&#8221;</p>
 <p>Sample response for a User that has selected the &#8220;Following&#8221; tab but is not following any groups:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
@@ -1022,6 +1022,14 @@ Each User object in the list contains:</p>
 <div class="section" id="id5">
 <h2>Groups<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>Returns a dictionary of all Group objects indexed be the Group&#8217;s slug attribute. This request is called when the User clicks on the &#8220;Groups&#8221; button (i.e. the Octopus icon) in the top nav bar.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To return ONLY a list of group slugs for the given user, use this endpoint: <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/groups/?slugs_only</span></code></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To return information on only one group at a time, use this endpoint: <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/?casties=</span></code> By default, this request will also include a list of all Casties within the Group. Set the &#8216;casties&#8217; parameter to False to omit this list and only return the Group Object.</p>
+</div>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/</span></code></p>
 <p><strong>Arguments</strong></p>
@@ -1246,7 +1254,10 @@ Each User object in the list contains:</p>
 <div class="section" id="search">
 <h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
 <p>The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.</p>
-<p>NOTE: For now, each request shouldn&#8217;t take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For now, each request shouldn&#8217;t take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).</p>
+</div>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/{search_type}/</span></code></p>
 <p><strong>Arguments</strong></p>
