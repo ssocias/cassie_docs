@@ -16,8 +16,6 @@ In order to get the number of notifications, the date of the most recent notific
 
 Before/after making this request, make a request to `Home`_ to get the home Castie data. 
 
-If, however, you are making a request to :ref:`log in` (found in the :ref:`Post Requests` section), there is no need to call `Initialize`_ or `Home`_ because :ref:`log in` does it already.
-
 .. note:: **Periodaclly Updating Notifications Count**
 
   You might need to make periodic requests to this "Initialize" endpoint or to the "Needs Answer" endpoint below in order to alert the User when they have a new notification while they are using the app. 
@@ -30,8 +28,8 @@ If, however, you are making a request to :ref:`log in` (found in the :ref:`Post 
 
 **Parameters (sent as key:value pairs in the request)**
 
-  * **seen_date:** *string*, date of the notification the User last saw; YYYY-MM-DD format
-  * **seen_time:** *string*, time of the notification the User last saw; Hour:Minute:Second format
+  * **last_seen_date:** *string*, date of the notification the User last saw; YYYY-MM-DD format
+  * **last_seen_time:** *string*, time of the notification the User last saw; Hour:Minute:Second format
 
 **Returns**
 

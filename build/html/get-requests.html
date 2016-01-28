@@ -173,7 +173,6 @@
 <p>This must be called anytime a User opens the app. It returns the number of notifications the User has not yet seen and indicates if the User has Casties that can be answered.</p>
 <p>In order to get the number of notifications, the date of the most recent notification the user has seen should be sent in the request.</p>
 <p>Before/after making this request, make a request to <a class="reference internal" href="#home">Home</a> to get the home Castie data.</p>
-<p>If, however, you are making a request to <a class="reference internal" href="post-requests.html#log-in"><span>Log In</span></a> (found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section), there is no need to call <a class="reference internal" href="#initialize">Initialize</a> or <a class="reference internal" href="#home">Home</a> because <a class="reference internal" href="post-requests.html#log-in"><span>Log In</span></a> does it already.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>Periodaclly Updating Notifications Count</strong></p>
@@ -185,8 +184,8 @@
 <p><strong>Parameters (sent as key:value pairs in the request)</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>seen_date:</strong> <em>string</em>, date of the notification the User last saw; YYYY-MM-DD format</li>
-<li><strong>seen_time:</strong> <em>string</em>, time of the notification the User last saw; Hour:Minute:Second format</li>
+<li><strong>last_seen_date:</strong> <em>string</em>, date of the notification the User last saw; YYYY-MM-DD format</li>
+<li><strong>last_seen_time:</strong> <em>string</em>, time of the notification the User last saw; Hour:Minute:Second format</li>
 </ul>
 </div></blockquote>
 <p><strong>Returns</strong></p>
