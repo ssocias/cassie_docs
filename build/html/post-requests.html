@@ -293,10 +293,12 @@ Once this client-side validation is complete, send the handle to the backend so 
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/login/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
-<ul class="simple">
-<li><strong>last_seen_date:</strong> <em>string</em>, date of the last read notification</li>
-<li><strong>last_seen_time</strong>: <em>string</em>, time of the last read notification</li>
+<blockquote>
+<div><ul class="simple">
+<li><strong>last_seen_date:</strong> <em>string</em>, date of the notification the User last saw; YYYY-MM-DD format</li>
+<li><strong>last_seen_time:</strong> <em>string</em>, time of the notification the User last saw; Hour:Minute:Second format</li>
 </ul>
+</div></blockquote>
 <p><strong>Returns</strong></p>
 <p>The number of notifications the user has never seen (as calculated from the date/time passed in the requeset) and a boolean indicating if the User has any Casties that are ready to be answered.</p>
 <blockquote>

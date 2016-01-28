@@ -164,8 +164,8 @@ Updates the User's "last_login" date/time and returns info on the User's notific
 
 **Parameters (sent as key:value pairs)**
 
-* **last_seen_date:** *string*, date of the last read notification
-* **last_seen_time**: *string*, time of the last read notification
+  * **last_seen_date:** *string*, date of the notification the User last saw; YYYY-MM-DD format
+  * **last_seen_time:** *string*, time of the notification the User last saw; Hour:Minute:Second format
 
 **Returns**
 
