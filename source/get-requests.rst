@@ -162,8 +162,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
 
     * **uuid:** *string*, unique id for the Castie
     * **question:** *string*, question text 
-    * **group:** *string*, group to which the Castie belongs
-    * **groupIcon:** *string*, location of the group icon image
+    * **groupSlug:** *string*, unique slug of the group to which the Castie belongs
     * **showUsername:** *boolean*, ``True`` if the Castie creator's handle should be displayed
     * **submitter:** *string*, handle of the User that created the Castie
     * **createdAtDate:** *string*, date (YYYY-MM-DD) the Castie was created
@@ -206,8 +205,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
               "answerSubmitted": true,
               "friendCount": 3,
               "createdAtDate": "2015-08-12",
-              "group": "Around Campus",
-              "groupIcon": "category-bkgds/campus_pic.png",
+              "groupSlug": "around-campus",
               "uuid": "929559bf4dba4049b01efa673b8b85bf",
               "friendPics": [
                 "profiles/user-159/image_Fbr8GSY.jpg",
@@ -249,8 +247,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
               "answerSubmitted": false,
               "friendCount": 3,
               "createdAtDate": "2015-08-13",
-              "group": "Around Campus",
-              "groupIcon": "category-bkgds/campus_pic.png",
+              "groupSlug": "around-campus",
               "uuid": "6785577f160f45b0989dcee31bd762bf",
               "friendPics": [
                 "profiles/user-280/image.jpg",
@@ -408,8 +405,7 @@ This object is the same as `Castie Object`_  described above in the `Home`_ sect
       },
       "correctIndex": "Female",
       "createdAtTime": "05:29:28.893629",
-      "group": "General Pop Culture",
-      "groupIcon": "category-bkgds/pop_cul.png",
+      "groupSlug": "pop-culture",
       "userForecast": " Male",
       "openEnded": true,
       "endDate": "open",

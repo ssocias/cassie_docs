@@ -289,19 +289,19 @@ Once this client-side validation is complete, send the handle to the backend so 
 </div>
 <div class="section" id="log-in">
 <span id="id2"></span><h2>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h2>
-<p>Updates the User&#8217;s &#8220;last_login&#8221; date/time and returns all data needed to start the app. No additional calls to initialize the app are needed. One request to &#8220;Log In&#8221; will provide all data needed to display the home page, with notification indications.</p>
-<p>Similar to the &#8220;home&#8221; endpoint, where either a list of Castie objects or a list of Castie UUIDs may be returned, an &#8220;ids&#8221; parameter may be included to indicate that only Castie UUIDs should be returned.</p>
+<p>Updates the User&#8217;s &#8220;last_login&#8221; date/time and returns info on the User&#8217;s notifications and casties requiring answers.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/login/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
 <ul class="simple">
-<li><strong>ids:</strong> <em>string</em>, set this to &#8216;true&#8217; to return only a list of Castie UUIDs, otherwise do not include this parameter in the request</li>
-<li><strong>groups</strong> (<em>optional</em>): <em>string</em>, the group slug to which the Casties being returned must belong; include a key:value entry of &#8220;groups&#8221; to &#8220;group slug&#8221; for every group desired (do not include this parameter if no filtering is needed)</li>
+<li><strong>last_seen_date:</strong> <em>string</em>, date of the last read notification</li>
+<li><strong>last_seen_time</strong>: <em>string</em>, time of the last read notification</li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>Data needed to display the home page (same data returned in <a class="reference internal" href="get-requests.html#home"><span>Home</span></a>), the number of notifications the user has never seen, and a boolean indicating if the User has any Casties that are ready to be answered.</p>
+<p>The number of notifications the user has never seen (as calculated from the date/time passed in the requeset) and a boolean indicating if the User has any Casties that are ready to be answered.</p>
 <blockquote>
 <div><ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the User&#8217;s handle</li>
 <li><strong>number_notifications:</strong> <em>integer</em>, number of notifications the User has</li>
 <li><strong>needs_answer:</strong> <em>boolean</em>, True if the User has a Castie(s) that is ready to be answered</li>
 <li><strong>number_needing_answer:</strong> <em>integer</em>, number of Casties needing to be answered</li>
@@ -309,52 +309,11 @@ Once this client-side validation is complete, send the handle to the backend so 
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-    <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-    <span class="s">&quot;profile_handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
-    <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-    <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s">&quot;casties&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-          <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-          <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-13&quot;</span><span class="p">,</span>
-          <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;Around Campus&quot;</span><span class="p">,</span>
-          <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">,</span>
-          <span class="s">&quot;friendPics&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s">&quot;profiles/user-280/image.jpg&quot;</span><span class="p">,</span>
-            <span class="s">&quot;profiles/user-159/image_Fbr8GSY.jpg&quot;</span><span class="p">,</span>
-            <span class="s">&quot;&quot;</span>
-          <span class="p">],</span>
-          <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;03:37:08.153640&quot;</span><span class="p">,</span>
-          <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
-          <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-          <span class="s">&quot;commentsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-          <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Which company will have the most Q4 revenue?&quot;</span><span class="p">,</span>
-          <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
-          <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-          <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="s">&quot;Best Buy&quot;</span><span class="p">,</span>
-          <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-          <span class="s">&quot;forecasts&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Visa&quot;</span><span class="p">,</span>
-              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">48</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Starbucks&quot;</span><span class="p">,</span>
-              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">16</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-              <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;American Express&quot;</span><span class="p">,</span>
-              <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">4</span>
-            <span class="p">}</span>
-          <span class="p">],</span>
-          <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-31&quot;</span><span class="p">,</span>
-          <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-          <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;11:20:00&quot;</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;profile_handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+  <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>

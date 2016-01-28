@@ -156,9 +156,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 Log In
 ======
 
-Updates the User's "last_login" date/time and returns all data needed to start the app. No additional calls to initialize the app are needed. One request to "Log In" will provide all data needed to display the home page, with notification indications.
-
-Similar to the "home" endpoint, where either a list of Castie objects or a list of Castie UUIDs may be returned, an "ids" parameter may be included to indicate that only Castie UUIDs should be returned.
+Updates the User's "last_login" date/time and returns info on the User's notifications and casties requiring answers.
 
 **Definition:**
 
@@ -166,13 +164,14 @@ Similar to the "home" endpoint, where either a list of Castie objects or a list 
 
 **Parameters (sent as key:value pairs)**
 
-* **ids:** *string*, set this to 'true' to return only a list of Castie UUIDs, otherwise do not include this parameter in the request
-* **groups** (*optional*): *string*, the group slug to which the Casties being returned must belong; include a key:value entry of "groups" to "group slug" for every group desired (do not include this parameter if no filtering is needed)
+* **last_seen_date:** *string*, date of the last read notification
+* **last_seen_time**: *string*, time of the last read notification
 
 **Returns**
 
-Data needed to display the home page (same data returned in :ref:`Home`), the number of notifications the user has never seen, and a boolean indicating if the User has any Casties that are ready to be answered.
+The number of notifications the user has never seen (as calculated from the date/time passed in the requeset) and a boolean indicating if the User has any Casties that are ready to be answered.
 
+  * **handle:** *string*, the User's handle
   * **number_notifications:** *integer*, number of notifications the User has
   * **needs_answer:** *boolean*, True if the User has a Castie(s) that is ready to be answered
   * **number_needing_answer:** *integer*, number of Casties needing to be answered
@@ -181,52 +180,11 @@ Data needed to display the home page (same data returned in :ref:`Home`), the nu
 **Sample Response** ::
 
     {
-        "status": 200,
-        "profile_handle": "steph",
-        "number_notifications": 4,
-        "needs_answer": false,
-        "number_needing_answer": 2,
-        "casties": {
-            "6785577f160f45b0989dcee31bd762bf": {
-              "answerSubmitted": false,
-              "friendCount": 3,
-              "createdAtDate": "2015-08-13",
-              "group": "Around Campus",
-              "uuid": "6785577f160f45b0989dcee31bd762bf",
-              "friendPics": [
-                "profiles/user-280/image.jpg",
-                "profiles/user-159/image_Fbr8GSY.jpg",
-                ""
-              ],
-              "createdAtTime": "03:37:08.153640",
-              "submitter": "csocias",
-              "showUsername": false,
-              "commentsCount": 0,
-              "question": "Which company will have the most Q4 revenue?",
-              "forecastsCount": 25,
-              "setAnswered": false,
-              "userForecast": "Best Buy",
-              "openEnded": false,
-              "forecasts": [
-                {
-                  "answer_text": "Visa",
-                  "percentage": 48
-                },
-                {
-                  "answer_text": "Starbucks",
-                  "percentage": 16
-                },
-                {
-                  "answer_text": "American Express",
-                  "percentage": 4
-                }
-              ],
-              "endDate": "2015-08-31",
-              "correctIndex": null,
-              "allowWriteIn": true,
-              "endTime": "11:20:00"
-            },
-        }
+      "status": 200,
+      "profile_handle": "steph",
+      "number_notifications": 4,
+      "needs_answer": false,
+      "number_needing_answer": 2,
     }
 
 
