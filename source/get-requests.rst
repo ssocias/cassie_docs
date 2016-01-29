@@ -1299,7 +1299,7 @@ An alphabetical list of (group name, group slug) tuples for Groups the User foll
 Create Castie- Group List
 =========================
 
-The request to actually save a Castie being created can be found in the :ref:`create castie` section of the POST requests docs. This request will return a list of groups for the User to choose from in the process of createing their Castie.
+The request to actually save a Castie being created can be found in the :ref:`create castie` section of the POST requests docs. This request will return a list of groups for the User to choose from in the process of creating their Castie.
 
 **Definition:** 
 
@@ -1313,7 +1313,7 @@ None
 
 An alphabetical list of (group name, group slug) tuples for all existing Groups (the slug is the unique identifier for a group).
 
-This is similar to the :ref:`Hamburger` request but returns data for all existing Groups, not just the ones the User follows.
+This is similar to the :ref:`Hamburger` request, which returns a list of all Gropus a User follows, but this endpoint returns data for all Groups a User folows AND has permission to create Casties in (as some Groups might not allow Users to create Casties).
 
 **Sample Response** ::
 

@@ -1411,14 +1411,14 @@ Each User object in the list contains:</p>
 </div>
 <div class="section" id="create-castie-group-list">
 <h2>Create Castie- Group List<a class="headerlink" href="#create-castie-group-list" title="Permalink to this headline">¶</a></h2>
-<p>The request to actually save a Castie being created can be found in the <a class="reference internal" href="post-requests.html#create-castie"><span>Create Castie</span></a> section of the POST requests docs. This request will return a list of groups for the User to choose from in the process of createing their Castie.</p>
+<p>The request to actually save a Castie being created can be found in the <a class="reference internal" href="post-requests.html#create-castie"><span>Create Castie</span></a> section of the POST requests docs. This request will return a list of groups for the User to choose from in the process of creating their Castie.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/create/groups/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
 <p>An alphabetical list of (group name, group slug) tuples for all existing Groups (the slug is the unique identifier for a group).</p>
-<p>This is similar to the <a class="reference internal" href="#hamburger"><span>Hamburger Side Menu</span></a> request but returns data for all existing Groups, not just the ones the User follows.</p>
+<p>This is similar to the <a class="reference internal" href="#hamburger"><span>Hamburger Side Menu</span></a> request, which returns a list of all Gropus a User follows, but this endpoint returns data for all Groups a User folows AND has permission to create Casties in (as some Groups might not allow Users to create Casties).</p>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
