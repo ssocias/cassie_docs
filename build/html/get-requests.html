@@ -1045,6 +1045,7 @@ Each User object in the list contains:</p>
 <li><strong>accuracy:</strong> <em>integer</em>, percent correct for the User&#8217;s forecasts in the Group</li>
 <li><strong>access:</strong> <em>string</em>, set to either &#8220;granted&#8221;, &#8220;pending&#8221;, or <code class="docutils literal"><span class="pre">None</span></code>. &#8220;granted&#8221; indicates that the User has been approved and is &#8220;following&#8221; the Group (therefore the &#8220;following&#8221; field is always <code class="docutils literal"><span class="pre">True</span></code> if this &#8220;access&#8221; field is &#8220;granted&#8221;). &#8220;pending&#8221; indicates that the User has requested access but has not yet been approved. If the User is &#8220;pending&#8221;, the &#8220;following&#8221; field is <code class="docutils literal"><span class="pre">False</span></code>.</li>
 <li><strong>following:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the User is following the Group, <code class="docutils literal"><span class="pre">False</span></code> if the User is not following the Group</li>
+<li><strong>canCreateCastie:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the User has permission to create Casties in the Group</li>
 <li><strong>numberCasties:</strong> <em>integer</em>, number of total casties in the Group</li>
 </ul>
 </div></blockquote>
