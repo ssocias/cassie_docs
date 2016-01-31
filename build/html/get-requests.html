@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#hamburger-side-menu">Hamburger Side Menu</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-castie-group-list">Create Castie- Group List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#view-all-frodad-requests">View All Frodad Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comments">Comments</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="post-requests.html">Post Requests</a></li>
@@ -1239,7 +1240,7 @@ Each User object in the list contains:</p>
 <p>Data for the Activity tab</p>
 <div class="section" id="frodad-feed">
 <h3>Frodad Feed<a class="headerlink" href="#frodad-feed" title="Permalink to this headline">¶</a></h3>
-<p>Coming Soon</p>
+<p>Frodad Feed will NOT be implemented in Cassie v1.0</p>
 </div>
 <div class="section" id="notifications">
 <h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
@@ -1474,6 +1475,66 @@ Each User object in the list contains:</p>
   <span class="s">&quot;number_friend_requests&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
   <span class="s">&quot;friend_requests_from&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comments">
+<span id="id7"></span><h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Return a list of Comment Objects for a given Castie.</p>
+<p>To save a new comment for a Castie, use the <a class="reference internal" href="post-requests.html#submitcomment"><span>Submit Comment</span></a> endpoint found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/comments/</span></code></p>
+<p><strong>Returns</strong></p>
+<p>The number of comments for the given Castie and a list of Comment Objects</p>
+<ul class="simple">
+<li><strong>numberComments:</strong> <em>integer</em>, numer of comments left on the Castie</li>
+</ul>
+<p><strong>Comment Object</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the user&#8217;s handle; uniquely identifies the friend</li>
+<li><strong>lastName:</strong> <em>string</em>, the user&#8217;s last name</li>
+<li><strong>firstName:</strong> <em>string</em>, the user&#8217;s first name</li>
+<li><strong>profPic:</strong> <em>string</em>, location of the friend&#8217;s profile picture</li>
+<li><strong>commentText:</strong> <em>string</em>, the text of the comment itself</li>
+<li><strong>commentDate:</strong> <em>string</em>, date (YYYY-MM-DD) the comment was made</li>
+<li><strong>commentTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the comment was made</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;numberComments&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s">&quot;comments&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:13:43.694687&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;first comment left by steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-581&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:05.613757&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;second comment left by another steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Soc&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:25.847464&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;thirsd comment left by christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-4/image_QPZAEEG.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -1110,7 +1110,7 @@ Data for the Activity tab
 Frodad Feed
 -----------
 
-Coming Soon
+Frodad Feed will NOT be implemented in Cassie v1.0
 
 -------------
 Notifications
@@ -1379,3 +1379,68 @@ If there are no friend requests: ::
     "friend_requests_from": null,
     "status": 200
   }
+
+.. _Comments:
+
+Comments
+========
+
+Return a list of Comment Objects for a given Castie.
+
+To save a new comment for a Castie, use the :ref:`SubmitComment` endpoint found in the :ref:`Post Requests` section.
+
+**Definition:** 
+
+``GET https://cassieapp.com/api/casties/{uuid}/comments/``
+
+**Returns**
+
+The number of comments for the given Castie and a list of Comment Objects
+
+* **numberComments:** *integer*, numer of comments left on the Castie
+
+**Comment Object** 
+
+  * **handle:** *string*, the user's handle; uniquely identifies the friend
+  * **lastName:** *string*, the user's last name 
+  * **firstName:** *string*, the user's first name 
+  * **profPic:** *string*, location of the friend's profile picture
+  * **commentText:** *string*, the text of the comment itself
+  * **commentDate:** *string*, date (YYYY-MM-DD) the comment was made
+  * **commentTime:**  *string*, time (Hour:Minute:Second:Microsecond) the comment was made
+
+**Sample Response** ::
+
+    {
+      "status": 200,
+      "numberComments": 3,
+      "comments": [
+        {
+          "handle": "steph",
+          "commentTime": "19:13:43.694687",
+          "firstName": "Stephanie",
+          "commentText": "first comment left by steph",
+          "lastName": "Socias",
+          "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
+          "commentDate": "2016-01-31"
+        },
+        {
+          "handle": "user-581",
+          "commentTime": "19:14:05.613757",
+          "firstName": "Stephanie",
+          "commentText": "second comment left by another steph",
+          "lastName": "Soc",
+          "profPic": "",
+          "commentDate": "2016-01-31"
+        },
+        {
+          "handle": "csocias",
+          "commentTime": "19:14:25.847464",
+          "firstName": "Christina",
+          "commentText": "thirsd comment left by christina",
+          "lastName": "Socias",
+          "profPic": "profiles/user-4/image_QPZAEEG.jpg",
+          "commentDate": "2016-01-31"
+        }
+      ]
+    }

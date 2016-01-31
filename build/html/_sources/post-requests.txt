@@ -513,6 +513,44 @@ If the two Users are already friends: ::
     "error_type": "cannot_add_frodad"
   }
 
+
+
+.. _SubmitComment:
+
+Submit Comment
+==============
+
+Save a comment for a given Castie.
+
+To view comments for a given Castie, use the :ref:`Comments` endpoint.
+
+**Definition:** 
+
+``POST https://cassieapp.com/api/casties/{uuid}/comments/``
+
+**Returns**
+
+A list of Comment Objects
+
+**Comment Object** 
+
+  * **handle:** *string*, the user's handle; uniquely identifies the friend
+  * **lastName:** *string*, the user's last name 
+  * **firstName:** *string*, the user's first name 
+  * **profPic:** *string*, location of the friend's profile picture
+  * **commentText:** *string*, the text of the comment itself
+  * **commentDate:** *string*, date (YYYY-MM-DD) the comment was made
+  * **commentTime:**  *string*, time (Hour:Minute:Second:Microsecond) the comment was made
+
+**Sample Response** ::
+
+    {
+      "status": 200,
+      "number_notifications": 7,
+      "needs_answer": true,
+      "number_needing_answer": 3
+    }  
+
 Accept or Reject a Frodad Request
 =================================
 

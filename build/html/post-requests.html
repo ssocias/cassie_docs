@@ -99,6 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#unfollow-a-group">Unfollow a Group</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-castie">Create Castie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-frodad">Add Frodad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submit-comment">Submit Comment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accept-or-reject-a-frodad-request">Accept or Reject a Frodad Request</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unfrdodad">Unfrdodad</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#notification-has-been-read">Notification Has Been Read</a></li>
@@ -611,6 +612,36 @@ Once this client-side validation is complete, send the handle to the backend so 
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
   <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;cannot frodad request yourself&quot;</span><span class="p">,</span>
   <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;cannot_add_frodad&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="submit-comment">
+<span id="submitcomment"></span><h2>Submit Comment<a class="headerlink" href="#submit-comment" title="Permalink to this headline">¶</a></h2>
+<p>Save a comment for a given Castie.</p>
+<p>To view comments for a given Castie, use the <a class="reference internal" href="get-requests.html#comments"><span>Comments</span></a> endpoint.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/comments/</span></code></p>
+<p><strong>Returns</strong></p>
+<p>A list of Comment Objects</p>
+<p><strong>Comment Object</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>handle:</strong> <em>string</em>, the user&#8217;s handle; uniquely identifies the friend</li>
+<li><strong>lastName:</strong> <em>string</em>, the user&#8217;s last name</li>
+<li><strong>firstName:</strong> <em>string</em>, the user&#8217;s first name</li>
+<li><strong>profPic:</strong> <em>string</em>, location of the friend&#8217;s profile picture</li>
+<li><strong>commentText:</strong> <em>string</em>, the text of the comment itself</li>
+<li><strong>commentDate:</strong> <em>string</em>, date (YYYY-MM-DD) the comment was made</li>
+<li><strong>commentTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the comment was made</li>
+</ul>
+</div></blockquote>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+  <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">3</span>
 <span class="p">}</span>
 </pre></div>
 </div>
