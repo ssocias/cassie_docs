@@ -164,12 +164,14 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
     * **showUsername:** *boolean*, ``True`` if the Castie creator's handle should be displayed
     * **submitter:** *string*, handle of the User that created the Castie
     * **createdAtDate:** *string*, date (YYYY-MM-DD) the Castie was created
-    * **createdAtTime:**  *string*, time (Hour:Minute:Second:Microsecond) the Castie was created
+    * **createdAtTime:**  *string*, time (HH:MM:SS.mmmmmm) the Castie was created
+    * **lastForecastedDate:** *string*, date (YYYY-MM-DD) the Castie was last forecasted
+    * **lastForecastedTime:**  *string*, time (HH:MM:SS.mmmmmm) the Castie was last forecasted
     * **allowWriteIn:** *boolean*, ``True`` if the Castie allows write-in forecasts
     * **setAnswered:** *boolean*, ``True`` if the Castie consists of set answer options
     * **openEnded:** *boolean*, ``True`` if the Castie has no end date
     * **endDate:** *string*, date (YYYY-MM-DD) the Castie closes; ``None`` if this is an open-ended Castie
-    * **endTime:**  *string*, time (Hour:Minute:Second:Microsecond) the Castie closes; ``None`` if this is an open-ended Castie
+    * **endTime:**  *string*, time (HH:MM) the Castie closes; ``None`` if this is an open-ended Castie
     * **userForecast:** *dictionary*, this dictionary contains data about the User's forecast. If the User did not forecast this Castie, this dictionary does not exist. Keys in the dictionary include:
 
       * **forecast_text:** *string*, the text of the forecast
@@ -239,7 +241,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
               "endDate": "2015-08-21",
               "correctIndex": "between 10 and 50",
               "allowWriteIn": false,
-              "endTime": "23:00:00"
+              "endTime": "23:00"
             },
             "6785577f160f45b0989dcee31bd762bf": {
               "answerSubmitted": false,
@@ -282,7 +284,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
               "endDate": "2015-08-31",
               "correctIndex": null,
               "allowWriteIn": true,
-              "endTime": "11:20:00"
+              "endTime": "11:20"
             },
         }
     }
@@ -652,7 +654,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
     * **is_correct:** *boolean*, if the castie has ended, this indicates if the User's forecast was correct- ``True`` if correct, ``False`` if incorrect. this field is only present if the Castie has ended.
     * **points_earned**: *integer*, number of points the User was awarded if they were correct
     * **endDate:** *string*, date (YYYY-MM-DD) the Castie closes; ``None`` if this is an open-ended Castie
-    * **endTime:**  *string*, time (Hour:Minute:Second:Microsecond) the Castie closes; ``None`` if this is an open-ended 
+    * **endTime:**  *string*, time (HH:MM) the Castie closes; ``None`` if this is an open-ended 
 
 **Sample Response** ::
 
@@ -674,7 +676,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
     },
     "myForecasts": {
       "6": {
-        "endTime": "22:36:00",
+        "endTime": "22:36",
         "endDate": "2015-12-09",
         "question": "Who will become the next prez?",
         "uuid": "8b2f08bb4cd64c98bab5e87efdf32b24",
@@ -701,7 +703,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
         "forecast": "lol no"
       },
       "342": {
-        "endTime": "20:49:00",
+        "endTime": "20:49",
         "answerSubmitted": true,
         "question": "Kentucky v. Wisconsin",
         "uuid": "8b2f08bb4cd64c98bab5e87efdf32b24",
@@ -1035,7 +1037,7 @@ In addition to a "myForecasts" dictionary, returns a dictionary entitled 'accura
       "ranking_outOf": 189,
       "myForecasts": {
         "1517": {
-          "endTime": "16:00:00",
+          "endTime": "16:00",
           "question": "Bucs to win their season opener vs the Titans?",
           "endDate": "2015-09-13",
           "uuid": "6fgt4f2f80c5460d9940f1f91c8caae6",

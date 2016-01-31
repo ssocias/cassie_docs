@@ -304,7 +304,11 @@
 </li>
 <li><p class="first"><strong>createdAtDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie was created</p>
 </li>
-<li><p class="first"><strong>createdAtTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the Castie was created</p>
+<li><p class="first"><strong>createdAtTime:</strong>  <em>string</em>, time (HH:MM:SS.mmmmmm) the Castie was created</p>
+</li>
+<li><p class="first"><strong>lastForecastedDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie was last forecasted</p>
+</li>
+<li><p class="first"><strong>lastForecastedTime:</strong>  <em>string</em>, time (HH:MM:SS.mmmmmm) the Castie was last forecasted</p>
 </li>
 <li><p class="first"><strong>allowWriteIn:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie allows write-in forecasts</p>
 </li>
@@ -314,7 +318,7 @@
 </li>
 <li><p class="first"><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
 </li>
-<li><p class="first"><strong>endTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
+<li><p class="first"><strong>endTime:</strong>  <em>string</em>, time (HH:MM) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
 </li>
 <li><p class="first"><strong>userForecast:</strong> <em>dictionary</em>, this dictionary contains data about the User&#8217;s forecast. If the User did not forecast this Castie, this dictionary does not exist. Keys in the dictionary include:</p>
 <ul class="simple">
@@ -402,7 +406,7 @@
           <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-21&quot;</span><span class="p">,</span>
           <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="s">&quot;between 10 and 50&quot;</span><span class="p">,</span>
           <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;23:00:00&quot;</span>
+          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;23:00&quot;</span>
         <span class="p">},</span>
         <span class="s">&quot;6785577f160f45b0989dcee31bd762bf&quot;</span><span class="p">:</span> <span class="p">{</span>
           <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
@@ -445,7 +449,7 @@
           <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-08-31&quot;</span><span class="p">,</span>
           <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
           <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;11:20:00&quot;</span>
+          <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;11:20&quot;</span>
         <span class="p">},</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -820,7 +824,7 @@ Each User object in the list contains:</p>
 <li><strong>is_correct:</strong> <em>boolean</em>, if the castie has ended, this indicates if the User&#8217;s forecast was correct- <code class="docutils literal"><span class="pre">True</span></code> if correct, <code class="docutils literal"><span class="pre">False</span></code> if incorrect. this field is only present if the Castie has ended.</li>
 <li><strong>points_earned</strong>: <em>integer</em>, number of points the User was awarded if they were correct</li>
 <li><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</li>
-<li><strong>endTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended</li>
+<li><strong>endTime:</strong>  <em>string</em>, time (HH:MM) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
@@ -842,7 +846,7 @@ Each User object in the list contains:</p>
   <span class="p">},</span>
   <span class="s">&quot;myForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">&quot;6&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;22:36:00&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;22:36&quot;</span><span class="p">,</span>
       <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-12-09&quot;</span><span class="p">,</span>
       <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Who will become the next prez?&quot;</span><span class="p">,</span>
       <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;8b2f08bb4cd64c98bab5e87efdf32b24&quot;</span><span class="p">,</span>
@@ -869,7 +873,7 @@ Each User object in the list contains:</p>
       <span class="s">&quot;forecast&quot;</span><span class="p">:</span> <span class="s">&quot;lol no&quot;</span>
     <span class="p">},</span>
     <span class="s">&quot;342&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;20:49:00&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;20:49&quot;</span><span class="p">,</span>
       <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
       <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Kentucky v. Wisconsin&quot;</span><span class="p">,</span>
       <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;8b2f08bb4cd64c98bab5e87efdf32b24&quot;</span><span class="p">,</span>
@@ -1171,7 +1175,7 @@ Each User object in the list contains:</p>
     <span class="s">&quot;ranking_outOf&quot;</span><span class="p">:</span> <span class="mi">189</span><span class="p">,</span>
     <span class="s">&quot;myForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="s">&quot;1517&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;16:00:00&quot;</span><span class="p">,</span>
+        <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="s">&quot;16:00&quot;</span><span class="p">,</span>
         <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Bucs to win their season opener vs the Titans?&quot;</span><span class="p">,</span>
         <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="s">&quot;2015-09-13&quot;</span><span class="p">,</span>
         <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;6fgt4f2f80c5460d9940f1f91c8caae6&quot;</span><span class="p">,</span>
