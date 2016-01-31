@@ -517,39 +517,35 @@ If the two Users are already friends: ::
 
 .. _SubmitComment:
 
-Submit Comment
+Create Comment
 ==============
 
-Save a comment for a given Castie.
+Create and save a comment for a given Castie. The comment text must be passed in the body of the request. Comments must be 500 chars or less. If the comment exceeds 500 chars, an error will be returned.
 
-To view comments for a given Castie, use the :ref:`Comments` endpoint.
+To view comments for a given Castie, use the :ref:`Comments` endpoint. 
 
 **Definition:** 
 
-``POST https://cassieapp.com/api/casties/{uuid}/comments/``
+``POST https://cassieapp.com/api/casties/{uuid}/comment/``
+
+**Parameters**
+
+    **Data needed to create a Comment, sent as key:value pairs:**
+
+    * **commentText:** *string*, the text of the comment; MAX 500 chars
+
 
 **Returns**
 
-A list of Comment Objects
-
-**Comment Object** 
-
-  * **handle:** *string*, the user's handle; uniquely identifies the friend
-  * **lastName:** *string*, the user's last name 
-  * **firstName:** *string*, the user's first name 
-  * **profPic:** *string*, location of the friend's profile picture
-  * **commentText:** *string*, the text of the comment itself
-  * **commentDate:** *string*, date (YYYY-MM-DD) the comment was made
-  * **commentTime:**  *string*, time (Hour:Minute:Second:Microsecond) the comment was made
-
 **Sample Response** ::
 
-    {
-      "status": 200,
-      "number_notifications": 7,
-      "needs_answer": true,
-      "number_needing_answer": 3
-    }  
+  {
+    "handle": "user-581",
+    "commentText": "I love Cassie so much!",
+    "status": 200,
+    "comment": "created successfully",
+    "castie": "a1f318a5c9ab4858a15996f69f851938"
+  }
 
 Accept or Reject a Frodad Request
 =================================

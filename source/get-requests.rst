@@ -1387,7 +1387,7 @@ Comments
 
 Return a list of Comment Objects for a given Castie. Comments are ordered from newest to oldest.
 
-To save a new comment for a Castie, use the :ref:`SubmitComment` endpoint found in the :ref:`Post Requests` section.
+To save a new comment for a Castie, use the :ref:`CreateComment` endpoint found in the :ref:`Post Requests` section.
 
 **Definition:** 
 

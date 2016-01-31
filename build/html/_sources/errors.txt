@@ -28,6 +28,7 @@ If the response status is anything other than 200, ``error_type`` and ``error_me
 * ``object_not_found`` requested object (usually a Castie, Group, or User) could not be found
 * ``inactive_user`` the requested profile is not active
 * ``castie_not_created`` castie could not be created/saved to database
+* ``comment_not_created`` comment not saved to database
 * ``account_not_created`` new Cassie account could not be created/saved to database
 * ``email_not_unique`` email address is already associated with an existing account
 * ``handle_not_unique`` handle is already associated with an existing account

@@ -1481,13 +1481,14 @@ Each User object in the list contains:</p>
 </div>
 <div class="section" id="comments">
 <span id="id7"></span><h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
-<p>Return a list of Comment Objects for a given Castie.</p>
-<p>To save a new comment for a Castie, use the <a class="reference internal" href="post-requests.html#submitcomment"><span>Submit Comment</span></a> endpoint found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section.</p>
+<p>Return a list of Comment Objects for a given Castie. Comments are ordered from newest to oldest.</p>
+<p>To save a new comment for a Castie, use the <span class="xref std std-ref">CreateComment</span> endpoint found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/comments/</span></code></p>
 <p><strong>Returns</strong></p>
-<p>The number of comments for the given Castie and a list of Comment Objects</p>
+<p>The Castie UUID, number of comments for the given Castie, and a list of Comment Objects</p>
 <ul class="simple">
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
 <li><strong>numberComments:</strong> <em>integer</em>, numer of comments left on the Castie</li>
 </ul>
 <p><strong>Comment Object</strong></p>
@@ -1506,33 +1507,34 @@ Each User object in the list contains:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;numberComments&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;a1f318a5c9ab4858a15996f69f851938&quot;</span><span class="p">,</span>
   <span class="s">&quot;comments&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:13:43.694687&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;first comment left by steph&quot;</span><span class="p">,</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-581&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:05.613757&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;second comment left by another steph&quot;</span><span class="p">,</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Soc&quot;</span><span class="p">,</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:25.847464&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;thirsd comment left by christina&quot;</span><span class="p">,</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
       <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-4/image_QPZAEEG.jpg&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:25.847464&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;third comment left by christina&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-581&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socais&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:05.613757&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;second comment left by other steph&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:13:43.694687&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;first comment left by steph&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
 <span class="p">}</span>
