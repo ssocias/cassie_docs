@@ -1003,7 +1003,8 @@ Each User object in the list contains:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">To return information on only one group at a time, use this endpoint: <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/?casties=</span></code> By default, this request will also include a list of all Casties within the Group. Set the &#8216;casties&#8217; parameter to False to omit this list and only return the Group Object.</p>
+<p>To return information on only one group at a time, use this endpoint: <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/{group_slug}/?casties=</span></code> By default, this request will also include a list of all Casties within the Group. Set the &#8216;casties&#8217; parameter to False to omit this list and only return the Group Object.</p>
+<p class="last">This request will also return two additional attributes to the Group Object: <strong>ranking</strong> and <strong>totalRanked</strong>, which are both integers to indicate where the User is ranked within the Group (if no ranking, &#8216;0&#8217; is returned).</p>
 </div>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/groups/</span></code></p>
@@ -1138,7 +1139,7 @@ Each User object in the list contains:</p>
 <div><ul class="simple">
 <li><strong>percentCorrect</strong>: <em>integer</em>, the User&#8217;s accuracy in the Group</li>
 <li><strong>ranking</strong>: <em>integer</em>, the User&#8217;s ranking in the Group leaderboard</li>
-<li><strong>ranking_outOf</strong>: <em>integer</em>, total number of Users used in ranking (ranking on the app should be displayed as &#8220;ranking / ranking_outOf&#8221;; ex. 1/189)</li>
+<li><strong>totalRanked</strong>: <em>integer</em>, total number of Users used in ranking (ranking on the app should be displayed as &#8220;ranking / totalRanked&#8221;; ex. 1/189)</li>
 <li><strong>myForecasts</strong>: <em>dictionary</em>, dictionary of <a class="reference internal" href="#forecast-object">Forecast Object</a> entries indexed by forecast id</li>
 </ul>
 </div></blockquote>

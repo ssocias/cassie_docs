@@ -847,6 +847,8 @@ Returns a dictionary of all Group objects indexed be the Group's slug attribute.
 
 .. note:: To return information on only one group at a time, use this endpoint: ``GET https://cassieapp.com/api/groups/{group_slug}/?casties=`` By default, this request will also include a list of all Casties within the Group. Set the 'casties' parameter to False to omit this list and only return the Group Object.
 
+  This request will also return two additional attributes to the Group Object: **ranking** and **totalRanked**, which are both integers to indicate where the User is ranked within the Group (if no ranking, '0' is returned).
+
 
 **Definition:** 
 
@@ -1000,7 +1002,7 @@ In addition to a "myForecasts" dictionary, returns a dictionary entitled 'accura
 
   * **percentCorrect**: *integer*, the User's accuracy in the Group
   * **ranking**: *integer*, the User's ranking in the Group leaderboard
-  * **ranking_outOf**: *integer*, total number of Users used in ranking (ranking on the app should be displayed as "ranking / ranking_outOf"; ex. 1/189)
+  * **totalRanked**: *integer*, total number of Users used in ranking (ranking on the app should be displayed as "ranking / totalRanked"; ex. 1/189)
   * **myForecasts**: *dictionary*, dictionary of `Forecast Object`_ entries indexed by forecast id 
 
 **Sample Response** ::
