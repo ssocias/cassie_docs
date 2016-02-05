@@ -330,7 +330,7 @@
 </li>
 <li><p class="first"><strong>friendCount:</strong> <em>integer</em>, number of friends that have forecasted the Castie</p>
 </li>
-<li><p class="first"><strong>friendPics:</strong> <em>list</em>, list of strings of friends that have forecasted the Castie</p>
+<li><p class="first"><strong>commentsCount:</strong> <em>integer</em>, number of comments left on the Castie</p>
 </li>
 <li><p class="first"><strong>answerSubmitted:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie has been answered</p>
 </li>
@@ -485,12 +485,6 @@
 <dd><ul class="first">
 <li><p class="first"><strong>handle</strong>: <em>string</em>, the friend&#8217;s handle</p>
 </li>
-<li><p class="first"><strong>lastName</strong>: <em>string</em>, the friend&#8217;s last name</p>
-</li>
-<li><p class="first"><strong>firstName</strong>: <em>string</em>, the friend&#8217;s last name</p>
-</li>
-<li><p class="first"><strong>profPic</strong>: <em>string</em>, location of the friend&#8217;s profile picture</p>
-</li>
 <li><p class="first"><strong>forecast_text</strong>: <em>string</em>, the friend&#8217;s forecast text</p>
 </li>
 <li><p class="first"><strong>answer_id</strong>: <em>integer</em>, If the Forecast is for a Castie with pre-defined answer options, this is the ID of the Answer option chosen</p>
@@ -503,26 +497,17 @@
 <div class="last highlight-python"><div class="highlight"><pre>&quot;friendForecasts&quot;: {
   &quot;222&quot;: {
     &quot;handle&quot;: &quot;Lizzyswanson&quot;,
-    &quot;lastName&quot;: &quot;Swanson&quot;,
-    &quot;profPic&quot;: &quot;profiles/user-38/image.jpg&quot;,
-    &quot;firstName&quot;: &quot;Lizzy&quot;,
     &quot;forecast_text&quot;: &quot;Female&quot;,
     &quot;answer_id&quot;: 209,
     &quot;is_correct&quot;: true
   },
   &quot;343&quot;: {
     &quot;handle&quot;: &quot;user-18&quot;,
-    &quot;lastName&quot;: &quot;Sevinsky&quot;,
-    &quot;profPic&quot;: &quot;profiles/user-18/image.jpg&quot;,
-    &quot;firstName&quot;: &quot;Amanda&quot;,
     &quot;answer_id&quot;: 210,
     &quot;forecast_text&quot;: &quot; Male&quot;
   },
   &quot;45&quot;: {
     &quot;handle&quot;: &quot;jennysmith&quot;,
-    &quot;lastName&quot;: &quot;Smith&quot;,
-    &quot;profPic&quot;: &quot;profiles/user-33/image_sOlgfKm.jpg&quot;,
-    &quot;firstName&quot;: &quot;Jennifer&quot;,
     &quot;forecast_text&quot;: &quot;Female&quot;,
     &quot;answer_id&quot;: 209,
     &quot;is_correct&quot;: true
@@ -542,26 +527,17 @@
     <span class="s">&quot;friendForecasts&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="s">&quot;34&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;Lizzyswanson&quot;</span><span class="p">,</span>
-        <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Swanson&quot;</span><span class="p">,</span>
-        <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-38/image.jpg&quot;</span><span class="p">,</span>
-        <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Lizzy&quot;</span><span class="p">,</span>
         <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;Female&quot;</span><span class="p">,</span>
         <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">209</span><span class="p">,</span>
         <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span>
       <span class="p">},</span>
       <span class="s">&quot;323&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-18&quot;</span><span class="p">,</span>
-        <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Sevinsky&quot;</span><span class="p">,</span>
-        <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-18/image.jpg&quot;</span><span class="p">,</span>
-        <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Amanda&quot;</span><span class="p">,</span>
         <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
         <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot; Male&quot;</span>
       <span class="p">},</span>
       <span class="s">&quot;44&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;jennysmith&quot;</span><span class="p">,</span>
-        <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Smith&quot;</span><span class="p">,</span>
-        <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-33/image_sOlgfKm.jpg&quot;</span><span class="p">,</span>
-        <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Jennifer&quot;</span><span class="p">,</span>
         <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;Female&quot;</span><span class="p">,</span>
         <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">209</span><span class="p">,</span>
         <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">true</span>
@@ -1486,7 +1462,7 @@ Each User object in the list contains:</p>
 <div class="section" id="comments">
 <span id="id7"></span><h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
 <p>Return a list of Comment Objects for a given Castie. Comments are ordered from newest to oldest.</p>
-<p>To save a new comment for a Castie, use the <span class="xref std std-ref">CreateComment</span> endpoint found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section.</p>
+<p>To save a new comment for a Castie, use the <a class="reference internal" href="post-requests.html#createcomment"><span>Create Comment</span></a> endpoint found in the <a class="reference internal" href="post-requests.html#post-requests"><span>Post Requests</span></a> section.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/{uuid}/comments/</span></code></p>
 <p><strong>Returns</strong></p>

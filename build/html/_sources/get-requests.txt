@@ -180,7 +180,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
       * **answer_id:** *integer*, if this forecast is for a Castie that has set answer options, this answer_id is the unique id of the answer option chosen. If the Castie consists of write-in answers only, this field does not exist.
 
     * **friendCount:** *integer*, number of friends that have forecasted the Castie
-    * **friendPics:** *list*, list of strings of friends that have forecasted the Castie
+    * **commentsCount:** *integer*, number of comments left on the Castie
     * **answerSubmitted:** *boolean*, ``True`` if the Castie has been answered
     * **correctIndex:** *string*, correct answer text; ``None`` if no answer has been provided
         * **NOTE:** if the Castie allowed write-in forecasts, the 'correctIndex' is the keyword the forecast must contain in order to be considered correct. If the Castie did not allow write-in answers, 'correctIndex' is the text of the correct forecast.
@@ -325,12 +325,6 @@ This object is the same as `Castie Object`_  described above in the `Home`_ sect
     **friendForecasts Dictionary Attributes:**
       * **handle**: *string*, the friend's handle
 
-      * **lastName**: *string*, the friend's last name
-
-      * **firstName**: *string*, the friend's last name
-
-      * **profPic**: *string*, location of the friend's profile picture
-
       * **forecast_text**: *string*, the friend's forecast text
 
       * **answer_id**: *integer*, If the Forecast is for a Castie with pre-defined answer options, this is the ID of the Answer option chosen
@@ -344,26 +338,17 @@ This object is the same as `Castie Object`_  described above in the `Home`_ sect
         "friendForecasts": {
           "222": {
             "handle": "Lizzyswanson",
-            "lastName": "Swanson",
-            "profPic": "profiles/user-38/image.jpg",
-            "firstName": "Lizzy",
             "forecast_text": "Female",
             "answer_id": 209,
             "is_correct": true
           },
           "343": {
             "handle": "user-18",
-            "lastName": "Sevinsky",
-            "profPic": "profiles/user-18/image.jpg",
-            "firstName": "Amanda",
             "answer_id": 210,
             "forecast_text": " Male"
           },
           "45": {
             "handle": "jennysmith",
-            "lastName": "Smith",
-            "profPic": "profiles/user-33/image_sOlgfKm.jpg",
-            "firstName": "Jennifer",
             "forecast_text": "Female",
             "answer_id": 209,
             "is_correct": true
@@ -378,26 +363,17 @@ This object is the same as `Castie Object`_  described above in the `Home`_ sect
       "friendForecasts": {
         "34": {
           "handle": "Lizzyswanson",
-          "lastName": "Swanson",
-          "profPic": "profiles/user-38/image.jpg",
-          "firstName": "Lizzy",
           "forecast_text": "Female",
           "answer_id": 209,
           "is_correct": true
         },
         "323": {
           "handle": "user-18",
-          "lastName": "Sevinsky",
-          "profPic": "profiles/user-18/image.jpg",
-          "firstName": "Amanda",
           "answer_id": 210,
           "forecast_text": " Male"
         },
         "44": {
           "handle": "jennysmith",
-          "lastName": "Smith",
-          "profPic": "profiles/user-33/image_sOlgfKm.jpg",
-          "firstName": "Jennifer",
           "forecast_text": "Female",
           "answer_id": 209,
           "is_correct": true

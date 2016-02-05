@@ -515,7 +515,7 @@ If the two Users are already friends: ::
 
 
 
-.. _SubmitComment:
+.. _CreateComment:
 
 Create Comment
 ==============
