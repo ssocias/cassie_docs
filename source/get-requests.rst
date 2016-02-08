@@ -877,7 +877,7 @@ Returns a dictionary, entitled 'groups', of Group objects. Groups are indexed by
     * **followersCount:** *integer*, number of Users that "Follow" the given group
     * **friendsCount:** *integer*, number of the User's friends that "Follow" the given group
     * **accuracy:** *integer*, percent correct for the User's forecasts in the Group
-    * **access:** *string*, set to either "granted", "pending", or ``None``. "granted" indicates that the User has been approved and is "following" the Group (therefore the "following" field is always ``True`` if this "access" field is "granted"). "pending" indicates that the User has requested access but has not yet been approved. If the User is "pending", the "following" field is ``False``.
+    * **access:** *string*, set to either "granted", "pending", or ``None``. "granted" indicates that the User has been approved. "pending" indicates that the User has requested access but has not yet been approved. If the User is "pending", the "following" field is ``False``.
     * **following:** *boolean*, ``True`` if the User is following the Group, ``False`` if the User is not following the Group
     * **canCreateCastie:** *boolean*, ``True`` if the User has permission to create Casties in the Group
     * **numberCasties:** *integer*, number of total casties in the Group
