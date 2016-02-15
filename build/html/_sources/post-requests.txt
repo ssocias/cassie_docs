@@ -252,7 +252,7 @@ Place a forecast on any active Castie. Forecast can be made when the Castie's en
 
 A successfull request returns a status 200, the uuid of the Castie, the User's forecast text, and, for a set answer option forecast, the answer_id of the answer option chosen.
 
-For a write-in forecast, the answer_id field is None.
+For a write-in forecast, the answer_id field is None/null.
 
 Appropriate errors will be returned in a variety of circumstances-
 
@@ -352,7 +352,7 @@ If the Group is not private and the "follow" was successful: ::
     "status": 200,
     "handle": "myHandleHere",
     "group_slug": "groupSlugHere",
-    "access": None,
+    "access": null,
     "following": true
   }
 
@@ -418,7 +418,7 @@ If the "un-follow" was successful: ::
     "status": 200,
     "handle": "myHandleHere",
     "group_slug": "groupSlugHere",
-    "access": None,
+    "access": null,
     "following": false
   }
 

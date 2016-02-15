@@ -371,7 +371,7 @@ Once this client-side validation is complete, send the handle to the backend so 
 </div></blockquote>
 <p><strong>Returns</strong></p>
 <p>A successfull request returns a status 200, the uuid of the Castie, the User&#8217;s forecast text, and, for a set answer option forecast, the answer_id of the answer option chosen.</p>
-<p>For a write-in forecast, the answer_id field is None.</p>
+<p>For a write-in forecast, the answer_id field is None/null.</p>
 <p>Appropriate errors will be returned in a variety of circumstances-</p>
 <p>If the User has already forecasted the Castie:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
@@ -459,7 +459,7 @@ Once this client-side validation is complete, send the handle to the backend so 
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
   <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
-  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
   <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">true</span>
 <span class="p">}</span>
 </pre></div>
@@ -519,7 +519,7 @@ Once this client-side validation is complete, send the handle to the backend so 
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;myHandleHere&quot;</span><span class="p">,</span>
   <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="s">&quot;groupSlugHere&quot;</span><span class="p">,</span>
-  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+  <span class="s">&quot;access&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
   <span class="s">&quot;following&quot;</span><span class="p">:</span> <span class="n">false</span>
 <span class="p">}</span>
 </pre></div>

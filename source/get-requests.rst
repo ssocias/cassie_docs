@@ -170,8 +170,8 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
     * **allowWriteIn:** *boolean*, ``True`` if the Castie allows write-in forecasts
     * **setAnswered:** *boolean*, ``True`` if the Castie consists of set answer options
     * **openEnded:** *boolean*, ``True`` if the Castie has no end date
-    * **endDate:** *string*, date (YYYY-MM-DD) the Castie closes; ``None`` if this is an open-ended Castie
-    * **endTime:**  *string*, time (HH:MM) the Castie closes; ``None`` if this is an open-ended Castie
+    * **endDate:** *string*, date (YYYY-MM-DD) the Castie closes; ``None/null`` if this is an open-ended Castie
+    * **endTime:**  *string*, time (HH:MM) the Castie closes; ``None/null`` if this is an open-ended Castie
     * **userForecast:** *dictionary*, this dictionary contains data about the User's forecast. If the User did not forecast this Castie, this dictionary does not exist. Keys in the dictionary include:
 
       * **forecast_text:** *string*, the text of the forecast
@@ -182,7 +182,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
     * **friendCount:** *integer*, number of friends that have forecasted the Castie
     * **commentsCount:** *integer*, number of comments left on the Castie
     * **answerSubmitted:** *boolean*, ``True`` if the Castie has been answered
-    * **correctIndex:** *string*, correct answer text; ``None`` if no answer has been provided
+    * **correctIndex:** *string*, correct answer text; ``None/null`` if no answer has been provided
         * **NOTE:** if the Castie allowed write-in forecasts, the 'correctIndex' is the keyword the forecast must contain in order to be considered correct. If the Castie did not allow write-in answers, 'correctIndex' is the text of the correct forecast.
     * **forecastsCount:** *integer*, number of total forecasts for the Castie
     * **forecast_options:** *list*, list of dictionaries for every forecast option
@@ -629,8 +629,8 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
     * **answerSubmitted:** *boolean*, indicates if the correct answer has been submitted. this field is only present if the Castie has ended (``is_active`` would be ``False``)
     * **is_correct:** *boolean*, if the castie has ended, this indicates if the User's forecast was correct- ``True`` if correct, ``False`` if incorrect. this field is only present if the Castie has ended.
     * **points_earned**: *integer*, number of points the User was awarded if they were correct
-    * **endDate:** *string*, date (YYYY-MM-DD) the Castie closes; ``None`` if this is an open-ended Castie
-    * **endTime:**  *string*, time (HH:MM) the Castie closes; ``None`` if this is an open-ended 
+    * **endDate:** *string*, date (YYYY-MM-DD) the Castie closes; ``None/null`` if this is an open-ended Castie
+    * **endTime:**  *string*, time (HH:MM) the Castie closes; ``None/null`` if this is an open-ended 
 
 **Sample Response** ::
 
@@ -877,7 +877,7 @@ Returns a dictionary, entitled 'groups', of Group objects. Groups are indexed by
     * **followersCount:** *integer*, number of Users that "Follow" the given group
     * **friendsCount:** *integer*, number of the User's friends that "Follow" the given group
     * **accuracy:** *integer*, percent correct for the User's forecasts in the Group
-    * **access:** *string*, set to either "granted", "pending", or ``None``. "granted" indicates that the User has been approved. "pending" indicates that the User has requested access but has not yet been approved. If the User is "pending", the "following" field is ``False``.
+    * **access:** *string*, set to either "granted", "pending", or ``None/null``. "granted" indicates that the User has been approved. "pending" indicates that the User has requested access but has not yet been approved. If the User is "pending", the "following" field is ``False``.
     * **following:** *boolean*, ``True`` if the User is following the Group, ``False`` if the User is not following the Group
     * **canCreateCastie:** *boolean*, ``True`` if the User has permission to create Casties in the Group
     * **numberCasties:** *integer*, number of total casties in the Group

@@ -316,9 +316,9 @@
 </li>
 <li><p class="first"><strong>openEnded:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie has no end date</p>
 </li>
-<li><p class="first"><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
+<li><p class="first"><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None/null</span></code> if this is an open-ended Castie</p>
 </li>
-<li><p class="first"><strong>endTime:</strong>  <em>string</em>, time (HH:MM) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</p>
+<li><p class="first"><strong>endTime:</strong>  <em>string</em>, time (HH:MM) the Castie closes; <code class="docutils literal"><span class="pre">None/null</span></code> if this is an open-ended Castie</p>
 </li>
 <li><p class="first"><strong>userForecast:</strong> <em>dictionary</em>, this dictionary contains data about the User&#8217;s forecast. If the User did not forecast this Castie, this dictionary does not exist. Keys in the dictionary include:</p>
 <ul class="simple">
@@ -335,7 +335,7 @@
 <li><p class="first"><strong>answerSubmitted:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the Castie has been answered</p>
 </li>
 <li><dl class="first docutils">
-<dt><strong>correctIndex:</strong> <em>string</em>, correct answer text; <code class="docutils literal"><span class="pre">None</span></code> if no answer has been provided</dt>
+<dt><strong>correctIndex:</strong> <em>string</em>, correct answer text; <code class="docutils literal"><span class="pre">None/null</span></code> if no answer has been provided</dt>
 <dd><ul class="first last simple">
 <li><strong>NOTE:</strong> if the Castie allowed write-in forecasts, the &#8216;correctIndex&#8217; is the keyword the forecast must contain in order to be considered correct. If the Castie did not allow write-in answers, &#8216;correctIndex&#8217; is the text of the correct forecast.</li>
 </ul>
@@ -799,8 +799,8 @@ Each User object in the list contains:</p>
 <li><strong>answerSubmitted:</strong> <em>boolean</em>, indicates if the correct answer has been submitted. this field is only present if the Castie has ended (<code class="docutils literal"><span class="pre">is_active</span></code> would be <code class="docutils literal"><span class="pre">False</span></code>)</li>
 <li><strong>is_correct:</strong> <em>boolean</em>, if the castie has ended, this indicates if the User&#8217;s forecast was correct- <code class="docutils literal"><span class="pre">True</span></code> if correct, <code class="docutils literal"><span class="pre">False</span></code> if incorrect. this field is only present if the Castie has ended.</li>
 <li><strong>points_earned</strong>: <em>integer</em>, number of points the User was awarded if they were correct</li>
-<li><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended Castie</li>
-<li><strong>endTime:</strong>  <em>string</em>, time (HH:MM) the Castie closes; <code class="docutils literal"><span class="pre">None</span></code> if this is an open-ended</li>
+<li><strong>endDate:</strong> <em>string</em>, date (YYYY-MM-DD) the Castie closes; <code class="docutils literal"><span class="pre">None/null</span></code> if this is an open-ended Castie</li>
+<li><strong>endTime:</strong>  <em>string</em>, time (HH:MM) the Castie closes; <code class="docutils literal"><span class="pre">None/null</span></code> if this is an open-ended</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
@@ -1025,7 +1025,7 @@ Each User object in the list contains:</p>
 <li><strong>followersCount:</strong> <em>integer</em>, number of Users that &#8220;Follow&#8221; the given group</li>
 <li><strong>friendsCount:</strong> <em>integer</em>, number of the User&#8217;s friends that &#8220;Follow&#8221; the given group</li>
 <li><strong>accuracy:</strong> <em>integer</em>, percent correct for the User&#8217;s forecasts in the Group</li>
-<li><strong>access:</strong> <em>string</em>, set to either &#8220;granted&#8221;, &#8220;pending&#8221;, or <code class="docutils literal"><span class="pre">None</span></code>. &#8220;granted&#8221; indicates that the User has been approved. &#8220;pending&#8221; indicates that the User has requested access but has not yet been approved. If the User is &#8220;pending&#8221;, the &#8220;following&#8221; field is <code class="docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>access:</strong> <em>string</em>, set to either &#8220;granted&#8221;, &#8220;pending&#8221;, or <code class="docutils literal"><span class="pre">None/null</span></code>. &#8220;granted&#8221; indicates that the User has been approved. &#8220;pending&#8221; indicates that the User has requested access but has not yet been approved. If the User is &#8220;pending&#8221;, the &#8220;following&#8221; field is <code class="docutils literal"><span class="pre">False</span></code>.</li>
 <li><strong>following:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the User is following the Group, <code class="docutils literal"><span class="pre">False</span></code> if the User is not following the Group</li>
 <li><strong>canCreateCastie:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if the User has permission to create Casties in the Group</li>
 <li><strong>numberCasties:</strong> <em>integer</em>, number of total casties in the Group</li>
