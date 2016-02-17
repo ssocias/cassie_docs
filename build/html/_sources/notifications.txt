@@ -57,6 +57,8 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 +-------------------------------+----------------------------------+-----------------------------------------+
 |Castie Commented               | castie-commented                 | uuid of the castie and new comment      |
 +-------------------------------+----------------------------------+-----------------------------------------+
+|New Castie                     | new-castie                       | uuid of the castie                      |
++-------------------------------+----------------------------------+-----------------------------------------+
 |Your Castie has been Forecasted| castie-forecasted                | uuid of the castie                      |
 +-------------------------------+----------------------------------+-----------------------------------------+
 |Castie Forecasted by Friends   | castie-friends-forecasted        | uuid of the castie                      |
