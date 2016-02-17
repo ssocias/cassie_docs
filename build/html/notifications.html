@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Notifications &mdash; Cassie API 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Cassie API 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Image Paths" href="image-paths.html"/>
+        <link rel="prev" title="Errors" href="errors.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Cassie API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Notifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#delete-an-individual-notification">Delete an Individual Notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#retrieve-a-count-of-new-notifications">Retrieve a Count of New Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#frodad-requests">Frodad Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagination.html">Pagination</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get-requests.html">Get Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post-requests.html">Post Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other-requests.html">Other Requests</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cassie API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Notifications</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/notifications.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="notifications">
+<span id="id1"></span><h1>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h1>
+<p>Users receive notifications from the Activity section found on the bottom navbar. THe Activity section consists of &#8220;Requests&#8221; and &#8220;Notifications&#8221; tabs. The &#8220;Requests&#8221; tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent.
+The &#8220;Notifications&#8221; tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.).</p>
+<p>When using the word &#8220;notifications&#8221;, I am referring to both frodad requests and generic notifications-
+Each notification is saved as a &#8220;Notificaion Object&#8221;. Most GET requests regarding notifications return either an individual object or an array of objects. See the <a class="reference internal" href="#notification-object">Notification Object</a> section below for more details.
+Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate &#8220;has been read&#8221; endpoint.
+The app should display a small red indicator number when the User has 1 or more new notifications. A new notification is one that was created at any point since the User last clicked the &#8220;Activity&#8221; tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User&#8217;s last visit to the &#8220;Activity&#8221; tab in the request to retrieve the number of new notifications.</p>
+<p>Users may delete notifications by tapping the small &#8216;x&#8217; in the right hand corner of the notification. When they do so, a request is made to the appropriate DELETE endpoint. Notifications that are &#8220;completed&#8221; after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted whenever the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie.</p>
+<p id="notification-object"><strong>The Notification Object</strong></p>
+<blockquote>
+<div><p><strong>Attributes</strong></p>
+<ul class="simple">
+<li><strong>created_on:</strong> <em>date</em>, date (YYYY-MM-DD?) the Notification was created</li>
+<li><strong>uuid:</strong> <em>string</em>, unique id for the Notification</li>
+<li><strong>message:</strong> <em>string</em>, text of the notification</li>
+<li><strong>url:</strong> <em>string</em>, action url used in the web app</li>
+<li><strong>has_been_read:</strong> <em>boolean</em>, indicates whether or not the notification has been read</li>
+<li><strong>notification_type:</strong> <em>string</em>, what type of notification this is (friend request, answer castie, etc); see the <a class="reference internal" href="#notification-types-table">Notification Types Table</a> for details</li>
+<li><strong>data:</strong> <em>array</em>, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)</li>
+</ul>
+</div></blockquote>
+<p id="notification-types-table"><strong>Notification Types</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="32%" />
+<col width="39%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Notification Name</strong></td>
+<td><strong>notification_type</strong></td>
+<td><strong>data</strong></td>
+</tr>
+<tr class="row-even"><td>Friend Request Received</td>
+<td>friend-request-received</td>
+<td>handle of user who sent the request</td>
+</tr>
+<tr class="row-odd"><td>Friend Request Accepted</td>
+<td>friend-request-accepted</td>
+<td>handle of user who accepted the request</td>
+</tr>
+<tr class="row-even"><td>Castie Needs Answer</td>
+<td>castie-needs-answer</td>
+<td>uuid of the castie to be answered</td>
+</tr>
+<tr class="row-odd"><td>Castie Answered</td>
+<td>castie-answered</td>
+<td>uuid of the newly answered castie</td>
+</tr>
+<tr class="row-even"><td>Castie Commented</td>
+<td>castie-commented</td>
+<td>uuid of the castie and new comment</td>
+</tr>
+<tr class="row-odd"><td>Your Castie has been Forecasted</td>
+<td>castie-forecasted</td>
+<td>uuid of the castie</td>
+</tr>
+<tr class="row-even"><td>Castie Forecasted by Friends</td>
+<td>castie-friends-forecasted</td>
+<td>uuid of the castie</td>
+</tr>
+<tr class="row-odd"><td>Group Access Approved</td>
+<td>group-approved</td>
+<td>slug of the group</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="delete-an-individual-notification">
+<h2>Delete an Individual Notification<a class="headerlink" href="#delete-an-individual-notification" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>user_uuid: <em>string</em>, the User&#8217;s uniquie uuid</li>
+</ul>
+<p><strong>Sample Response</strong></p>
+</div>
+<div class="section" id="retrieve-a-count-of-new-notifications">
+<h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/unread/?last_seen_date={last_seen_date}&amp;last_seen_time={last_seen_time}</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>user_uuid: <em>string</em>, the User&#8217;s uniquie uuid</li>
+<li>last_seen_date: <em>string</em>, date the User last clicked on the &#8220;Activity&#8221; tab</li>
+<li>last_seen_time: <em>string</em>, time the User last clicked on the &#8220;Activity&#8221; tab</li>
+</ul>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="frodad-requests">
+<h2>Frodad Requests<a class="headerlink" href="#frodad-requests" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/frodad-requests/</span></code>
+<code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/frodad-requests-accepted/</span></code></p>
+<p><strong>Arguments</strong></p>
+<p><strong>Returns</strong></p>
+<p><strong>Sample Response</strong></p>
+</div>
+<div class="section" id="id2">
+<h2>Notifications<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Coming Soon</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="image-paths.html" class="btn btn-neutral float-right" title="Image Paths" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="errors.html" class="btn btn-neutral" title="Errors" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Stephanie Socias.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -21,6 +21,7 @@ Topics
    
    authentication
    errors
+   notifications
    image-paths
    pagination
 

@@ -1084,19 +1084,7 @@ Returns a dictionary, entitled 'friendFollowers', of User objects- these are fol
   
 Activity
 ========
-Data for the Activity tab
-
------------
-Frodad Feed
------------
-
-Frodad Feed will NOT be implemented in Cassie v1.0
-
--------------
-Notifications
--------------
-
-Coming Soon
+The Activity section is where Users receive notifications. See the :ref:`Notifications` section for more details. 
 
 Search
 ======
