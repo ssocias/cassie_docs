@@ -92,9 +92,9 @@ None
 
 .. _Frodad Requests:
 
-----------------------------
-Frodad Request Notifications
-----------------------------
+------------------------------------
+Retrieve rodad Request Notifications
+------------------------------------
 
 Returns notifications regarding pending friend requests the User has received and notifications regarding recently accepted friend requests the User has sent. 
 
