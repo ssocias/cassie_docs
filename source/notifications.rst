@@ -3,6 +3,9 @@
 Notifications
 *************
 
+.. warning:: Question about Friend Requests
+    Since we include the Frodad's picture along with their request, can we link to their profile from the picture??
+
 Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of "Requests" and "Notifications" tabs. 
 
 The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recently accepted requests the User has sent. 
@@ -11,6 +14,7 @@ The "Notifications" tab contains all other notifications to the user (ex. Castie
 From here forward, when using the word "notifications", I am referring to both frodad requests and generic notifications.
 
 .. note:: Notifications API endpoint
+
     ``https://notifications.cassieapp.com/``
 
     All requests (except for the request to obtain a `count of new notifications`_ ) require Basic Authentication using the Cassie admin username and password (ask Stephanie for it!).

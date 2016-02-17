@@ -518,6 +518,8 @@ Profiles are uniquely defined by both their ``handle`` and ``user_uuid`` attribu
 
 There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a `Profile Object`_.
 
+.. warning:: Users may designate their Profile as private. If a User's profile is private, the "is_private" boolean will be ``true``. In this case, the server will only return `Profile Object`_ data (the value for the myCasties, frodads, groups, or stats dictionary will be returned as the string ``private``). The privacy applies to friends and non-friends alike.
+
 .. _Profile Object:
 
 **The Profile Object**
@@ -555,7 +557,7 @@ My Casties
 
 This is the "main" Profile subsection shown when "Profile" is selected from the bottom nav bar. It contains information on all Casties the User has created, including whether or not the Castie is ready to be answered. A Castie is ready to be answered if the Castie end date has passed. 
 
-.. note:: When looking at another user's profile (not your own), the "Answer" button for the individual Casties the user has created should NOT be visible.
+.. warning:: When looking at another user's profile (not your own), the "Answer" button for the individual Casties the user has created should NOT be visible.
 
 **Definition:** 
 

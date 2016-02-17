@@ -675,6 +675,10 @@ Each User object in the list contains:</p>
 </div>
 <p>Profiles are uniquely defined by both their <code class="docutils literal"><span class="pre">handle</span></code> and <code class="docutils literal"><span class="pre">user_uuid</span></code> attributes. <code class="docutils literal"><span class="pre">user_uuid</span></code> is only used for the <a class="reference internal" href="notifications.html#notifications"><span>Notifications</span></a> API.</p>
 <p>There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a <a class="reference internal" href="#profile-object">Profile Object</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Users may designate their Profile as private. If a User&#8217;s profile is private, the &#8220;is_private&#8221; boolean will be <code class="docutils literal"><span class="pre">true</span></code>. In this case, the server will only return <a class="reference internal" href="#profile-object">Profile Object</a> data (the value for the myCasties, frodads, groups, or stats dictionary will be returned as the string <code class="docutils literal"><span class="pre">private</span></code>). The privacy applies to friends and non-friends alike.</p>
+</div>
 <p id="profile-object"><strong>The Profile Object</strong></p>
 <blockquote>
 <div><p><strong>Attributes</strong></p>
@@ -731,8 +735,8 @@ Each User object in the list contains:</p>
 <div class="section" id="my-casties">
 <h3>My Casties<a class="headerlink" href="#my-casties" title="Permalink to this headline">¶</a></h3>
 <p>This is the &#8220;main&#8221; Profile subsection shown when &#8220;Profile&#8221; is selected from the bottom nav bar. It contains information on all Casties the User has created, including whether or not the Castie is ready to be answered. A Castie is ready to be answered if the Castie end date has passed.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
 <p class="last">When looking at another user&#8217;s profile (not your own), the &#8220;Answer&#8221; button for the individual Casties the user has created should NOT be visible.</p>
 </div>
 <p><strong>Definition:</strong></p>
