@@ -3,7 +3,7 @@
 Notifications
 *************
 
-.. warning:: Question about Friend Requests
+.. warning:: **Question for James about Frodad Requests**:
     Since we include the Frodad's picture along with their request, can we link to their profile from the picture??
 
 Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of "Requests" and "Notifications" tabs. 
