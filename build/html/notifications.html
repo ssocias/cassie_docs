@@ -86,9 +86,10 @@
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Notifications</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#delete-an-individual-notification">Delete an Individual Notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mark-as-read">Mark as Read</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#retrieve-a-count-of-new-notifications">Retrieve a Count of New Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#frodad-requests">Frodad Requests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-notifications">Other Notifications</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
@@ -144,19 +145,19 @@
             
   <div class="section" id="notifications">
 <span id="id1"></span><h1>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h1>
-<p>Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of &#8220;Requests&#8221; and &#8220;Notifications&#8221; tabs. The &#8220;Requests&#8221; tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent.
+<p>Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of &#8220;Requests&#8221; and &#8220;Notifications&#8221; tabs.</p>
+<p>The &#8220;Requests&#8221; tab houses all Frodad Requests- both requests the User has received and also any recently accepted requests the User has sent.
 The &#8220;Notifications&#8221; tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.).</p>
 <p>From here forward, when using the word &#8220;notifications&#8221;, I am referring to both frodad requests and generic notifications.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Notifications API endpoint</p>
-<p><code class="docutils literal"><span class="pre">https://notifications.cassieapp.com/</span></code></p>
-<p class="last">All requests except for the request to obtain a count of notifications require Basic Authentication using the User&#8217;s email and password.</p>
+<p>Notifications API endpoint
+<code class="docutils literal"><span class="pre">https://notifications.cassieapp.com/</span></code></p>
+<p class="last">All requests (except for the request to obtain a <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> ) require Basic Authentication using the User&#8217;s email and password.</p>
 </div>
-<p>Notifications are accessed via <cite>https://notifications.cassieapp.com/notifications/</cite>
-Each notification is saved as a &#8220;Notificaion Object&#8221;. Most GET requests regarding notifications return either an individual object or an array of objects. See the <a class="reference internal" href="#notification-object">Notification Object</a> section below for more details.
-Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate &#8220;has been read&#8221; endpoint.
-The app should display a small red indicator number when the User has 1 or more new notifications. A new notification is one that was created at any point since the User last clicked the &#8220;Activity&#8221; tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User&#8217;s last visit to the &#8220;Activity&#8221; tab in the request to retrieve the number of new notifications.</p>
+<p>Each notification is saved as a <a class="reference internal" href="#notification-object">Notification Object</a>. Most GET requests regarding notifications return either an individual object or an array of objects.</p>
+<p>Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate <a class="reference internal" href="#mark-as-read">mark as read</a> endpoint.</p>
+<p>The app should display a small red indicator number when the User has 1 or more new notifications (using the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> endpoint). A new notification is one that was created at any point since the User last clicked the &#8220;Activity&#8221; tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User&#8217;s last visit to the &#8220;Activity&#8221; tab in the request to retrieve the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a>.</p>
 <p>Users may delete notifications by tapping the small &#8216;x&#8217; in the right hand corner of the notification. When they do so, a request is made to the appropriate DELETE endpoint. Notifications that are &#8220;completed&#8221; after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted whenever the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie.</p>
 <p id="notification-object"><strong>The Notification Object</strong></p>
 <blockquote>
@@ -167,6 +168,7 @@ The app should display a small red indicator number when the User has 1 or more 
 <li><strong>message:</strong> <em>string</em>, text of the notification</li>
 <li><strong>url:</strong> <em>string</em>, action url used in the web app</li>
 <li><strong>has_been_read:</strong> <em>boolean</em>, indicates whether or not the notification has been read</li>
+<li><strong>notification_id:</strong> <em>string</em>, unique id for the Notification</li>
 <li><strong>notification_type:</strong> <em>string</em>, what type of notification this is (friend request, answer castie, etc); see the <a class="reference internal" href="#notification-types-table">Notification Types Table</a> for details</li>
 <li><strong>data:</strong> <em>array</em>, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)</li>
 </ul>
@@ -223,20 +225,37 @@ The app should display a small red indicator number when the User has 1 or more 
 <p><code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li>user_uuid: <em>string</em>, the User&#8217;s uniquie uuid</li>
+<li><strong>user_uuid</strong>: <em>string</em>, the User&#8217;s uniquie uuid</li>
 </ul>
 <p><strong>Sample Response</strong></p>
+<blockquote>
+<div>Coming soon</div></blockquote>
+</div>
+<div class="section" id="mark-as-read">
+<span id="id2"></span><h2>Mark as Read<a class="headerlink" href="#mark-as-read" title="Permalink to this headline">¶</a></h2>
+<p>Use this endpoint to indicate that a notification has been read. A notification is &#8220;read&#8221; once a User clicks the notification.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/read/{notification_id}</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><strong>user_uuid</strong>: <em>string</em>, the User&#8217;s uniquie uuid</li>
+<li><strong>notification_id</strong>: <em>string</em>, the Notification&#8217;s uniquie id</li>
+</ul>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>Coming Soon
+</pre></div>
+</div>
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
-<h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
+<span id="count-of-new-notifications"></span><h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
 <p>No authentication required.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/unread/?last_seen_date={last_seen_date}&amp;last_seen_time={last_seen_time}</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li>user_uuid: <em>string</em>, the User&#8217;s uniquie uuid</li>
-<li>last_seen_date: <em>string</em>, date the User last clicked on the &#8220;Activity&#8221; tab</li>
-<li>last_seen_time: <em>string</em>, time the User last clicked on the &#8220;Activity&#8221; tab</li>
+<li><strong>user_uuid</strong>: <em>string</em>, the User&#8217;s uniquie uuid</li>
+<li><strong>last_seen_date</strong>: <em>string</em>, date the User last clicked on the &#8220;Activity&#8221; tab</li>
+<li><strong>last_seen_time</strong>: <em>string</em>, time the User last clicked on the &#8220;Activity&#8221; tab</li>
 </ul>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
@@ -254,8 +273,8 @@ The app should display a small red indicator number when the User has 1 or more 
 <p><strong>Returns</strong></p>
 <p><strong>Sample Response</strong></p>
 </div>
-<div class="section" id="id2">
-<h2>Notifications<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="other-notifications">
+<h2>Other Notifications<a class="headerlink" href="#other-notifications" title="Permalink to this headline">¶</a></h2>
 <p>Coming Soon</p>
 </div>
 </div>

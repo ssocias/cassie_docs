@@ -3,21 +3,24 @@
 Notifications
 *************
 
-Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of "Requests" and "Notifications" tabs. The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent. 
+Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of "Requests" and "Notifications" tabs. 
+
+The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recently accepted requests the User has sent. 
 The "Notifications" tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.).
 
 From here forward, when using the word "notifications", I am referring to both frodad requests and generic notifications.
 
 .. note:: Notifications API endpoint
-
     ``https://notifications.cassieapp.com/``
 
-    All requests except for the request to obtain a count of notifications require Basic Authentication using the User's email and password.
+    All requests (except for the request to obtain a `count of new notifications`_ ) require Basic Authentication using the User's email and password.
 
-Notifications are accessed via `https://notifications.cassieapp.com/notifications/` 
-Each notification is saved as a "Notificaion Object". Most GET requests regarding notifications return either an individual object or an array of objects. See the `Notification Object`_ section below for more details.
-Notifications are classified as "unread" when the User has not yet clicked on it and "read" once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate "has been read" endpoint.
-The app should display a small red indicator number when the User has 1 or more new notifications. A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the number of new notifications.
+
+Each notification is saved as a `Notification Object`_. Most GET requests regarding notifications return either an individual object or an array of objects.
+
+Notifications are classified as "unread" when the User has not yet clicked on it and "read" once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate `mark as read`_ endpoint.
+
+The app should display a small red indicator number when the User has 1 or more new notifications (using the `count of new notifications`_ endpoint). A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the `count of new notifications`_.
 
 Users may delete notifications by tapping the small 'x' in the right hand corner of the notification. When they do so, a request is made to the appropriate DELETE endpoint. Notifications that are "completed" after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted whenever the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie.
 
@@ -33,6 +36,7 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
     * **url:** *string*, action url used in the web app
     * **has_been_read:** *boolean*, indicates whether or not the notification has been read
 
+    * **notification_id:** *string*, unique id for the Notification
     * **notification_type:** *string*, what type of notification this is (friend request, answer castie, etc); see the `Notification Types Table`_ for details
     * **data:** *array*, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)
 
@@ -70,9 +74,34 @@ Delete an Individual Notification
 
 **Arguments**
 
-* user_uuid: *string*, the User's uniquie uuid 
+* **user_uuid**: *string*, the User's uniquie uuid 
 
 **Sample Response**
+
+    Coming soon
+
+.. _mark as read:
+
+------------
+Mark as Read
+------------
+
+Use this endpoint to indicate that a notification has been read. A notification is "read" once a User clicks the notification.
+
+**Definition**
+
+``GET https://notifications.cassieapp.com/notifications/{user_uuid}/read/{notification_id}``
+
+**Arguments**
+
+* **user_uuid**: *string*, the User's uniquie uuid 
+* **notification_id**: *string*, the Notification's uniquie id 
+
+**Sample Response** ::
+
+    Coming Soon
+
+.. _count of new notifications:
 
 -------------------------------------
 Retrieve a Count of New Notifications
@@ -86,9 +115,9 @@ No authentication required.
 
 **Arguments**
 
-* user_uuid: *string*, the User's uniquie uuid 
-* last_seen_date: *string*, date the User last clicked on the "Activity" tab
-* last_seen_time: *string*, time the User last clicked on the "Activity" tab
+* **user_uuid**: *string*, the User's uniquie uuid 
+* **last_seen_date**: *string*, date the User last clicked on the "Activity" tab
+* **last_seen_time**: *string*, time the User last clicked on the "Activity" tab
 
 
 **Sample Response** ::
@@ -112,9 +141,9 @@ Frodad Requests
 
 **Sample Response**
 
--------------
-Notifications
--------------
+-------------------
+Other Notifications
+-------------------
 
 Coming Soon
 
