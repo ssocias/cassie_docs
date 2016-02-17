@@ -13,7 +13,7 @@ From here forward, when using the word "notifications", I am referring to both f
 .. note:: Notifications API endpoint
     ``https://notifications.cassieapp.com/``
 
-    All requests (except for the request to obtain a `count of new notifications`_ ) require Basic Authentication using the User's email and password.
+    All requests (except for the request to obtain a `count of new notifications`_ ) require Basic Authentication using the Cassie admin username and password (ask Stephanie for it!).
 
 
 Each notification is saved as a `Notification Object`_. Most GET requests regarding notifications return either an individual object or an array of objects.

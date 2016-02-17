@@ -153,7 +153,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <p class="first admonition-title">Note</p>
 <p>Notifications API endpoint
 <code class="docutils literal"><span class="pre">https://notifications.cassieapp.com/</span></code></p>
-<p class="last">All requests (except for the request to obtain a <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> ) require Basic Authentication using the User&#8217;s email and password.</p>
+<p class="last">All requests (except for the request to obtain a <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> ) require Basic Authentication using the Cassie admin username and password (ask Stephanie for it!).</p>
 </div>
 <p>Each notification is saved as a <a class="reference internal" href="#notification-object">Notification Object</a>. Most GET requests regarding notifications return either an individual object or an array of objects.</p>
 <p>Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate <a class="reference internal" href="#mark-as-read">mark as read</a> endpoint.</p>
