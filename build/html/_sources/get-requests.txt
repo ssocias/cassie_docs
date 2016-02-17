@@ -514,15 +514,18 @@ If the requested profile is inactive, the following response is returned ::
     "error_message": "the profile you requested is not active"
   }
 
-Profiles are uniquely defined by their ``handle`` attribute.
+Profiles are uniquely defined by both their ``handle`` and ``user_uuid`` attributes. ``user_uuid`` is only used for the :ref:`notifications` API.
 
-There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a profile object.
+There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a `Profile Object`_.
+
+.. _Profile Object:
 
 **The Profile Object**
 
     **Attributes**
 
-    * **handle:** *string*, unique identifier for the profile
+    * **handle:** *string*, unique identifier for the profile (each User selects their own handle)
+    * **user_uuid:** *string*, unique identifier for the profile; random 32 character string
     * **firstName:** *string*, first name of the user
     * **lastName:** *string*, last name of the user
     * **city:** *string*, city
@@ -574,6 +577,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
       "lastName": "Socias",
       "firstName": "Stephanie",
       "handle": "steph",
+      "user_uuid": "dfgo9e8b733700981f14cccd39cd8462",
       "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
       "is_private": false,
       "city": "Boston"
@@ -647,6 +651,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
       "state": "MA",
       "forecastsNumber": 210,
       "handle": "steph",
+      "user_uuid": "dfgo9e8b733700981f14cccd39cd8462",
       "frodadsNumber": 41,
       "lastName": "Socias"
     },
@@ -725,6 +730,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
       "forecastsNumber": 210,
       "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
       "handle": "steph",
+      "user_uuid": "dfgo9e8b733700981f14cccd39cd8462",
       "city": "Boston",
       "groupsNumber": 3,
       "friend_status": "self"
@@ -803,6 +809,7 @@ A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictiona
       "city": "Boston",
       "lastName": "Socias",
       "handle": "steph",
+      "user_uuid": "dfgo9e8b733700981f14cccd39cd8462",
       "frodadsNumber": 41,
       "myCastiesNumber": 138,
       "firstName": "Stephanie",

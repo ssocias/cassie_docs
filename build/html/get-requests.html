@@ -673,13 +673,15 @@ Each User object in the list contains:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Profiles are uniquely defined by their <code class="docutils literal"><span class="pre">handle</span></code> attribute.</p>
-<p>There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a profile object.</p>
-<p><strong>The Profile Object</strong></p>
+<p>Profiles are uniquely defined by both their <code class="docutils literal"><span class="pre">handle</span></code> and <code class="docutils literal"><span class="pre">user_uuid</span></code> attributes. <code class="docutils literal"><span class="pre">user_uuid</span></code> is only used for the <a class="reference internal" href="notifications.html#notifications"><span>Notifications</span></a> API.</p>
+<p>There are four GET endpoints for this profile screen, corresponding to the four subdivisions. Every endpoint contains the same basic profile data, followed by the subdivision-specific data. The basic profile data consists of a <a class="reference internal" href="#profile-object">Profile Object</a>.</p>
+<p id="profile-object"><strong>The Profile Object</strong></p>
 <blockquote>
 <div><p><strong>Attributes</strong></p>
 <ul>
-<li><p class="first"><strong>handle:</strong> <em>string</em>, unique identifier for the profile</p>
+<li><p class="first"><strong>handle:</strong> <em>string</em>, unique identifier for the profile (each User selects their own handle)</p>
+</li>
+<li><p class="first"><strong>user_uuid:</strong> <em>string</em>, unique identifier for the profile; random 32 character string</p>
 </li>
 <li><p class="first"><strong>firstName:</strong> <em>string</em>, first name of the user</p>
 </li>
@@ -748,6 +750,7 @@ Each User object in the list contains:</p>
     <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
     <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Stephanie&quot;</span><span class="p">,</span>
     <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;user_uuid&quot;</span><span class="p">:</span> <span class="s">&quot;dfgo9e8b733700981f14cccd39cd8462&quot;</span><span class="p">,</span>
     <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
     <span class="s">&quot;is_private&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
     <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span>
@@ -814,6 +817,7 @@ Each User object in the list contains:</p>
     <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span>
     <span class="s">&quot;forecastsNumber&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
     <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;user_uuid&quot;</span><span class="p">:</span> <span class="s">&quot;dfgo9e8b733700981f14cccd39cd8462&quot;</span><span class="p">,</span>
     <span class="s">&quot;frodadsNumber&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
     <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span>
   <span class="p">},</span>
@@ -884,6 +888,7 @@ Each User object in the list contains:</p>
     <span class="s">&quot;forecastsNumber&quot;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
     <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
     <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span><span class="p">,</span>
+    <span class="s">&quot;user_uuid&quot;</span><span class="p">:</span> <span class="s">&quot;dfgo9e8b733700981f14cccd39cd8462&quot;</span><span class="p">,</span>
     <span class="s">&quot;city&quot;</span><span class="p">:</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span>
     <span class="s">&quot;groupsNumber&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
     <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;self&quot;</span>
@@ -953,6 +958,7 @@ Each User object in the list contains:</p>
     &quot;city&quot;: &quot;Boston&quot;,
     &quot;lastName&quot;: &quot;Socias&quot;,
     &quot;handle&quot;: &quot;steph&quot;,
+    &quot;user_uuid&quot;: &quot;dfgo9e8b733700981f14cccd39cd8462&quot;,
     &quot;frodadsNumber&quot;: 41,
     &quot;myCastiesNumber&quot;: 138,
     &quot;firstName&quot;: &quot;Stephanie&quot;,
