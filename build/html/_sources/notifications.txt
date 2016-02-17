@@ -3,10 +3,18 @@
 Notifications
 *************
 
-Users receive notifications from the Activity section found on the bottom navbar. THe Activity section consists of "Requests" and "Notifications" tabs. The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent. 
+Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of "Requests" and "Notifications" tabs. The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent. 
 The "Notifications" tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.).
 
-When using the word "notifications", I am referring to both frodad requests and generic notifications-
+From here forward, when using the word "notifications", I am referring to both frodad requests and generic notifications.
+
+.. note:: Notifications API endpoint
+
+    ``https://notifications.cassieapp.com/``
+
+    All requests except for the request to obtain a count of notifications require Basic Authentication using the User's email and password.
+
+Notifications are accessed via `https://notifications.cassieapp.com/notifications/` 
 Each notification is saved as a "Notificaion Object". Most GET requests regarding notifications return either an individual object or an array of objects. See the `Notification Object`_ section below for more details.
 Notifications are classified as "unread" when the User has not yet clicked on it and "read" once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate "has been read" endpoint.
 The app should display a small red indicator number when the User has 1 or more new notifications. A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the number of new notifications.
@@ -69,6 +77,8 @@ Delete an Individual Notification
 -------------------------------------
 Retrieve a Count of New Notifications
 -------------------------------------
+
+No authentication required.
 
 **Definition**
 

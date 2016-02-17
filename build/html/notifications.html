@@ -144,9 +144,16 @@
             
   <div class="section" id="notifications">
 <span id="id1"></span><h1>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h1>
-<p>Users receive notifications from the Activity section found on the bottom navbar. THe Activity section consists of &#8220;Requests&#8221; and &#8220;Notifications&#8221; tabs. The &#8220;Requests&#8221; tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent.
+<p>Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of &#8220;Requests&#8221; and &#8220;Notifications&#8221; tabs. The &#8220;Requests&#8221; tab houses all Frodad Requests- both requests the User has received and also any recenty accepted requests the User has sent.
 The &#8220;Notifications&#8221; tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.).</p>
-<p>When using the word &#8220;notifications&#8221;, I am referring to both frodad requests and generic notifications-
+<p>From here forward, when using the word &#8220;notifications&#8221;, I am referring to both frodad requests and generic notifications.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notifications API endpoint</p>
+<p><code class="docutils literal"><span class="pre">https://notifications.cassieapp.com/</span></code></p>
+<p class="last">All requests except for the request to obtain a count of notifications require Basic Authentication using the User&#8217;s email and password.</p>
+</div>
+<p>Notifications are accessed via <cite>https://notifications.cassieapp.com/notifications/</cite>
 Each notification is saved as a &#8220;Notificaion Object&#8221;. Most GET requests regarding notifications return either an individual object or an array of objects. See the <a class="reference internal" href="#notification-object">Notification Object</a> section below for more details.
 Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate &#8220;has been read&#8221; endpoint.
 The app should display a small red indicator number when the User has 1 or more new notifications. A new notification is one that was created at any point since the User last clicked the &#8220;Activity&#8221; tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User&#8217;s last visit to the &#8220;Activity&#8221; tab in the request to retrieve the number of new notifications.</p>
@@ -222,6 +229,7 @@ The app should display a small red indicator number when the User has 1 or more 
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
 <h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
+<p>No authentication required.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/unread/?last_seen_date={last_seen_date}&amp;last_seen_time={last_seen_time}</span></code></p>
 <p><strong>Arguments</strong></p>
