@@ -85,11 +85,12 @@
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Notifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#retrieve-all-notifcations">Retrieve All Notifcations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#frodad-request-notifications">Frodad Request Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#delete-an-individual-notification">Delete an Individual Notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#delete-all-notifications">Delete all Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mark-as-read">Mark as Read</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#retrieve-a-count-of-new-notifications">Retrieve a Count of New Notifications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#frodad-requests">Frodad Requests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#other-notifications">Other Notifications</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
@@ -157,8 +158,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Notifications API endpoint</p>
-<p><code class="docutils literal"><span class="pre">https://notifications.cassieapp.com/</span></code></p>
-<p class="last">All requests (except for the request to obtain a <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> ) require Basic Authentication using the Cassie admin username and password (ask Stephanie for it!).</p>
+<p class="last"><code class="docutils literal"><span class="pre">https://cassieapp.com/api/notifications/</span></code></p>
 </div>
 <p>Each notification is saved as a <a class="reference internal" href="#notification-object">Notification Object</a>. Most GET requests regarding notifications return either an individual object or an array of objects.</p>
 <p>Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate <a class="reference internal" href="#mark-as-read">mark as read</a> endpoint.</p>
@@ -228,14 +228,52 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </tr>
 </tbody>
 </table>
+<div class="section" id="retrieve-all-notifcations">
+<h2>Retrieve All Notifcations<a class="headerlink" href="#retrieve-all-notifcations" title="Permalink to this headline">¶</a></h2>
+<p>Returns an array of Notification Objects for all notifications. By default, this will not include Frodad Request notifications or notifications of recently accepted frodad requests. To include such notifications, set the <code class="docutils literal"><span class="pre">include_frodads</span></code> parameter to <code class="docutils literal"><span class="pre">True</span></code>. To retrieve only Frodad Request and recently accepted frodad request notifications, use the <a class="reference internal" href="#frodad-requests">Frodad Requests</a> endpoint.</p>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/all/?include_frodad_notifications=False</span></code></p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><strong>include_frodad_notifications</strong>: <em>boolean</em>, set to <code class="docutils literal"><span class="pre">True</span></code> in order to return Frodad Request notifications</li>
+</ul>
+<p><strong>Sample Response</strong></p>
+<blockquote>
+<div>Coming soon</div></blockquote>
+</div>
+<div class="section" id="frodad-request-notifications">
+<span id="frodad-requests"></span><h2>Frodad Request Notifications<a class="headerlink" href="#frodad-request-notifications" title="Permalink to this headline">¶</a></h2>
+<p>Returns notifications regarding pending friend requests the User has received and notifications regarding recently accepted friend requests the User has sent.</p>
+<p>Maybe include notification the User has sent but have not yet been accepte/rejected?</p>
+<p><strong>Definition</strong></p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/frodad-requests/</span></code></div></blockquote>
+<p><strong>Arguments</strong>
+None</p>
+<p><strong>Returns</strong></p>
+<p>Coming Soon</p>
+<p><strong>Sample Response</strong></p>
+</div>
 <div class="section" id="delete-an-individual-notification">
 <h2>Delete an Individual Notification<a class="headerlink" href="#delete-an-individual-notification" title="Permalink to this headline">¶</a></h2>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/{notification_id}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li><strong>user_uuid</strong>: <em>string</em>, the User&#8217;s uniquie uuid</li>
+<li><strong>notification_id</strong>: <em>string</em>, the Notification&#8217;s uniquie id</li>
 </ul>
+<p><strong>Sample Response</strong></p>
+<blockquote>
+<div>Coming soon</div></blockquote>
+</div>
+<div class="section" id="delete-all-notifications">
+<h2>Delete all Notifications<a class="headerlink" href="#delete-all-notifications" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/all/</span></code></p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
 <p><strong>Sample Response</strong></p>
 <blockquote>
 <div>Coming soon</div></blockquote>
@@ -244,10 +282,9 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <span id="id2"></span><h2>Mark as Read<a class="headerlink" href="#mark-as-read" title="Permalink to this headline">¶</a></h2>
 <p>Use this endpoint to indicate that a notification has been read. A notification is &#8220;read&#8221; once a User clicks the notification.</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/read/{notification_id}</span></code></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/read/{notification_id}/</span></code></p>
 <p><strong>Arguments</strong></p>
 <ul class="simple">
-<li><strong>user_uuid</strong>: <em>string</em>, the User&#8217;s uniquie uuid</li>
 <li><strong>notification_id</strong>: <em>string</em>, the Notification&#8217;s uniquie id</li>
 </ul>
 <p><strong>Sample Response</strong></p>
@@ -257,12 +294,13 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
 <span id="count-of-new-notifications"></span><h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
-<p>No authentication required.</p>
+<p>Returns a count of the number of new notifications since the User last visited the &#8220;Activity&#8221; section. The date and time of the last visit must be passed in the request.</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/unread/?last_seen_date={last_seen_date}&amp;last_seen_time={last_seen_time}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/count/?last_seen_date={last_seen_date}&amp;last_seen_time={last_seen_time}</span></code></p>
 <p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Parameters</strong></p>
 <ul class="simple">
-<li><strong>user_uuid</strong>: <em>string</em>, the User&#8217;s uniquie uuid</li>
 <li><strong>last_seen_date</strong>: <em>string</em>, date the User last clicked on the &#8220;Activity&#8221; tab</li>
 <li><strong>last_seen_time</strong>: <em>string</em>, time the User last clicked on the &#8220;Activity&#8221; tab</li>
 </ul>
@@ -272,19 +310,6 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="frodad-requests">
-<h2>Frodad Requests<a class="headerlink" href="#frodad-requests" title="Permalink to this headline">¶</a></h2>
-<p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/frodad-requests/</span></code>
-<code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://notifications.cassieapp.com/notifications/{user_uuid}/frodad-requests-accepted/</span></code></p>
-<p><strong>Arguments</strong></p>
-<p><strong>Returns</strong></p>
-<p><strong>Sample Response</strong></p>
-</div>
-<div class="section" id="other-notifications">
-<h2>Other Notifications<a class="headerlink" href="#other-notifications" title="Permalink to this headline">¶</a></h2>
-<p>Coming Soon</p>
 </div>
 </div>
 

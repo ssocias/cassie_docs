@@ -1316,45 +1316,46 @@ This is similar to the :ref:`Hamburger` request, which returns a list of all Gro
 View All Frodad Requests
 ========================
 
-All of the User's current frodad requests. This returns a list of dictionaries, where each dictionary contains info about a User that has friend requested the User.
+Information about the Friend Requests a User has sent and received. 
+
+.. note:: There is a separate endpoint for retrieving :ref:`Frodad Request Notifications <Frodad Requests>`
+
 
 **Definition**
 
 ``GET https://cassieapp.com/api/frodad-requests/``
 
-**Parameters**
+**Arguments**
 
 None
 
 **Returns**
 
-The number of pending friend requests and, if there are any, a list of dictionaries with info on Users that have friend requested the User.
+* **number_received**: The number of pending requests a user has received (i.e. requests the User has not responded to yet)
+* **requests_received**: a list of dictionaries with handle, firstName, and lastName fields for each request; if there are no requests, this field is set to ``None/null``
+* **number_sent**: The number of requests a user has sent 
+* **requests_sent**: a list of dictionaries with handle, firstName, and lastName fields for each request; if there are no requests, this field is set to ``None/null``
+
 
 **Sample Response** ::
 
   {
     "status": 200,
-    "number_friend_requests": 2,
-    "friend_requests_from": [
+    "number_sent": 43,
+    "number_received": 0,
+    "requests_received": null,
+    "requests_sent": [
       {
-        "lastName": "Socias",
-        "firstName": "Luly",
-        "handle": "Luly"
+        "handle": "user-478",
+        "firstName": "Sam",
+        "lastName": "Smith"
       },
       {
-        "lastName": "Socias",
-        "firstName": "Christina",
-        "handle": "csocias"
+        "handle": "user-465",
+        "firstName": "Amy",
+        "lastName": "Jones"
       }
     ]
-  }
-
-If there are no friend requests: ::
-
-  {
-    "number_friend_requests": 0,
-    "friend_requests_from": null,
-    "status": 200
   }
 
 .. _Comments:

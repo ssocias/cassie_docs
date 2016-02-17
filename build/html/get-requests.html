@@ -1424,37 +1424,40 @@ Each User object in the list contains:</p>
 </div>
 <div class="section" id="view-all-frodad-requests">
 <h2>View All Frodad Requests<a class="headerlink" href="#view-all-frodad-requests" title="Permalink to this headline">¶</a></h2>
-<p>All of the User&#8217;s current frodad requests. This returns a list of dictionaries, where each dictionary contains info about a User that has friend requested the User.</p>
+<p>Information about the Friend Requests a User has sent and received.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is a separate endpoint for retrieving <a class="reference internal" href="notifications.html#frodad-requests"><span>Frodad Request Notifications</span></a></p>
+</div>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/frodad-requests/</span></code></p>
-<p><strong>Parameters</strong></p>
+<p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
-<p>The number of pending friend requests and, if there are any, a list of dictionaries with info on Users that have friend requested the User.</p>
+<ul class="simple">
+<li><strong>number_received</strong>: The number of pending requests a user has received (i.e. requests the User has not responded to yet)</li>
+<li><strong>requests_received</strong>: a list of dictionaries with handle, firstName, and lastName fields for each request; if there are no requests, this field is set to <code class="docutils literal"><span class="pre">None/null</span></code></li>
+<li><strong>number_sent</strong>: The number of requests a user has sent</li>
+<li><strong>requests_sent</strong>: a list of dictionaries with handle, firstName, and lastName fields for each request; if there are no requests, this field is set to <code class="docutils literal"><span class="pre">None/null</span></code></li>
+</ul>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;number_friend_requests&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="s">&quot;friend_requests_from&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s">&quot;number_sent&quot;</span><span class="p">:</span> <span class="mi">43</span><span class="p">,</span>
+  <span class="s">&quot;number_received&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s">&quot;requests_received&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">&quot;requests_sent&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span><span class="p">,</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-478&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Sam&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Smith&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-465&quot;</span><span class="p">,</span>
+      <span class="s">&quot;firstName&quot;</span><span class="p">:</span> <span class="s">&quot;Amy&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Jones&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>If there are no friend requests:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-  <span class="s">&quot;number_friend_requests&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s">&quot;friend_requests_from&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span>
 <span class="p">}</span>
 </pre></div>
 </div>

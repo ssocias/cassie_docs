@@ -15,9 +15,7 @@ From here forward, when using the word "notifications", I am referring to both f
 
 .. note:: Notifications API endpoint
 
-    ``https://notifications.cassieapp.com/``
-
-    All requests (except for the request to obtain a `count of new notifications`_ ) require Basic Authentication using the Cassie admin username and password (ask Stephanie for it!).
+    ``https://cassieapp.com/api/notifications/``
 
 
 Each notification is saved as a `Notification Object`_. Most GET requests regarding notifications return either an individual object or an array of objects.
@@ -70,17 +68,79 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 |Group Access Approved          | group-approved                   | slug of the group                       |
 +-------------------------------+----------------------------------+-----------------------------------------+
 
+-------------------------
+Retrieve All Notifcations
+-------------------------
+Returns an array of Notification Objects for all notifications. By default, this will not include Frodad Request notifications or notifications of recently accepted frodad requests. To include such notifications, set the ``include_frodads`` parameter to ``True``. To retrieve only Frodad Request and recently accepted frodad request notifications, use the `Frodad Requests`_ endpoint.
+
+**Definition**
+
+``GET https://cassieapp.com/api/notifications/all/?include_frodad_notifications=False``
+
+**Arguments**
+
+None
+
+**Parameters**
+
+* **include_frodad_notifications**: *boolean*, set to ``True`` in order to return Frodad Request notifications
+
+**Sample Response**
+
+    Coming soon
+
+
+.. _Frodad Requests:
+
+----------------------------
+Frodad Request Notifications
+----------------------------
+
+Returns notifications regarding pending friend requests the User has received and notifications regarding recently accepted friend requests the User has sent. 
+
+Maybe include notification the User has sent but have not yet been accepte/rejected?
+
+**Definition**
+
+    ``GET https://cassieapp.com/api/notifications/frodad-requests/``
+
+**Arguments**
+None
+
+**Returns**
+
+Coming Soon
+
+**Sample Response**
+
 ---------------------------------
 Delete an Individual Notification
 ---------------------------------
 
 **Definition**
 
-``DELETE https://notifications.cassieapp.com/notifications/{user_uuid}/``
+``POST https://cassieapp.com/api/notifications/delete/{notification_id}/``
 
 **Arguments**
 
-* **user_uuid**: *string*, the User's uniquie uuid 
+* **notification_id**: *string*, the Notification's uniquie id 
+
+**Sample Response**
+
+    Coming soon
+
+
+------------------------
+Delete all Notifications
+------------------------
+
+**Definition**
+
+``POST https://cassieapp.com/api/notifications/delete/all/``
+
+**Arguments**
+
+None
 
 **Sample Response**
 
@@ -96,11 +156,10 @@ Use this endpoint to indicate that a notification has been read. A notification 
 
 **Definition**
 
-``GET https://notifications.cassieapp.com/notifications/{user_uuid}/read/{notification_id}``
+``POST https://cassieapp.com/api/notifications/read/{notification_id}/``
 
 **Arguments**
 
-* **user_uuid**: *string*, the User's uniquie uuid 
 * **notification_id**: *string*, the Notification's uniquie id 
 
 **Sample Response** ::
@@ -113,44 +172,24 @@ Use this endpoint to indicate that a notification has been read. A notification 
 Retrieve a Count of New Notifications
 -------------------------------------
 
-No authentication required.
+Returns a count of the number of new notifications since the User last visited the "Activity" section. The date and time of the last visit must be passed in the request.
 
 **Definition**
 
-``GET https://notifications.cassieapp.com/notifications/{user_uuid}/unread/?last_seen_date={last_seen_date}&last_seen_time={last_seen_time}``
+``GET https://cassieapp.com/api/notifications/count/?last_seen_date={last_seen_date}&last_seen_time={last_seen_time}``
 
 **Arguments**
 
-* **user_uuid**: *string*, the User's uniquie uuid 
+None
+
+**Parameters**
+
 * **last_seen_date**: *string*, date the User last clicked on the "Activity" tab
 * **last_seen_time**: *string*, time the User last clicked on the "Activity" tab
-
 
 **Sample Response** ::
 
     {
         "count": 3
     }
-
----------------
-Frodad Requests
----------------
-
-**Definition**
-
-``GET https://notifications.cassieapp.com/notifications/{user_uuid}/frodad-requests/``
-``GET https://notifications.cassieapp.com/notifications/{user_uuid}/frodad-requests-accepted/``
-
-**Arguments**
-
-**Returns**
-
-**Sample Response**
-
--------------------
-Other Notifications
--------------------
-
-Coming Soon
-
 
