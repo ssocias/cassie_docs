@@ -1375,7 +1375,7 @@ To save a new comment for a Castie, use the :ref:`CreateComment` endpoint found 
 
 The Castie UUID, number of comments for the given Castie, and a list of Comment Objects
 
-* **uuid:** *string*, unique id for the Castie
+* **castieUUID:** *string*, unique id for the Castie
 * **numberComments:** *integer*, numer of comments left on the Castie
 
 **Comment Object** 
@@ -1384,9 +1384,11 @@ The Castie UUID, number of comments for the given Castie, and a list of Comment 
   * **lastName:** *string*, the user's last name 
   * **firstName:** *string*, the user's first name 
   * **profPic:** *string*, location of the friend's profile picture
+  * **commentUUID:** *string*, unique id for the Comment
   * **commentText:** *string*, the text of the comment itself
   * **commentDate:** *string*, date (YYYY-MM-DD) the comment was made
   * **commentTime:**  *string*, time (Hour:Minute:Second:Microsecond) the comment was made
+  * **isOffensive:** *boolean*, ``True`` if a User has marked the comment as offfensive; server does not return any comments marked as offensive
 
 **Sample Response** ::
 
@@ -1402,7 +1404,9 @@ The Castie UUID, number of comments for the given Castie, and a list of Comment 
           "commentDate": "2016-01-31",
           "lastName": "Socias",
           "commentTime": "19:14:25.847464",
-          "commentText": "third comment left by christina"
+          "commentUUID": "zzf3v908c9ab4858a15996f69f851938",
+          "commentText": "third comment left by christina",
+          "isOffensive": false
         },
         {
           "profPic": "",
@@ -1411,7 +1415,9 @@ The Castie UUID, number of comments for the given Castie, and a list of Comment 
           "commentDate": "2016-01-31",
           "lastName": "Socais",
           "commentTime": "19:14:05.613757",
-          "commentText": "second comment left by other steph"
+          "commentUUID": "zzf3v908c9ab4858a15996f69f851938",
+          "commentText": "second comment left by other steph",
+          "isOffensive": false
         },
         {
           "profPic": "profiles/user-2/socias_photo_wp1ENod.jpg",
@@ -1420,7 +1426,9 @@ The Castie UUID, number of comments for the given Castie, and a list of Comment 
           "commentDate": "2016-01-31",
           "lastName": "Socias",
           "commentTime": "19:13:43.694687",
-          "commentText": "first comment left by steph"
+          "commentUUID": "zzf3v908c9ab4858a15996f69f851938",
+          "commentText": "first comment left by steph",
+          "isOffensive": false
         }
       ]
     }

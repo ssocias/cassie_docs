@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notifications.html">Notifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting-inappropriate-content.html">Reporting Inappropriate Content</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pagination.html">Pagination</a></li>
 </ul>
@@ -1471,7 +1472,7 @@ Each User object in the list contains:</p>
 <p><strong>Returns</strong></p>
 <p>The Castie UUID, number of comments for the given Castie, and a list of Comment Objects</p>
 <ul class="simple">
-<li><strong>uuid:</strong> <em>string</em>, unique id for the Castie</li>
+<li><strong>castieUUID:</strong> <em>string</em>, unique id for the Castie</li>
 <li><strong>numberComments:</strong> <em>integer</em>, numer of comments left on the Castie</li>
 </ul>
 <p><strong>Comment Object</strong></p>
@@ -1481,9 +1482,11 @@ Each User object in the list contains:</p>
 <li><strong>lastName:</strong> <em>string</em>, the user&#8217;s last name</li>
 <li><strong>firstName:</strong> <em>string</em>, the user&#8217;s first name</li>
 <li><strong>profPic:</strong> <em>string</em>, location of the friend&#8217;s profile picture</li>
+<li><strong>commentUUID:</strong> <em>string</em>, unique id for the Comment</li>
 <li><strong>commentText:</strong> <em>string</em>, the text of the comment itself</li>
 <li><strong>commentDate:</strong> <em>string</em>, date (YYYY-MM-DD) the comment was made</li>
 <li><strong>commentTime:</strong>  <em>string</em>, time (Hour:Minute:Second:Microsecond) the comment was made</li>
+<li><strong>isOffensive:</strong> <em>boolean</em>, <code class="docutils literal"><span class="pre">True</span></code> if a User has marked the comment as offfensive; server does not return any comments marked as offensive</li>
 </ul>
 </div></blockquote>
 <p><strong>Sample Response</strong></p>
@@ -1499,7 +1502,9 @@ Each User object in the list contains:</p>
       <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span><span class="p">,</span>
       <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
       <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:25.847464&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;third comment left by christina&quot;</span>
+      <span class="s">&quot;commentUUID&quot;</span><span class="p">:</span> <span class="s">&quot;zzf3v908c9ab4858a15996f69f851938&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;third comment left by christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;isOffensive&quot;</span><span class="p">:</span> <span class="n">false</span>
     <span class="p">},</span>
     <span class="p">{</span>
       <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
@@ -1508,7 +1513,9 @@ Each User object in the list contains:</p>
       <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span><span class="p">,</span>
       <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socais&quot;</span><span class="p">,</span>
       <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:14:05.613757&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;second comment left by other steph&quot;</span>
+      <span class="s">&quot;commentUUID&quot;</span><span class="p">:</span> <span class="s">&quot;zzf3v908c9ab4858a15996f69f851938&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;second comment left by other steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;isOffensive&quot;</span><span class="p">:</span> <span class="n">false</span>
     <span class="p">},</span>
     <span class="p">{</span>
       <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-2/socias_photo_wp1ENod.jpg&quot;</span><span class="p">,</span>
@@ -1517,7 +1524,9 @@ Each User object in the list contains:</p>
       <span class="s">&quot;commentDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-01-31&quot;</span><span class="p">,</span>
       <span class="s">&quot;lastName&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
       <span class="s">&quot;commentTime&quot;</span><span class="p">:</span> <span class="s">&quot;19:13:43.694687&quot;</span><span class="p">,</span>
-      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;first comment left by steph&quot;</span>
+      <span class="s">&quot;commentUUID&quot;</span><span class="p">:</span> <span class="s">&quot;zzf3v908c9ab4858a15996f69f851938&quot;</span><span class="p">,</span>
+      <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;first comment left by steph&quot;</span><span class="p">,</span>
+      <span class="s">&quot;isOffensive&quot;</span><span class="p">:</span> <span class="n">false</span>
     <span class="p">}</span>
   <span class="p">]</span>
 <span class="p">}</span>

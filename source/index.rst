@@ -22,6 +22,7 @@ Topics
    authentication
    errors
    notifications
+   reporting-inappropriate-content
    image-paths
    pagination
 

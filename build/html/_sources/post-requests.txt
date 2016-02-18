@@ -537,6 +537,8 @@ To view comments for a given Castie, use the :ref:`Comments` endpoint.
 
 **Returns**
 
+Basic info on the newly created comment- the handle that created the comment, UUID for the comment, UUID for the Castie the comment pertains to, and the actual comment text.
+
 **Sample Response** ::
 
   {
@@ -544,7 +546,34 @@ To view comments for a given Castie, use the :ref:`Comments` endpoint.
     "commentText": "I love Cassie so much!",
     "status": 200,
     "comment": "created successfully",
-    "castie": "a1f318a5c9ab4858a15996f69f851938"
+    "commentUUID": "zzf3v908c9ab4858a15996f69f851938",
+    "castieUUID": "a1f318a5c9ab4858a15996f69f851938"
+  }
+
+
+Delete Comment
+==============
+
+Delete a comment. Only the User that created the Comment can delete it.
+
+**Definition:** 
+
+``POST https://cassieapp.com/api/comments/{commentUUID}/delete/``
+
+**Arguments**
+
+* **commentUUID:** *string*, the UUID of the comment being deleted
+
+
+**Returns**
+
+A success message if the comment was deleted; an error message if the comment doesn't exist or if a User other than the User who created the comment is trying to delete it.
+
+**Sample Response** ::
+
+  {
+    "status": 200,
+    "comment": "deleted"
   }
 
 Accept or Reject a Frodad Request

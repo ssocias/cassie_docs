@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notifications.html">Notifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting-inappropriate-content.html">Reporting Inappropriate Content</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image-paths.html">Image Paths</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pagination.html">Pagination</a></li>
 </ul>
@@ -101,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#create-castie">Create Castie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-frodad">Add Frodad</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-comment">Create Comment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#delete-comment">Delete Comment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accept-or-reject-a-frodad-request">Accept or Reject a Frodad Request</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unfrdodad">Unfrdodad</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#notification-has-been-read">Notification Has Been Read</a></li>
@@ -631,13 +633,34 @@ Once this client-side validation is complete, send the handle to the backend so 
 </ul>
 </div></blockquote>
 <p><strong>Returns</strong></p>
+<p>Basic info on the newly created comment- the handle that created the comment, UUID for the comment, UUID for the Castie the comment pertains to, and the actual comment text.</p>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;user-581&quot;</span><span class="p">,</span>
   <span class="s">&quot;commentText&quot;</span><span class="p">:</span> <span class="s">&quot;I love Cassie so much!&quot;</span><span class="p">,</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
   <span class="s">&quot;comment&quot;</span><span class="p">:</span> <span class="s">&quot;created successfully&quot;</span><span class="p">,</span>
-  <span class="s">&quot;castie&quot;</span><span class="p">:</span> <span class="s">&quot;a1f318a5c9ab4858a15996f69f851938&quot;</span>
+  <span class="s">&quot;commentUUID&quot;</span><span class="p">:</span> <span class="s">&quot;zzf3v908c9ab4858a15996f69f851938&quot;</span><span class="p">,</span>
+  <span class="s">&quot;castieUUID&quot;</span><span class="p">:</span> <span class="s">&quot;a1f318a5c9ab4858a15996f69f851938&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-comment">
+<h2>Delete Comment<a class="headerlink" href="#delete-comment" title="Permalink to this headline">¶</a></h2>
+<p>Delete a comment. Only the User that created the Comment can delete it.</p>
+<p><strong>Definition:</strong></p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/comments/{commentUUID}/delete/</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><strong>commentUUID:</strong> <em>string</em>, the UUID of the comment being deleted</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A success message if the comment was deleted; an error message if the comment doesn&#8217;t exist or if a User other than the User who created the comment is trying to delete it.</p>
+<p><strong>Sample Response</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;comment&quot;</span><span class="p">:</span> <span class="s">&quot;deleted&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
