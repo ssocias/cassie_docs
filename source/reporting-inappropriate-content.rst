@@ -3,7 +3,7 @@
 Reporting Inappropriate Content
 *******************************
 
-Per Apple App Store rules, any User generated content must have a way to be reported as inappropriate/offensive. 
+Per Apple App Store rules, any user-generated content must have a way to be reported as inappropriate/offensive. 
 Cassie Users can report invididual Casties and individual Comments as inappropriate using the endpoints below.
 
 ------------------
