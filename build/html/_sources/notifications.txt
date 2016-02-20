@@ -32,13 +32,14 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 
     **Attributes**
 
-    * **created_on:** *date*, date (YYYY-MM-DD?) the Notification was created
-    * **uuid:** *string*, unique id for the Notification
+    * **created_on_date:** *string*, date (YYYY-MM-DD) the Notification was created
+    * **created_on_timee:** *string*, time (HH:mm:ss) the Notification was created
+    * **timesince_created:** *string*, human readable string of time since notification was created (ex. "2 days ago")
+    * **id:** *string*, unique id for the Notification
     * **message:** *string*, text of the notification
     * **url:** *string*, action url used in the web app
     * **has_been_read:** *boolean*, indicates whether or not the notification has been read
 
-    * **notification_id:** *string*, unique id for the Notification
     * **notification_type:** *string*, what type of notification this is (friend request, answer castie, etc); see the `Notification Types Table`_ for details
     * **data:** *array*, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)
 
@@ -85,6 +86,12 @@ None
 
 * **include_frodad_notifications**: *boolean*, set to ``True`` in order to return Frodad Request notifications
 
+**Returns**
+
+* **notifications**: a list of Notification Objects for all notifications (except Frodad Requests and Recently Accepted Frodad Requests)
+* **frodad_notifications**: a list of Notification Objects for all Frodad Requests the User has received and not responded to yet
+* **recently_accepted**: a list of Notification Objects for Frodad Requests the User has sent and were recently accepted
+
 **Sample Response**
 
     Coming soon
@@ -109,9 +116,12 @@ None
 
 **Returns**
 
-Coming Soon
+* **frodad_notifications**: a list of Notification Objects for all Frodad Requests the User has received and not responded to yet
+* **recently_accepted**: a list of Notification Objects for Frodad Requests the User has sent and were recently accepted
 
 **Sample Response**
+
+Coming Soon
 
 ---------------------------------
 Delete an Individual Notification

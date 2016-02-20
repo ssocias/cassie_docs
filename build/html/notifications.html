@@ -169,12 +169,13 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <blockquote>
 <div><p><strong>Attributes</strong></p>
 <ul class="simple">
-<li><strong>created_on:</strong> <em>date</em>, date (YYYY-MM-DD?) the Notification was created</li>
-<li><strong>uuid:</strong> <em>string</em>, unique id for the Notification</li>
+<li><strong>created_on_date:</strong> <em>string</em>, date (YYYY-MM-DD) the Notification was created</li>
+<li><strong>created_on_timee:</strong> <em>string</em>, time (HH:mm:ss) the Notification was created</li>
+<li><strong>timesince_created:</strong> <em>string</em>, human readable string of time since notification was created (ex. &#8220;2 days ago&#8221;)</li>
+<li><strong>id:</strong> <em>string</em>, unique id for the Notification</li>
 <li><strong>message:</strong> <em>string</em>, text of the notification</li>
 <li><strong>url:</strong> <em>string</em>, action url used in the web app</li>
 <li><strong>has_been_read:</strong> <em>boolean</em>, indicates whether or not the notification has been read</li>
-<li><strong>notification_id:</strong> <em>string</em>, unique id for the Notification</li>
 <li><strong>notification_type:</strong> <em>string</em>, what type of notification this is (friend request, answer castie, etc); see the <a class="reference internal" href="#notification-types-table">Notification Types Table</a> for details</li>
 <li><strong>data:</strong> <em>array</em>, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)</li>
 </ul>
@@ -240,6 +241,12 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <ul class="simple">
 <li><strong>include_frodad_notifications</strong>: <em>boolean</em>, set to <code class="docutils literal"><span class="pre">True</span></code> in order to return Frodad Request notifications</li>
 </ul>
+<p><strong>Returns</strong></p>
+<ul class="simple">
+<li><strong>notifications</strong>: a list of Notification Objects for all notifications (except Frodad Requests and Recently Accepted Frodad Requests)</li>
+<li><strong>frodad_notifications</strong>: a list of Notification Objects for all Frodad Requests the User has received and not responded to yet</li>
+<li><strong>recently_accepted</strong>: a list of Notification Objects for Frodad Requests the User has sent and were recently accepted</li>
+</ul>
 <p><strong>Sample Response</strong></p>
 <blockquote>
 <div>Coming soon</div></blockquote>
@@ -254,8 +261,12 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <p><strong>Arguments</strong>
 None</p>
 <p><strong>Returns</strong></p>
-<p>Coming Soon</p>
+<ul class="simple">
+<li><strong>frodad_notifications</strong>: a list of Notification Objects for all Frodad Requests the User has received and not responded to yet</li>
+<li><strong>recently_accepted</strong>: a list of Notification Objects for Frodad Requests the User has sent and were recently accepted</li>
+</ul>
 <p><strong>Sample Response</strong></p>
+<p>Coming Soon</p>
 </div>
 <div class="section" id="delete-an-individual-notification">
 <h2>Delete an Individual Notification<a class="headerlink" href="#delete-an-individual-notification" title="Permalink to this headline">¶</a></h2>
