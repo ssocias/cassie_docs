@@ -101,7 +101,55 @@ A list(s) of Notification Objects.
 
 **Sample Response**
 
-    Coming soon
+**No Filtering:** ::
+
+    {
+      "status": 200,
+      "notifications": [
+        {
+          "url": "/profile/c71d8f8144f74a3498d279043182d600/",
+          "notification_type": "friend-request-accepted",
+          "id": "56c8d5969e4d5b596129cebe",
+          "timesince_created": "an hour ago",
+          "has_been_read": true,
+          "created_on_date": "2016-02-20",
+          "data": "Luly",
+          "message": "@Luly has accepted your friendship request",
+          "created_on_time": "16:07:34"
+        },
+        {
+          "url": "/friends/requests/",
+          "notification_type": "friend-request-received",
+          "id": "56c8d3287d97535a6195f8cc",
+          "timesince_created": "an hour ago",
+          "has_been_read": true,
+          "created_on_date": "2016-02-20",
+          "data": "Luly",
+          "message": "@Luly has sent you a friendship request",
+          "created_on_time": "15:57:12"
+        }
+      ]
+    }
+
+**Filtered by Type:** ::
+
+    {
+      "status": 200,
+      "castie-needs-answer": [],
+      "friend-request-accepted": [
+        {
+          "url": "/profile/c71d8f8144f74a3498d279043182d600/",
+          "notification_type": "friend-request-accepted",
+          "id": "56c8d5969e4d5b596129cebe",
+          "timesince_created": "an hour ago",
+          "has_been_read": true,
+          "created_on_date": "2016-02-20",
+          "data": "Luly",
+          "message": "@Luly has accepted your friendship request",
+          "created_on_time": "16:07:34"
+        }
+      ]
+    }
 
 ---------------------------------
 Delete an Individual Notification
