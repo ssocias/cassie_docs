@@ -8,8 +8,8 @@ Notifications
 
 Users receive notifications from the Activity section found on the bottom navbar. The Activity section consists of "Requests" and "Notifications" tabs. 
 
-The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recently accepted requests the User has sent. 
-The "Notifications" tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.).
+The "Requests" tab houses all Frodad Requests- both requests the User has received and also any recently accepted requests the User has sent. Requests are ordered chronologically (most recent to oldest). 
+The "Notifications" tab contains all other notifications to the user (ex. Castie needs to be answered, You forecasted correctly, etc.). Notifications are ordered chronologically (most recent to oldest). However, if the User has any Casties that need to be answered, these notifications should be displayed first. 
 
 From here forward, when using the word "notifications", I am referring to both frodad requests and generic notifications.
 
@@ -20,9 +20,9 @@ From here forward, when using the word "notifications", I am referring to both f
 
 Each notification is saved as a `Notification Object`_. Most GET requests regarding notifications return either an individual object or an array of objects.
 
-Notifications are classified as "unread" when the User has not yet clicked on it and "read" once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate `mark as read`_ endpoint.
+**Probably will not have any read vs unread distinctions- TBD** Notifications are classified as "unread" when the User has not yet clicked on it and "read" once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate `mark as read`_ endpoint.
 
-The app should display a small red indicator number when the User has 1 or more new notifications (using the `count of new notifications`_ endpoint). A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the `count of new notifications`_.
+The app should display some type of indicator when the User has 1 or more new notifications (using the `count of new notifications`_ endpoint). A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the `count of new notifications`_.
 
 Users may delete notifications by tapping the small 'x' in the right hand corner of the notification. When they do so, a request is made to the appropriate DELETE endpoint. Notifications that are "completed" after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted whenever the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie.
 
@@ -69,14 +69,18 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 |Group Access Approved          | group-approved                   | slug of the group                       |
 +-------------------------------+----------------------------------+-----------------------------------------+
 
--------------------------
-Retrieve All Notifcations
--------------------------
-Returns an array of Notification Objects for all notifications. By default, this will not include Frodad Request notifications or notifications of recently accepted frodad requests. To include such notifications, set the ``include_frodads`` parameter to ``True``. To retrieve only Frodad Request and recently accepted frodad request notifications, use the `Frodad Requests`_ endpoint.
+.. _retrieve notifications:
+
+---------------------
+Retrieve Notifcations
+---------------------
+Returns an array of Notification Objects for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in chronological order.
+To return notifications of a particular type, you may use the "notification_type" parameter to include one or more notification_types from the table above. For example, ``/?notification_type=group-approved&notification_type=castie-needs-answer/``, will return two list of Notification Objects. One for "group-approved" notifications and one for "castie-needs-answer" notifications.
+
 
 **Definition**
 
-``GET https://cassieapp.com/api/notifications/all/?include_frodad_notifications=False``
+``GET https://cassieapp.com/api/notifications/all/?notification_type=``
 
 **Arguments**
 
@@ -84,44 +88,20 @@ None
 
 **Parameters**
 
-* **include_frodad_notifications**: *boolean*, set to ``True`` in order to return Frodad Request notifications
+* **notification_type**: *string*, filter by any one of the ``notification_type`` notifications in the Table above
 
 **Returns**
 
-* **notifications**: a list of Notification Objects for all notifications (except Frodad Requests and Recently Accepted Frodad Requests)
-* **frodad_notifications**: a list of Notification Objects for all Frodad Requests the User has received and not responded to yet
-* **recently_accepted**: a list of Notification Objects for Frodad Requests the User has sent and were recently accepted
+A list(s) of Notification Objects.
+
+    **If ALL notifications have been requested, only one list entitled "notifications" will be returned.**
+        * **notifications**: a list of Notification Objects for all notifications 
+
+    **If only certain types of notifications have been requested, there will be a separate list for each type.**
 
 **Sample Response**
 
     Coming soon
-
-
-.. _Frodad Requests:
-
--------------------------------------
-Retrieve Frodad Request Notifications
--------------------------------------
-
-Returns notifications regarding pending friend requests the User has received and notifications regarding recently accepted friend requests the User has sent. 
-
-Maybe include notification the User has sent but have not yet been accepte/rejected?
-
-**Definition**
-
-    ``GET https://cassieapp.com/api/notifications/frodad-requests/``
-
-**Arguments**
-None
-
-**Returns**
-
-* **frodad_notifications**: a list of Notification Objects for all Frodad Requests the User has received and not responded to yet
-* **recently_accepted**: a list of Notification Objects for Frodad Requests the User has sent and were recently accepted
-
-**Sample Response**
-
-Coming Soon
 
 ---------------------------------
 Delete an Individual Notification
@@ -161,6 +141,8 @@ None
 ------------
 Mark as Read
 ------------
+
+**PROBABLY WON'T USE THIS**
 
 Use this endpoint to indicate that a notification has been read. A notification is "read" once a User clicks the notification.
 

@@ -1318,7 +1318,7 @@ View All Frodad Requests
 
 Information about the Friend Requests a User has sent and received. 
 
-.. note:: There is a separate endpoint for retrieving :ref:`Frodad Request Notifications <Frodad Requests>`
+.. note:: There is a separate endpoint for retrieving frodad :ref:`  notifications <retrieve notifications>`
 
 
 **Definition**
