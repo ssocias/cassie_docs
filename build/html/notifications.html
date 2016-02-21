@@ -171,7 +171,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <li><strong>created_on_date:</strong> <em>string</em>, date (YYYY-MM-DD) the Notification was created</li>
 <li><strong>created_on_timee:</strong> <em>string</em>, time (HH:mm:ss) the Notification was created</li>
 <li><strong>timesince_created:</strong> <em>string</em>, human readable string of time since notification was created (ex. &#8220;2 days ago&#8221;)</li>
-<li><strong>id:</strong> <em>string</em>, unique id for the Notification</li>
+<li><strong>id:</strong> <em>string</em>, unique id for the Notification (casti-needs-answer notifications do not have an id)</li>
 <li><strong>message:</strong> <em>string</em>, text of the notification</li>
 <li><strong>url:</strong> <em>string</em>, action url used in the web app</li>
 <li><strong>has_been_read:</strong> <em>boolean</em>, indicates whether or not the notification has been read</li>
@@ -207,24 +207,24 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <td>castie-answered</td>
 <td>uuid of the newly answered castie</td>
 </tr>
-<tr class="row-even"><td>Castie Commented</td>
-<td>castie-commented</td>
-<td>uuid of the castie and new comment</td>
-</tr>
-<tr class="row-odd"><td>New Castie</td>
-<td>new-castie</td>
+<tr class="row-even"><td>Castie Commented by Friend</td>
+<td>castie-friend-commented</td>
 <td>uuid of the castie</td>
+</tr>
+<tr class="row-odd"><td>New Casties Added to Group</td>
+<td>new-casties</td>
+<td>slug of the group</td>
 </tr>
 <tr class="row-even"><td>Your Castie has been Forecasted</td>
 <td>castie-forecasted</td>
 <td>uuid of the castie</td>
 </tr>
-<tr class="row-odd"><td>Castie Forecasted by Friends</td>
-<td>castie-friends-forecasted</td>
+<tr class="row-odd"><td>Castie Forecasted by Friend</td>
+<td>castie-friend-forecasted</td>
 <td>uuid of the castie</td>
 </tr>
 <tr class="row-even"><td>Group Access Approved</td>
-<td>group-approved</td>
+<td>group-access-granted</td>
 <td>slug of the group</td>
 </tr>
 </tbody>

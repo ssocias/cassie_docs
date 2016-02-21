@@ -35,7 +35,7 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
     * **created_on_date:** *string*, date (YYYY-MM-DD) the Notification was created
     * **created_on_timee:** *string*, time (HH:mm:ss) the Notification was created
     * **timesince_created:** *string*, human readable string of time since notification was created (ex. "2 days ago")
-    * **id:** *string*, unique id for the Notification
+    * **id:** *string*, unique id for the Notification (casti-needs-answer notifications do not have an id)
     * **message:** *string*, text of the notification
     * **url:** *string*, action url used in the web app
     * **has_been_read:** *boolean*, indicates whether or not the notification has been read
@@ -58,15 +58,15 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 +-------------------------------+----------------------------------+-----------------------------------------+
 |Castie Answered                | castie-answered                  | uuid of the newly answered castie       |
 +-------------------------------+----------------------------------+-----------------------------------------+
-|Castie Commented               | castie-commented                 | uuid of the castie and new comment      |
+|Castie Commented by Friend     | castie-friend-commented          | uuid of the castie                      |
 +-------------------------------+----------------------------------+-----------------------------------------+
-|New Castie                     | new-castie                       | uuid of the castie                      |
+|New Casties Added to Group     | new-casties                      | slug of the group                       |
 +-------------------------------+----------------------------------+-----------------------------------------+
 |Your Castie has been Forecasted| castie-forecasted                | uuid of the castie                      |
 +-------------------------------+----------------------------------+-----------------------------------------+
-|Castie Forecasted by Friends   | castie-friends-forecasted        | uuid of the castie                      |
+|Castie Forecasted by Friend    | castie-friend-forecasted         | uuid of the castie                      |
 +-------------------------------+----------------------------------+-----------------------------------------+
-|Group Access Approved          | group-approved                   | slug of the group                       |
+|Group Access Approved          | group-access-granted             | slug of the group                       |
 +-------------------------------+----------------------------------+-----------------------------------------+
 
 .. _retrieve notifications:
