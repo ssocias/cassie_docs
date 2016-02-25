@@ -332,9 +332,11 @@ Once this client-side validation is complete, send the handle to the backend so 
 <h2>Delete Account<a class="headerlink" href="#delete-account" title="Permalink to this headline">¶</a></h2>
 <p>Completely deletes a User&#8217;s Cassie account.</p>
 <p><strong>Definition:</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/delete/</span></code></p>
-<p><strong>Parameters</strong></p>
-<p>None</p>
+<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/delete/</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>handle: <em>string</em>, the handle of the profile to be deleted (it must be the same as the requesting User or else you will get an error)</li>
+</ul>
 <p><strong>Returns</strong></p>
 <p>A success message indicating the User has been deleted. If the User is not deleted because the User cannot be found, an error message is returned.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>

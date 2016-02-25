@@ -109,11 +109,11 @@ View the "Edit Profile" landing page, with all editable fields displayed.
 
 **Definition**
 
-``GET https://cassieapp.com/api/profile/edit``
+``GET https://cassieapp.com/api/profile/{handle}/edit``
 
-**Parameters**
+**Arguments**
 
-None
+* handle: *string*, the handle of the profile to be edited (it must be the same as the requesting User or else you will get an error)
 
 **Returns**
 

@@ -254,9 +254,11 @@ handle, first name, last name, city, state, profile picture, and background pict
 <h3>GET<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>View the &#8220;Edit Profile&#8221; landing page, with all editable fields displayed.</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/edit</span></code></p>
-<p><strong>Parameters</strong></p>
-<p>None</p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/profile/{handle}/edit</span></code></p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li>handle: <em>string</em>, the handle of the profile to be edited (it must be the same as the requesting User or else you will get an error)</li>
+</ul>
 <p><strong>Returns</strong></p>
 <ul class="simple">
 <li><strong>handle</strong>: <em>string</em>, User&#8217;s unique identifier- must be at least three characters long, ASCII only, no /&#64; characters</li>

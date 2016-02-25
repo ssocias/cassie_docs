@@ -201,11 +201,11 @@ Completely deletes a User's Cassie account.
 
 **Definition:**
 
-``POST https://cassieapp.com/api/profile/delete/``
+``POST https://cassieapp.com/api/profile/{handle}/delete/``
 
-**Parameters**
+**Arguments**
 
-None 
+* handle: *string*, the handle of the profile to be deleted (it must be the same as the requesting User or else you will get an error)
 
 **Returns**
 

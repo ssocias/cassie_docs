@@ -224,12 +224,13 @@ None
 
 **Parameters**
 
-* **last_seen_date**: *string*, date the User last clicked on the "Activity" tab
-* **last_seen_time**: *string*, time the User last clicked on the "Activity" tab
+* **last_seen_date**: *string*, date (YYYY-MM-DD) the User last clicked on the "Activity" tab
+* **last_seen_time**: *string*, time (HH:mm:ss) the User last clicked on the "Activity" tab
 
 **Sample Response** ::
 
     {
-        "count": 3
+      "status": 200,
+      "count": 3
     }
 
