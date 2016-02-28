@@ -179,6 +179,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
       * **is_correct:** *boolean*, designates if the User's forecast was correct or not (if the Castie has not been answered, this will still be False)
       * **answer_id:** *integer*, if this forecast is for a Castie that has set answer options, this answer_id is the unique id of the answer option chosen. If the Castie consists of write-in answers only, this field does not exist.
 
+    * **is_answerable:** *boolean*, indicates if the Castie can be answered
     * **friendCount:** *integer*, number of friends that have forecasted the Castie
     * **commentsCount:** *integer*, number of comments left on the Castie
     * **answerSubmitted:** *boolean*, ``True`` if the Castie has been answered
@@ -203,6 +204,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
         "casties": {
             "929559bf4dba4049b01efa673b8b85bf": {
               "answerSubmitted": true,
+              "is_answerable": false,
               "friendCount": 3,
               "createdAtDate": "2015-08-12",
               "groupSlug": "around-campus",
@@ -245,6 +247,7 @@ If, however, the 'castie' dictionary is returned empty, that means there are no 
             },
             "6785577f160f45b0989dcee31bd762bf": {
               "answerSubmitted": false,
+              "is_answerable": true,
               "friendCount": 3,
               "createdAtDate": "2015-08-13",
               "groupSlug": "around-campus",
