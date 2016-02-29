@@ -287,7 +287,12 @@ handle, first name, last name, city, state, profile picture, and background pict
 <div class="section" id="id2">
 <h3>POST<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Save changes to any fields that were edited. Perform basic validation client-side (ASCII only, image type/size, etc.).</p>
-<p>All fields passed in the request will be compared to their present values. Any fields that have changed will be updated in the DB. So, you can always pass all the fields and I will check to see which ones have changed.</p>
+<p>With the exception of <code class="docutils literal"><span class="pre">profPic</span></code>, all fields passed in the request will be compared to their present values and any fields that have changed will be updated in the DB. If <code class="docutils literal"><span class="pre">profPic</span></code> is sent in the request, the profile picture will be changed to this new image regardless. There is no check to see if it&#8217;s the same as the current picture. So, excluding <code class="docutils literal"><span class="pre">profPic</span></code>, you could always pass all the fields and I will check to see which ones have changed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Profile Pictures</strong></p>
+<p class="last">The image sent in the request should be a file designated with the encoding <code class="docutils literal"><span class="pre">form-data</span></code>.</p>
+</div>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/profile/edit</span></code></p>
 <p><strong>Parameters</strong></p>
@@ -298,7 +303,6 @@ handle, first name, last name, city, state, profile picture, and background pict
 <li><strong>city</strong>: <em>string</em>, city</li>
 <li><strong>state</strong>: <em>string</em>, state or country</li>
 <li><strong>profPic</strong>: <em>string</em>, location of User&#8217;s profile picture</li>
-<li><strong>backgroundPic</strong>: <em>string</em>, location of User&#8217;s background picture</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>Returns a success message if updates were successfully made. If the &#8220;handle&#8221; is already taken (handle must be unique), an error message will be returned:</p>
@@ -306,6 +310,12 @@ handle, first name, last name, city, state, profile picture, and background pict
 <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
 <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;handle_not_unique&quot;</span><span class="p">,</span>
 <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;the hanlde provided is already associated with a Cassie account&quot;</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;error_type&quot;</span><span class="p">:</span> <span class="s">&quot;invalid_request&quot;</span><span class="p">,</span>
+  <span class="s">&quot;error_message&quot;</span><span class="p">:</span> <span class="s">&quot;Images must be in .jpg, .jpeg, .gif, .png format.&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>

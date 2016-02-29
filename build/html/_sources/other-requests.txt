@@ -146,7 +146,11 @@ POST
 
 Save changes to any fields that were edited. Perform basic validation client-side (ASCII only, image type/size, etc.).
 
-All fields passed in the request will be compared to their present values. Any fields that have changed will be updated in the DB. So, you can always pass all the fields and I will check to see which ones have changed.
+With the exception of ``profPic``, all fields passed in the request will be compared to their present values and any fields that have changed will be updated in the DB. If ``profPic`` is sent in the request, the profile picture will be changed to this new image regardless. There is no check to see if it's the same as the current picture. So, excluding ``profPic``, you could always pass all the fields and I will check to see which ones have changed. 
+
+.. note:: **Profile Pictures**
+  
+  The image sent in the request should be a file designated with the encoding ``form-data``.  
 
 **Definition**
 
@@ -160,7 +164,6 @@ All fields passed in the request will be compared to their present values. Any f
 * **city**: *string*, city
 * **state**: *string*, state or country
 * **profPic**: *string*, location of User's profile picture
-* **backgroundPic**: *string*, location of User's background picture
 
 **Returns**
 
@@ -171,6 +174,13 @@ Returns a success message if updates were successfully made. If the "handle" is 
     "error_type": "handle_not_unique",
     "error_message": "the hanlde provided is already associated with a Cassie account"
     }
+
+    {
+      "status": 400,
+      "error_type": "invalid_request",
+      "error_message": "Images must be in .jpg, .jpeg, .gif, .png format."
+    }
+
 
 .. note:: **Real-time Handle Uniqueness Validation**
 

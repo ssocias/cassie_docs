@@ -180,7 +180,8 @@
 </div>
 <p><strong>1. Email Address</strong></p>
 <blockquote>
-<div><p>Perform basic validation client-side (that it is indeed an email) and then send the email address to the backend to verify that it is not already associated with an account. The email address becomes the User&#8217;s username.</p>
+<div><p>Perform basic validation client-side (that it is indeed an email) and then send the email address to the backend to verify that it is not already associated with an account. The email address becomes the User&#8217;s username.
+The server also performs some validation.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/email/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
@@ -209,7 +210,7 @@
 </div></blockquote>
 <p><strong>2. Password</strong></p>
 <blockquote>
-<div><p>Perform basic validation client-side to ensure that the two passwords match and that they contain only alphanumeric characters (no spaces). Then, send the email address (provided in the response of the previous request) and password in the request.</p>
+<div><p>Perform basic validation client-side to ensure that the two passwords match and that they contain only alphanumeric characters (no spaces). The server ensure the password is at least 4 chars long. Then, send the email address (provided in the response of the previous request) and password in the request.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/password/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
@@ -234,7 +235,7 @@
 <p><strong>3. Name and Handle</strong></p>
 <blockquote>
 <div><p>The User inputs their name and then their Handle on distinct sign-up screens. Perform basic validation client-side to ensure that the Names and Handle contain only alphanumberic characters (ASCII characters only). Additionally, the handle must be at least three characters long and cannot contain the following characters: &#64; /.
-Once this client-side validation is complete, send the handle to the backend so uniqueness can be verified.</p>
+Once this client-side validation is complete, send the handle to the backend so uniqueness can be verified. The server also performs some validation and will return error messages if the value provided is not acceptable.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/signup/handle/</span></code></p>
 <p><strong>Parameters (sent as key:value pairs)</strong></p>
@@ -274,7 +275,7 @@ Once this client-side validation is complete, send the handle to the backend so 
 <div><ul class="simple">
 <li><strong>handle:</strong> <em>string</em>, the User&#8217;s unique handle; this is used to identify the User</li>
 <li><strong>email:</strong> <em>string</em>, the User&#8217;s email address</li>
-<li><strong>profile_picture:</strong> optional (if no profile picture, do not include this field in the request) COMING SOON since I don&#8217;t know how to handle this yet!</li>
+<li><strong>profPic:</strong> optional, send as a file designated with the encoding <code class="docutils literal"><span class="pre">form-data</span></code></li>
 </ul>
 </div></blockquote>
 <p><strong>Returns</strong></p>

@@ -34,6 +34,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 **1. Email Address**
 
   Perform basic validation client-side (that it is indeed an email) and then send the email address to the backend to verify that it is not already associated with an account. The email address becomes the User's username.
+  The server also performs some validation.
 
   **Definition:**
 
@@ -63,7 +64,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
 **2. Password**
 
-  Perform basic validation client-side to ensure that the two passwords match and that they contain only alphanumeric characters (no spaces). Then, send the email address (provided in the response of the previous request) and password in the request.
+  Perform basic validation client-side to ensure that the two passwords match and that they contain only alphanumeric characters (no spaces). The server ensure the password is at least 4 chars long. Then, send the email address (provided in the response of the previous request) and password in the request.
 
   **Definition:**
 
@@ -90,7 +91,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 **3. Name and Handle**
 
   The User inputs their name and then their Handle on distinct sign-up screens. Perform basic validation client-side to ensure that the Names and Handle contain only alphanumberic characters (ASCII characters only). Additionally, the handle must be at least three characters long and cannot contain the following characters: @ \ /. 
-  Once this client-side validation is complete, send the handle to the backend so uniqueness can be verified.
+  Once this client-side validation is complete, send the handle to the backend so uniqueness can be verified. The server also performs some validation and will return error messages if the value provided is not acceptable.
 
 
   **Definition:**
@@ -134,7 +135,7 @@ The sign up process occurs over a series of steps as the User inputs the various
 
     * **handle:** *string*, the User's unique handle; this is used to identify the User
     * **email:** *string*, the User's email address
-    * **profile_picture:** optional (if no profile picture, do not include this field in the request) COMING SOON since I don't know how to handle this yet!
+    * **profPic:** optional, send as a file designated with the encoding ``form-data``
 
   **Returns**
 
