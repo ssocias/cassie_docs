@@ -151,6 +151,7 @@ With the exception of ``profPic``, all fields passed in the request will be comp
 .. note:: **Profile Pictures**
   
   The image sent in the request should be a file designated with the encoding ``form-data``.  
+  The server validates the image type (png, jpeg/jpg, or gif).
 
 **Definition**
 
