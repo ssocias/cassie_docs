@@ -39,7 +39,7 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
     * **has_been_read:** *boolean*, indicates whether or not the notification has been read
 
     * **notification_type:** *string*, what type of notification this is (friend request, answer castie, etc); see the `Notification Types Table`_ for details
-    * **data:** *array*, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)
+    * **data:** *string*, data needed to take action of the notification (ex. handle of the user who accepted the friend request or uuid of the Castie that needs to be answered)
 
 .. _Notification Types Table:
 
