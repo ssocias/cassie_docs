@@ -160,7 +160,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <p class="last"><code class="docutils literal"><span class="pre">https://cassieapp.com/api/notifications/</span></code></p>
 </div>
 <p>Each notification is saved as a <a class="reference internal" href="#notification-object">Notification Object</a>. Most GET requests regarding notifications return either an individual object or an array of objects.</p>
-<p>The app should display some type of indicator when the User has 1 or more new notifications (using the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> endpoint). A new notification is one that was created at any point since the client app last called the <code class="docutils literal"><span class="pre">/ap/notifications/</span></code> endpoint. To determine whether or not new notifications have arrived, use the <a class="reference internal" href="get-requests.html#initialize"><span>Initialize</span></a> endpoint <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code>.</p>
+<p>The app should display some type of indicator when the User has 1 or more new notifications (using the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> endpoint). A new notification is one that was created at any point since the client app last called the <a class="reference internal" href="#retrieve-notifications">retrieve notifications</a>  endpoint. To determine whether or not new notifications have arrived, use the <a class="reference internal" href="get-requests.html#initialize"><span>Initialize</span></a> endpoint <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code>.</p>
 <p>Users may delete notifications by tapping the small &#8216;x&#8217; in the right hand corner of the notification. When they do so, a request is made to the appropriate <a class="reference internal" href="#delete-notification">delete notification</a> endpoint. Notifications that are &#8220;completed&#8221; after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted when the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie. The server takes care of deleting such notifications so just make sure to &#8220;refresh&#8221; notifications on the client-side once the action is completed!</p>
 <p id="notification-object"><strong>The Notification Object</strong></p>
 <blockquote>
@@ -231,6 +231,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <span id="retrieve-notifications"></span><h2>Retrieve Notifcations<a class="headerlink" href="#retrieve-notifcations" title="Permalink to this headline">¶</a></h2>
 <p>Returns arrays of <a class="reference internal" href="#notification-object">Notification Object</a> grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.</p>
 <p>To return notifications of a particular type, you may use the &#8220;notification_type&#8221; parameter to include one or more notification_types from the table above. For example, <code class="docutils literal"><span class="pre">/?notification_type=group-approved&amp;notification_type=castie-needs-answer/</span></code>, will return two lists of Notification Objects. One for &#8220;group-approved&#8221; notifications and one for &#8220;castie-needs-answer&#8221; notifications.</p>
+<p>Calling this enpoint sets all notificaitons to <code class="docutils literal"><span class="pre">has_been_read</span> <span class="pre">=</span> <span class="pre">True</span></code>. So, only call this endpoint when the User clicks on the Activity tab. Or else it will interfere with the way I keep track of new notifications.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/</span></code></p>
 <p><strong>Arguments</strong></p>
@@ -317,7 +318,8 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
 <span id="count-of-new-notifications"></span><h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
-<p>Returns a count of the number of new notifications since the client app last called the <code class="docutils literal"><span class="pre">/api/notifications/</span></code> endpoint. Casties that need to be answered, regardless of how many there are, count as 1 collective notification. That is why, on the sample response below, the User has 11 Casties that need to be answered but their number_notifications is just 2 (one notification for the Casties needing answer and another for a separate notification).</p>
+<p>This is the same as the <a class="reference internal" href="get-requests.html#initialize"><span>Initialize</span></a> endpoint.</p>
+<p>Returns a count of the number of new notifications since the client app last called the <a class="reference internal" href="#retrieve-notifications">retrieve notifications</a> endpoint. Casties that need to be answered, regardless of how many there are, count as 1 collective notification. That is why, on the sample response below, the User has 11 Casties that need to be answered but their number_notifications is just 2 (one notification for the Casties needing answer and another for a separate notification).</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code></p>
 <p><strong>Arguments</strong></p>
@@ -349,6 +351,10 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </div>
 <div class="section" id="delete-all-notifications">
 <h2>Delete all Notifications<a class="headerlink" href="#delete-all-notifications" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This &#8220;Delete All&#8221; functionality is not needed in the iOS app.</p>
+</div>
 <p>Deletes all notifications except for any <code class="docutils literal"><span class="pre">castie-needs-answer</span></code> notifications. <code class="docutils literal"><span class="pre">castie-needs-answer</span></code> notifications can never be deleted. They are only &#8220;deleted&#8221; once the User answers the castie.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/all/</span></code></p>
