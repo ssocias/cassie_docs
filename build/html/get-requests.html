@@ -110,7 +110,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#activity">Activity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#search-current">Search - CURRENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-new">Search - NEW</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#search-old">Search - OLD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hamburger-side-menu">Hamburger Side Menu</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-castie-group-list">Create Castie- Group List</a></li>
@@ -1233,9 +1233,9 @@ Each User object in the list contains:</p>
 <h2>Activity<a class="headerlink" href="#activity" title="Permalink to this headline">¶</a></h2>
 <p>The Activity section is where Users receive notifications. See the <a class="reference internal" href="notifications.html#notifications"><span>Notifications</span></a> section for more details.</p>
 </div>
-<div class="section" id="search-current">
-<h2>Search - CURRENT<a class="headerlink" href="#search-current" title="Permalink to this headline">¶</a></h2>
-<p>Search Cassie users. Send the User&#8217;s query as a string. Will return a list of <a class="reference internal" href="#frodad-object">Frodad Object</a>.</p>
+<div class="section" id="search-new">
+<h2>Search - NEW<a class="headerlink" href="#search-new" title="Permalink to this headline">¶</a></h2>
+<p>Search Cassie users. Send the User&#8217;s query as a string. Will return a list of User Objects (a User Object is the same as a <a class="reference internal" href="#frodad-object">Frodad Object</a>) but without the &#8216;level&#8217; field.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/people/?q=</span></code></p>
 <p><strong>Arguments</strong></p>
@@ -1245,9 +1245,29 @@ Each User object in the list contains:</p>
 <li>q: <em>string</em>, the search query</li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>A list of Frodad Objects that meet the search criteria.</p>
+<p>A list of User Objects entitled &#8216;search_results&#8217; that meets the search criteria.</p>
 <p><strong>Sample Response</strong></p>
-<p>COMING SOON</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;search_results&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
+      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-4/image_QPZAEEG.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;not-friends&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;alexsocias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;alex&quot;</span><span class="p">,</span>
+      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;socias&quot;</span><span class="p">,</span>
+      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-13/1427919205429.jpg&quot;</span><span class="p">,</span>
+      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="search-old">
 <h2>Search - OLD<a class="headerlink" href="#search-old" title="Permalink to this headline">¶</a></h2>

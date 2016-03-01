@@ -1098,10 +1098,10 @@ Activity
 ========
 The Activity section is where Users receive notifications. See the :ref:`Notifications` section for more details. 
 
-Search - CURRENT
-================
+Search - NEW
+============
 
-Search Cassie users. Send the User's query as a string. Will return a list of `Frodad Object`_.
+Search Cassie users. Send the User's query as a string. Will return a list of User Objects (a User Object is the same as a `Frodad Object`_) but without the 'level' field.
 
 **Definition**
 
@@ -1117,11 +1117,29 @@ None
 
 **Returns**
 
-A list of Frodad Objects that meet the search criteria.
+A list of User Objects entitled 'search_results' that meets the search criteria.
 
-**Sample Response**
+**Sample Response** ::
 
-COMING SOON
+    {
+      "status": 200,
+      "search_results": [    
+        {
+          "handle": "csocias",
+          "first_name": "Christina",
+          "last_name": "Socias",
+          "profPic": "profiles/user-4/image_QPZAEEG.jpg",
+          "friend_status": "not-friends"
+        },
+        {
+          "handle": "alexsocias",
+          "first_name": "alex",
+          "last_name": "socias",
+          "profPic": "profiles/user-13/1427919205429.jpg",
+          "friend_status": "friends"
+        }
+      ]
+    }
 
 
 Search - OLD
