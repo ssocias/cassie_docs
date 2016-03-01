@@ -229,15 +229,15 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </table>
 <div class="section" id="retrieve-notifcations">
 <span id="retrieve-notifications"></span><h2>Retrieve Notifcations<a class="headerlink" href="#retrieve-notifcations" title="Permalink to this headline">¶</a></h2>
-<p>Returns arrays of Notification Objects grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.
-To return notifications of a particular type, you may use the &#8220;notification_type&#8221; parameter to include one or more notification_types from the table above. For example, <code class="docutils literal"><span class="pre">/?notification_type=group-approved&amp;notification_type=castie-needs-answer/</span></code>, will return two list of Notification Objects. One for &#8220;group-approved&#8221; notifications and one for &#8220;castie-needs-answer&#8221; notifications.</p>
+<p>Returns arrays of <a class="reference internal" href="#notification-object">Notification Object</a> grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.</p>
+<p>To return notifications of a particular type, you may use the &#8220;notification_type&#8221; parameter to include one or more notification_types from the table above. For example, <code class="docutils literal"><span class="pre">/?notification_type=group-approved&amp;notification_type=castie-needs-answer/</span></code>, will return two lists of Notification Objects. One for &#8220;group-approved&#8221; notifications and one for &#8220;castie-needs-answer&#8221; notifications.</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/all/?notification_type=</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/?notification_type=</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Parameters</strong></p>
 <ul class="simple">
-<li><strong>notification_type</strong>: <em>string</em>, filter by any one of the <code class="docutils literal"><span class="pre">notification_type</span></code> notifications in the Table above</li>
+<li><strong>notification_type (optional)</strong>: <em>string</em>, filter by any one of the <code class="docutils literal"><span class="pre">notification_type</span></code> notifications in the Table above</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>A list(s) of Notification Objects.</p>

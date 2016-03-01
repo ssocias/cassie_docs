@@ -72,13 +72,14 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 ---------------------
 Retrieve Notifcations
 ---------------------
-Returns arrays of Notification Objects grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.
-To return notifications of a particular type, you may use the "notification_type" parameter to include one or more notification_types from the table above. For example, ``/?notification_type=group-approved&notification_type=castie-needs-answer/``, will return two list of Notification Objects. One for "group-approved" notifications and one for "castie-needs-answer" notifications.
+Returns arrays of `Notification Object`_ grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.
+
+To return notifications of a particular type, you may use the "notification_type" parameter to include one or more notification_types from the table above. For example, ``/?notification_type=group-approved&notification_type=castie-needs-answer/``, will return two lists of Notification Objects. One for "group-approved" notifications and one for "castie-needs-answer" notifications.
 
 
 **Definition**
 
-``GET https://cassieapp.com/api/notifications/all/?notification_type=``
+``GET https://cassieapp.com/api/notifications/?notification_type=``
 
 **Arguments**
 
@@ -86,7 +87,7 @@ None
 
 **Parameters**
 
-* **notification_type**: *string*, filter by any one of the ``notification_type`` notifications in the Table above
+* **notification_type (optional)**: *string*, filter by any one of the ``notification_type`` notifications in the Table above
 
 **Returns**
 
