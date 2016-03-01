@@ -1098,8 +1098,34 @@ Activity
 ========
 The Activity section is where Users receive notifications. See the :ref:`Notifications` section for more details. 
 
-Search
-======
+Search - CURRENT
+================
+
+Search Cassie users. Send the User's query as a string. Will return a list of `Frodad Object`_.
+
+**Definition**
+
+``GET https://cassieapp.com/api/search/people/?q=``
+
+**Arguments**
+
+None
+
+**Parameters**
+
+* q: *string*, the search query
+
+**Returns**
+
+A list of Frodad Objects that meet the search criteria.
+
+**Sample Response**
+
+COMING SOON
+
+
+Search - OLD
+============
 
 The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.
 
