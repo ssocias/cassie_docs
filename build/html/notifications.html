@@ -324,18 +324,26 @@ To return notifications of a particular type, you may use the &#8220;notificatio
 <li><strong>notification_id</strong>: <em>string</em>, the Notification&#8217;s uniquie id</li>
 </ul>
 <p><strong>Sample Response</strong></p>
-<blockquote>
-<div>Coming soon</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&#39;status&#39;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="delete-all-notifications">
 <h2>Delete all Notifications<a class="headerlink" href="#delete-all-notifications" title="Permalink to this headline">¶</a></h2>
+<p>Deletes all notifications except for any <code class="docutils literal"><span class="pre">castie-needs-answer</span></code> notification. <code class="docutils literal"><span class="pre">castie-needs-answer</span></code> notifications can never be deleted. They are &#8220;deleted&#8221; once the User answers the castie.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/all/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Sample Response</strong></p>
-<blockquote>
-<div>Coming soon</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+  <span class="s">&quot;delete-all&quot;</span><span class="p">:</span> <span class="s">&quot;all notifications have been deleted&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
 <span id="count-of-new-notifications"></span><h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>

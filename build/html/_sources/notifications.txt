@@ -181,14 +181,18 @@ Delete an Individual Notification
 
 * **notification_id**: *string*, the Notification's uniquie id 
 
-**Sample Response**
+**Sample Response** ::
 
-    Coming soon
+    {
+      'status': 200
+    }
 
 
 ------------------------
 Delete all Notifications
 ------------------------
+
+Deletes all notifications except for any ``castie-needs-answer`` notification. ``castie-needs-answer`` notifications can never be deleted. They are "deleted" once the User answers the castie.
 
 **Definition**
 
@@ -198,9 +202,12 @@ Delete all Notifications
 
 None
 
-**Sample Response**
+**Sample Response** ::
 
-    Coming soon
+  {
+    "status": 200,
+    "delete-all": "all notifications have been deleted"
+  }
 
 
 .. _count of new notifications:
