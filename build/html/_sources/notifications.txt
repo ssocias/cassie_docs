@@ -20,11 +20,9 @@ From here forward, when using the word "notifications", I am referring to both f
 
 Each notification is saved as a `Notification Object`_. Most GET requests regarding notifications return either an individual object or an array of objects.
 
-**Probably will not have any read vs unread distinctions- TBD** Notifications are classified as "unread" when the User has not yet clicked on it and "read" once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate `mark as read`_ endpoint.
-
 The app should display some type of indicator when the User has 1 or more new notifications (using the `count of new notifications`_ endpoint). A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the `count of new notifications`_.
 
-Users may delete notifications by tapping the small 'x' in the right hand corner of the notification. When they do so, a request is made to the appropriate DELETE endpoint. Notifications that are "completed" after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted whenever the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie.
+Users may delete notifications by tapping the small 'x' in the right hand corner of the notification. When they do so, a request is made to the appropriate `delete notification`_ endpoint. Notifications that are "completed" after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted when the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie. The server takes care of deleting such notifications so just make sure to "refresh" notifications on the client-side once the action is completed!
 
 .. _Notification Object:
 
@@ -33,7 +31,7 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
     **Attributes**
 
     * **created_on_date:** *string*, date (YYYY-MM-DD) the Notification was created
-    * **created_on_timee:** *string*, time (HH:mm:ss) the Notification was created
+    * **created_on_time:** *string*, time (HH:mm:ss) the Notification was created
     * **timesince_created:** *string*, human readable string of time since notification was created (ex. "2 days ago")
     * **id:** *string*, unique id for the Notification (casti-needs-answer notifications do not have an id)
     * **message:** *string*, text of the notification
@@ -68,6 +66,8 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 +-------------------------------+----------------------------------+-----------------------------------------+
 |Group Access Approved          | group-access-granted             | slug of the group                       |
 +-------------------------------+----------------------------------+-----------------------------------------+
+
+There are some notification objects that we don't need on the iOS app. These will have ``None/null`` values for ``notification_type`` and ``data``. Just don't display these!
 
 .. _retrieve notifications:
 
@@ -150,6 +150,9 @@ A list(s) of Notification Objects.
         }
       ]
     }
+
+
+.. _delete notification:
 
 ---------------------------------
 Delete an Individual Notification

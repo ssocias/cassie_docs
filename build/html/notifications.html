@@ -161,15 +161,14 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <p class="last"><code class="docutils literal"><span class="pre">https://cassieapp.com/api/notifications/</span></code></p>
 </div>
 <p>Each notification is saved as a <a class="reference internal" href="#notification-object">Notification Object</a>. Most GET requests regarding notifications return either an individual object or an array of objects.</p>
-<p><strong>Probably will not have any read vs unread distinctions- TBD</strong> Notifications are classified as &#8220;unread&#8221; when the User has not yet clicked on it and &#8220;read&#8221; once they have. When a User clicks on a notification (thus making it read), the app must send a request to the appropriate <a class="reference internal" href="#mark-as-read">mark as read</a> endpoint.</p>
 <p>The app should display some type of indicator when the User has 1 or more new notifications (using the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> endpoint). A new notification is one that was created at any point since the User last clicked the &#8220;Activity&#8221; tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User&#8217;s last visit to the &#8220;Activity&#8221; tab in the request to retrieve the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a>.</p>
-<p>Users may delete notifications by tapping the small &#8216;x&#8217; in the right hand corner of the notification. When they do so, a request is made to the appropriate DELETE endpoint. Notifications that are &#8220;completed&#8221; after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted whenever the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie.</p>
+<p>Users may delete notifications by tapping the small &#8216;x&#8217; in the right hand corner of the notification. When they do so, a request is made to the appropriate <a class="reference internal" href="#delete-notification">delete notification</a> endpoint. Notifications that are &#8220;completed&#8221; after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted when the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie. The server takes care of deleting such notifications so just make sure to &#8220;refresh&#8221; notifications on the client-side once the action is completed!</p>
 <p id="notification-object"><strong>The Notification Object</strong></p>
 <blockquote>
 <div><p><strong>Attributes</strong></p>
 <ul class="simple">
 <li><strong>created_on_date:</strong> <em>string</em>, date (YYYY-MM-DD) the Notification was created</li>
-<li><strong>created_on_timee:</strong> <em>string</em>, time (HH:mm:ss) the Notification was created</li>
+<li><strong>created_on_time:</strong> <em>string</em>, time (HH:mm:ss) the Notification was created</li>
 <li><strong>timesince_created:</strong> <em>string</em>, human readable string of time since notification was created (ex. &#8220;2 days ago&#8221;)</li>
 <li><strong>id:</strong> <em>string</em>, unique id for the Notification (casti-needs-answer notifications do not have an id)</li>
 <li><strong>message:</strong> <em>string</em>, text of the notification</li>
@@ -229,6 +228,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </tr>
 </tbody>
 </table>
+<p>There are some notification objects that we don&#8217;t need on the iOS app. These will have <code class="docutils literal"><span class="pre">None/null</span></code> values for <code class="docutils literal"><span class="pre">notification_type</span></code> and <code class="docutils literal"><span class="pre">data</span></code>. Just don&#8217;t display these!</p>
 <div class="section" id="retrieve-notifcations">
 <span id="retrieve-notifications"></span><h2>Retrieve Notifcations<a class="headerlink" href="#retrieve-notifcations" title="Permalink to this headline">¶</a></h2>
 <p>Returns an array of Notification Objects for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in chronological order.
@@ -306,7 +306,7 @@ To return notifications of a particular type, you may use the &#8220;notificatio
 </div>
 </div>
 <div class="section" id="delete-an-individual-notification">
-<h2>Delete an Individual Notification<a class="headerlink" href="#delete-an-individual-notification" title="Permalink to this headline">¶</a></h2>
+<span id="delete-notification"></span><h2>Delete an Individual Notification<a class="headerlink" href="#delete-an-individual-notification" title="Permalink to this headline">¶</a></h2>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/{notification_id}/</span></code></p>
 <p><strong>Arguments</strong></p>
