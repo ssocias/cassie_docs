@@ -160,7 +160,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 <p class="last"><code class="docutils literal"><span class="pre">https://cassieapp.com/api/notifications/</span></code></p>
 </div>
 <p>Each notification is saved as a <a class="reference internal" href="#notification-object">Notification Object</a>. Most GET requests regarding notifications return either an individual object or an array of objects.</p>
-<p>The app should display some type of indicator when the User has 1 or more new notifications (using the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> endpoint). A new notification is one that was created at any point since the User last clicked the &#8220;Activity&#8221; tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User&#8217;s last visit to the &#8220;Activity&#8221; tab in the request to retrieve the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a>.</p>
+<p>The app should display some type of indicator when the User has 1 or more new notifications (using the <a class="reference internal" href="#count-of-new-notifications">count of new notifications</a> endpoint). A new notification is one that was created at any point since the client app last called the <code class="docutils literal"><span class="pre">/ap/notifications/</span></code> endpoint. To determine whether or not new notifications have arrived, use the <a class="reference internal" href="get-requests.html#initialize"><span>Initialize</span></a> endpoint <code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code>.</p>
 <p>Users may delete notifications by tapping the small &#8216;x&#8217; in the right hand corner of the notification. When they do so, a request is made to the appropriate <a class="reference internal" href="#delete-notification">delete notification</a> endpoint. Notifications that are &#8220;completed&#8221; after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted when the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie. The server takes care of deleting such notifications so just make sure to &#8220;refresh&#8221; notifications on the client-side once the action is completed!</p>
 <p id="notification-object"><strong>The Notification Object</strong></p>
 <blockquote>
@@ -317,20 +317,17 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
 <span id="count-of-new-notifications"></span><h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
-<p>Returns a count of the number of new notifications since the User last visited the &#8220;Activity&#8221; section. The date and time of the last visit must be passed in the request.</p>
+<p>Returns a count of the number of new notifications since the client app last called the <code class="docutils literal"><span class="pre">/api/notifications/</span></code> endpoint. Casties that need to be answered, regardless of how many there are, count as 1 collective notification. That is why, on the sample response below, the User has 11 Casties that need to be answered but their number_notifications is just 2 (one notification for the Casties needing answer and another for a separate notification).</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/count/?last_seen_date={last_seen_date}&amp;last_seen_time={last_seen_time}</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
-<p><strong>Parameters</strong></p>
-<ul class="simple">
-<li><strong>last_seen_date</strong>: <em>string</em>, date (YYYY-MM-DD) the User last clicked on the &#8220;Activity&#8221; tab</li>
-<li><strong>last_seen_time</strong>: <em>string</em>, time (HH:mm:ss) the User last clicked on the &#8220;Activity&#8221; tab</li>
-</ul>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="mi">3</span>
+  <span class="s">&quot;needs_answer&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+  <span class="s">&quot;number_needing_answer&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+  <span class="s">&quot;number_notifications&quot;</span><span class="p">:</span> <span class="mi">2</span>
 <span class="p">}</span>
 </pre></div>
 </div>

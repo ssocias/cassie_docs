@@ -18,18 +18,12 @@ Before/after making this request, make a request to `Home`_ to get the home Cast
 
 .. note:: **Periodaclly Updating Notifications Count**
 
-  You might need to make periodic requests to this "Initialize" endpoint or to the "Needs Answer" endpoint below in order to alert the User when they have a new notification while they are using the app. 
-
-  If I am able to implement a node.js notification system, this will change so that the system sends notifications to the client app as they come in....Stay tuned!
+  You need to make periodic requests to this "Initialize" endpoint or to the "Needs Answer" endpoint below in order to alert the User when they have a new notification while they are using the app. 
+  
 
 **Definition:** 
 
 ``GET https://cassieapp.com/api/initialize/``
-
-**Parameters (sent as key:value pairs in the request)**
-
-  * **last_seen_date:** *string*, date of the notification the User last saw; YYYY-MM-DD format
-  * **last_seen_time:** *string*, time of the notification the User last saw; Hour:Minute:Second format
 
 **Returns**
 
@@ -50,7 +44,7 @@ Before/after making this request, make a request to `Home`_ to get the home Cast
 Needs Answer
 ============
 
-A boolean to denote if the User has a Catie(s) that can be answered.
+A boolean to denote if the User has a Castie(s) that can be answered. This does not check Open-ended casties. It only returns data for set end date casties.
 
 **Definition:** 
 
@@ -62,7 +56,7 @@ None
 
 **Returns**
 
-``True`` is the User has Casties that need to be answered. Otherwise, it returns ``False``. Also returns the number of Casties needing to be answered.
+``True`` is the User has non-open-ended Casties that need to be answered. Otherwise, it returns ``False``. Also returns the number of non-open-ended Casties needing to be answered.
 
 **Sample Response** ::
 

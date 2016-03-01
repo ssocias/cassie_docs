@@ -176,18 +176,10 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>Periodaclly Updating Notifications Count</strong></p>
-<p>You might need to make periodic requests to this &#8220;Initialize&#8221; endpoint or to the &#8220;Needs Answer&#8221; endpoint below in order to alert the User when they have a new notification while they are using the app.</p>
-<p class="last">If I am able to implement a node.js notification system, this will change so that the system sends notifications to the client app as they come in....Stay tuned!</p>
+<p class="last">You need to make periodic requests to this &#8220;Initialize&#8221; endpoint or to the &#8220;Needs Answer&#8221; endpoint below in order to alert the User when they have a new notification while they are using the app.</p>
 </div>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/initialize/</span></code></p>
-<p><strong>Parameters (sent as key:value pairs in the request)</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li><strong>last_seen_date:</strong> <em>string</em>, date of the notification the User last saw; YYYY-MM-DD format</li>
-<li><strong>last_seen_time:</strong> <em>string</em>, time of the notification the User last saw; Hour:Minute:Second format</li>
-</ul>
-</div></blockquote>
 <p><strong>Returns</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -208,13 +200,13 @@
 </div>
 <div class="section" id="needs-answer">
 <h2>Needs Answer<a class="headerlink" href="#needs-answer" title="Permalink to this headline">¶</a></h2>
-<p>A boolean to denote if the User has a Catie(s) that can be answered.</p>
+<p>A boolean to denote if the User has a Castie(s) that can be answered. This does not check Open-ended casties. It only returns data for set end date casties.</p>
 <p><strong>Definition:</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/casties/needsanswer/</span></code></p>
 <p><strong>Arguments</strong></p>
 <p>None</p>
 <p><strong>Returns</strong></p>
-<p><code class="docutils literal"><span class="pre">True</span></code> is the User has Casties that need to be answered. Otherwise, it returns <code class="docutils literal"><span class="pre">False</span></code>. Also returns the number of Casties needing to be answered.</p>
+<p><code class="docutils literal"><span class="pre">True</span></code> is the User has non-open-ended Casties that need to be answered. Otherwise, it returns <code class="docutils literal"><span class="pre">False</span></code>. Also returns the number of non-open-ended Casties needing to be answered.</p>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>

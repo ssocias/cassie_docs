@@ -20,7 +20,7 @@ From here forward, when using the word "notifications", I am referring to both f
 
 Each notification is saved as a `Notification Object`_. Most GET requests regarding notifications return either an individual object or an array of objects.
 
-The app should display some type of indicator when the User has 1 or more new notifications (using the `count of new notifications`_ endpoint). A new notification is one that was created at any point since the User last clicked the "Activity" tab. In order for the backend to retrieve the correct number, the app must pass the date/time of the User's last visit to the "Activity" tab in the request to retrieve the `count of new notifications`_.
+The app should display some type of indicator when the User has 1 or more new notifications (using the `count of new notifications`_ endpoint). A new notification is one that was created at any point since the client app last called the ``/ap/notifications/`` endpoint. To determine whether or not new notifications have arrived, use the :ref:`Initialize` endpoint ``GET https://cassieapp.com/api/initialize/``.
 
 Users may delete notifications by tapping the small 'x' in the right hand corner of the notification. When they do so, a request is made to the appropriate `delete notification`_ endpoint. Notifications that are "completed" after the User takes action must be deleted automatically. For example, when the User receives a friend request, this notification must be deleted when the User accepts or rejects it. Because the User may accept/reject from other screens in the app, we need to coordinate for this! Same thing for answering a Castie. The server takes care of deleting such notifications so just make sure to "refresh" notifications on the client-side once the action is completed!
 
@@ -174,27 +174,24 @@ A list(s) of Notification Objects.
 Retrieve a Count of New Notifications
 -------------------------------------
 
-Returns a count of the number of new notifications since the User last visited the "Activity" section. The date and time of the last visit must be passed in the request.
+Returns a count of the number of new notifications since the client app last called the ``/api/notifications/`` endpoint. Casties that need to be answered, regardless of how many there are, count as 1 collective notification. That is why, on the sample response below, the User has 11 Casties that need to be answered but their number_notifications is just 2 (one notification for the Casties needing answer and another for a separate notification).
 
 **Definition**
 
-``GET https://cassieapp.com/api/notifications/count/?last_seen_date={last_seen_date}&last_seen_time={last_seen_time}``
+``GET https://cassieapp.com/api/initialize/``
 
 **Arguments**
 
 None
 
-**Parameters**
-
-* **last_seen_date**: *string*, date (YYYY-MM-DD) the User last clicked on the "Activity" tab
-* **last_seen_time**: *string*, time (HH:mm:ss) the User last clicked on the "Activity" tab
-
 **Sample Response** ::
 
-    {
-      "status": 200,
-      "count": 3
-    }
+  {
+    "status": 200,
+    "needs_answer": true,
+    "number_needing_answer": 11,
+    "number_notifications": 2
+  }
 
 
 .. _delete notification:
