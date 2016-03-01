@@ -18,8 +18,8 @@ Before/after making this request, make a request to `Home`_ to get the home Cast
 
 .. note:: **Periodaclly Updating Notifications Count**
 
-  You need to make periodic requests to this "Initialize" endpoint or to the "Needs Answer" endpoint below in order to alert the User when they have a new notification while they are using the app. 
-  
+  You need to make periodic requests to this "Initialize" endpoint in order to alert the User when they have a new notification while they are using the app. 
+
 
 **Definition:** 
 
