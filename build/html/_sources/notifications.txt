@@ -79,7 +79,7 @@ To return notifications of a particular type, you may use the "notification_type
 
 **Definition**
 
-``GET https://cassieapp.com/api/notifications/?notification_type=``
+``GET https://cassieapp.com/api/notifications/``
 
 **Arguments**
 
@@ -168,49 +168,6 @@ A list(s) of Notification Objects.
     }
 
 
-.. _delete notification:
-
----------------------------------
-Delete an Individual Notification
----------------------------------
-
-**Definition**
-
-``POST https://cassieapp.com/api/notifications/delete/{notification_id}/``
-
-**Arguments**
-
-* **notification_id**: *string*, the Notification's uniquie id 
-
-**Sample Response** ::
-
-    {
-      'status': 200
-    }
-
-
-------------------------
-Delete all Notifications
-------------------------
-
-Deletes all notifications except for any ``castie-needs-answer`` notification. ``castie-needs-answer`` notifications can never be deleted. They are "deleted" once the User answers the castie.
-
-**Definition**
-
-``POST https://cassieapp.com/api/notifications/delete/all/``
-
-**Arguments**
-
-None
-
-**Sample Response** ::
-
-  {
-    "status": 200,
-    "delete-all": "all notifications have been deleted"
-  }
-
-
 .. _count of new notifications:
 
 -------------------------------------
@@ -238,4 +195,47 @@ None
       "status": 200,
       "count": 3
     }
+
+
+.. _delete notification:
+
+---------------------------------
+Delete an Individual Notification
+---------------------------------
+
+**Definition**
+
+``POST https://cassieapp.com/api/notifications/delete/{notification_id}/``
+
+**Arguments**
+
+* **notification_id**: *string*, the Notification's uniquie id 
+
+**Sample Response** ::
+
+    {
+      'status': 200
+    }
+
+
+------------------------
+Delete all Notifications
+------------------------
+
+Deletes all notifications except for any ``castie-needs-answer`` notifications. ``castie-needs-answer`` notifications can never be deleted. They are only "deleted" once the User answers the castie.
+
+**Definition**
+
+``POST https://cassieapp.com/api/notifications/delete/all/``
+
+**Arguments**
+
+None
+
+**Sample Response** ::
+
+  {
+    "status": 200,
+    "delete-all": "all notifications have been deleted"
+  }
 
