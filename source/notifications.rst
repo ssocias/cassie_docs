@@ -67,14 +67,12 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 |Group Access Approved          | group-access-granted             | slug of the group                       |
 +-------------------------------+----------------------------------+-----------------------------------------+
 
-There are some notification objects that we don't need on the iOS app. These will have ``None/null`` values for ``notification_type`` and ``data``. Just don't display these!
-
 .. _retrieve notifications:
 
 ---------------------
 Retrieve Notifcations
 ---------------------
-Returns an array of Notification Objects for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in chronological order.
+Returns arrays of Notification Objects grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.
 To return notifications of a particular type, you may use the "notification_type" parameter to include one or more notification_types from the table above. For example, ``/?notification_type=group-approved&notification_type=castie-needs-answer/``, will return two list of Notification Objects. One for "group-approved" notifications and one for "castie-needs-answer" notifications.
 
 
@@ -94,10 +92,7 @@ None
 
 A list(s) of Notification Objects.
 
-    **If ALL notifications have been requested, only one list entitled "notifications" will be returned.**
-        * **notifications**: a list of Notification Objects for all notifications 
-
-    **If only certain types of notifications have been requested, there will be a separate list for each type.**
+    **If ALL notifications have been requested, multiple lists are returned. There is a separate list of Notification Objects for every notification_type, as specified in the table above.**
 
 **Sample Response**
 
@@ -105,28 +100,48 @@ A list(s) of Notification Objects.
 
     {
       "status": 200,
-      "notifications": [
+      "castie-friend-forecasted": [],
+      "castie-forecasted": [],
+      "new-casties": [],
+      "friend-request-received": [],
+      "castie-answered": [],
+      "castie-friend-commented": [],
+      "group-access-granted": [
         {
-          "url": "/profile/c71d8f8144f74a3498d279043182d600/",
-          "notification_type": "friend-request-accepted",
-          "id": "56c8d5969e4d5b596129cebe",
-          "timesince_created": "an hour ago",
-          "has_been_read": true,
-          "created_on_date": "2016-02-20",
-          "data": "Luly",
-          "message": "@Luly has accepted your friendship request",
-          "created_on_time": "16:07:34"
+          "id": "56d52be599c809a029620b24",
+          "url": "/categories/ism-6216-data-base/",
+          "created_on_time": "00:43:01",
+          "message": "You have been approved to join the ISM 6216 Data Base group",
+          "data": "ism-6216-data-base",
+          "timesince_created": "seconds ago",
+          "created_on_date": "2016-03-01",
+          "has_been_read": false,
+          "notification_type": "group-access-granted"
+        }
+      ],
+      "friend-request-accepted": [],
+      "castie-needs-answer": [
+        {
+          "id": null,
+          "url": null,
+          "created_on_time": "11:57:00",
+          "message": "Your Castie has ended- time to answer it!",
+          "data": "0f05ac0abc714bcf896ce60a2cdd2b55",
+          "timesince_created": "4 days ago",
+          "created_on_date": "2016-02-25",
+          "has_been_read": false,
+          "notification_type": "castie-needs-answer"
         },
         {
-          "url": "/friends/requests/",
-          "notification_type": "friend-request-received",
-          "id": "56c8d3287d97535a6195f8cc",
-          "timesince_created": "an hour ago",
-          "has_been_read": true,
-          "created_on_date": "2016-02-20",
-          "data": "Luly",
-          "message": "@Luly has sent you a friendship request",
-          "created_on_time": "15:57:12"
+          "id": null,
+          "url": null,
+          "created_on_time": "20:00:00",
+          "message": "Your Castie has ended- time to answer it!",
+          "data": "dacd33b5ffce4396a1b092c8901a8e08",
+          "timesince_created": "6 months ago",
+          "created_on_date": "2015-09-30",
+          "has_been_read": false,
+          "notification_type": "castie-needs-answer"
         }
       ]
     }
@@ -187,27 +202,6 @@ None
 
     Coming soon
 
-.. _mark as read:
-
-------------
-Mark as Read
-------------
-
-**PROBABLY WON'T USE THIS**
-
-Use this endpoint to indicate that a notification has been read. A notification is "read" once a User clicks the notification.
-
-**Definition**
-
-``POST https://cassieapp.com/api/notifications/read/{notification_id}/``
-
-**Arguments**
-
-* **notification_id**: *string*, the Notification's uniquie id 
-
-**Sample Response** ::
-
-    Coming Soon
 
 .. _count of new notifications:
 

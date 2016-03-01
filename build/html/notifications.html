@@ -88,7 +88,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#retrieve-notifcations">Retrieve Notifcations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#delete-an-individual-notification">Delete an Individual Notification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#delete-all-notifications">Delete all Notifications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mark-as-read">Mark as Read</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#retrieve-a-count-of-new-notifications">Retrieve a Count of New Notifications</a></li>
 </ul>
 </li>
@@ -228,10 +227,9 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </tr>
 </tbody>
 </table>
-<p>There are some notification objects that we don&#8217;t need on the iOS app. These will have <code class="docutils literal"><span class="pre">None/null</span></code> values for <code class="docutils literal"><span class="pre">notification_type</span></code> and <code class="docutils literal"><span class="pre">data</span></code>. Just don&#8217;t display these!</p>
 <div class="section" id="retrieve-notifcations">
 <span id="retrieve-notifications"></span><h2>Retrieve Notifcations<a class="headerlink" href="#retrieve-notifcations" title="Permalink to this headline">¶</a></h2>
-<p>Returns an array of Notification Objects for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in chronological order.
+<p>Returns arrays of Notification Objects grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.
 To return notifications of a particular type, you may use the &#8220;notification_type&#8221; parameter to include one or more notification_types from the table above. For example, <code class="docutils literal"><span class="pre">/?notification_type=group-approved&amp;notification_type=castie-needs-answer/</span></code>, will return two list of Notification Objects. One for &#8220;group-approved&#8221; notifications and one for &#8220;castie-needs-answer&#8221; notifications.</p>
 <p><strong>Definition</strong></p>
 <p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/notifications/all/?notification_type=</span></code></p>
@@ -244,41 +242,53 @@ To return notifications of a particular type, you may use the &#8220;notificatio
 <p><strong>Returns</strong></p>
 <p>A list(s) of Notification Objects.</p>
 <blockquote>
-<div><dl class="docutils">
-<dt><strong>If ALL notifications have been requested, only one list entitled &#8220;notifications&#8221; will be returned.</strong></dt>
-<dd><ul class="first last simple">
-<li><strong>notifications</strong>: a list of Notification Objects for all notifications</li>
-</ul>
-</dd>
-</dl>
-<p><strong>If only certain types of notifications have been requested, there will be a separate list for each type.</strong></p>
-</div></blockquote>
+<div><strong>If ALL notifications have been requested, multiple lists are returned. There is a separate list of Notification Objects for every notification_type, as specified in the table above.</strong></div></blockquote>
 <p><strong>Sample Response</strong></p>
 <p><strong>No Filtering:</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;notifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s">&quot;castie-friend-forecasted&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;castie-forecasted&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;new-casties&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;friend-request-received&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;castie-answered&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;castie-friend-commented&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;group-access-granted&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="s">&quot;/profile/c71d8f8144f74a3498d279043182d600/&quot;</span><span class="p">,</span>
-      <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;friend-request-accepted&quot;</span><span class="p">,</span>
-      <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;56c8d5969e4d5b596129cebe&quot;</span><span class="p">,</span>
-      <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;an hour ago&quot;</span><span class="p">,</span>
-      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-02-20&quot;</span><span class="p">,</span>
-      <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span><span class="p">,</span>
-      <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;@Luly has accepted your friendship request&quot;</span><span class="p">,</span>
-      <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;16:07:34&quot;</span>
+      <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;56d52be599c809a029620b24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="s">&quot;/categories/ism-6216-data-base/&quot;</span><span class="p">,</span>
+      <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;00:43:01&quot;</span><span class="p">,</span>
+      <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;You have been approved to join the ISM 6216 Data Base group&quot;</span><span class="p">,</span>
+      <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;ism-6216-data-base&quot;</span><span class="p">,</span>
+      <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;seconds ago&quot;</span><span class="p">,</span>
+      <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-01&quot;</span><span class="p">,</span>
+      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;group-access-granted&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s">&quot;friend-request-accepted&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">&quot;castie-needs-answer&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;11:57:00&quot;</span><span class="p">,</span>
+      <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Your Castie has ended- time to answer it!&quot;</span><span class="p">,</span>
+      <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;0f05ac0abc714bcf896ce60a2cdd2b55&quot;</span><span class="p">,</span>
+      <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;4 days ago&quot;</span><span class="p">,</span>
+      <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-02-25&quot;</span><span class="p">,</span>
+      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;castie-needs-answer&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="s">&quot;/friends/requests/&quot;</span><span class="p">,</span>
-      <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;friend-request-received&quot;</span><span class="p">,</span>
-      <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;56c8d3287d97535a6195f8cc&quot;</span><span class="p">,</span>
-      <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;an hour ago&quot;</span><span class="p">,</span>
-      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-02-20&quot;</span><span class="p">,</span>
-      <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span><span class="p">,</span>
-      <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;@Luly has sent you a friendship request&quot;</span><span class="p">,</span>
-      <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;15:57:12&quot;</span>
+      <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;20:00:00&quot;</span><span class="p">,</span>
+      <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Your Castie has ended- time to answer it!&quot;</span><span class="p">,</span>
+      <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;dacd33b5ffce4396a1b092c8901a8e08&quot;</span><span class="p">,</span>
+      <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;6 months ago&quot;</span><span class="p">,</span>
+      <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2015-09-30&quot;</span><span class="p">,</span>
+      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;castie-needs-answer&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
 <span class="p">}</span>
@@ -326,21 +336,6 @@ To return notifications of a particular type, you may use the &#8220;notificatio
 <p><strong>Sample Response</strong></p>
 <blockquote>
 <div>Coming soon</div></blockquote>
-</div>
-<div class="section" id="mark-as-read">
-<span id="id2"></span><h2>Mark as Read<a class="headerlink" href="#mark-as-read" title="Permalink to this headline">¶</a></h2>
-<p><strong>PROBABLY WON&#8217;T USE THIS</strong></p>
-<p>Use this endpoint to indicate that a notification has been read. A notification is &#8220;read&#8221; once a User clicks the notification.</p>
-<p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/read/{notification_id}/</span></code></p>
-<p><strong>Arguments</strong></p>
-<ul class="simple">
-<li><strong>notification_id</strong>: <em>string</em>, the Notification&#8217;s uniquie id</li>
-</ul>
-<p><strong>Sample Response</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>Coming Soon
-</pre></div>
-</div>
 </div>
 <div class="section" id="retrieve-a-count-of-new-notifications">
 <span id="count-of-new-notifications"></span><h2>Retrieve a Count of New Notifications<a class="headerlink" href="#retrieve-a-count-of-new-notifications" title="Permalink to this headline">¶</a></h2>
