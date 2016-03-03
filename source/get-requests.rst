@@ -564,9 +564,14 @@ This is the "main" Profile subsection shown when "Profile" is selected from the 
 
 * handle: *string*, the handle of the profile to be viewed
 
+**Parameters**
+
+* ids_only: *boolean*, include this parameter as ``/?=ids_only=True`` to return only castie IDs in a myCasties list
+
 **Returns**
 
 A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictionary of the basic profile data and the "myCasties" entry mapping to a dictionary of Casties indexed by ``uuid``. Each Castie in the myCasties dictionary contains a "question" attribute and an "answerable" attribute. "answerable" is set to ``True`` if the Castie is ready to be answered.
+If ``ids_only`` is included in the request, myCasties will be returned as a list of Castie UUIDs.
 
 **Sample Response** ::
 
@@ -615,9 +620,14 @@ The Stats subdivision includes two stats, percent correct and percent incorrect,
 
 * handle: *string*, the handle of the profile to be viewed
 
+**Parameters**
+
+* ids_only: *boolean*, include this parameter as ``/?=ids_only=True`` to return only castie IDs in a myForecasts list
+
 **Returns**
 
 A dictionary of dictionaries, with the "profileInfo" entry mapping to a dictionary of the basic profile data and the "myForecasts" entry mapping to a dictionary of forecast objects indexed by the ID of the forecast.  
+If ``ids_only`` is included in the request, myForecast will be returned as a list of Castie UUIDs.
 
 .. _Forecast Object:
 

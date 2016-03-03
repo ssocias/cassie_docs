@@ -743,8 +743,13 @@ Each User object in the list contains:</p>
 <ul class="simple">
 <li>handle: <em>string</em>, the handle of the profile to be viewed</li>
 </ul>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li>ids_only: <em>boolean</em>, include this parameter as <code class="docutils literal"><span class="pre">/?=ids_only=True</span></code> to return only castie IDs in a myCasties list</li>
+</ul>
 <p><strong>Returns</strong></p>
-<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myCasties&#8221; entry mapping to a dictionary of Casties indexed by <code class="docutils literal"><span class="pre">uuid</span></code>. Each Castie in the myCasties dictionary contains a &#8220;question&#8221; attribute and an &#8220;answerable&#8221; attribute. &#8220;answerable&#8221; is set to <code class="docutils literal"><span class="pre">True</span></code> if the Castie is ready to be answered.</p>
+<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myCasties&#8221; entry mapping to a dictionary of Casties indexed by <code class="docutils literal"><span class="pre">uuid</span></code>. Each Castie in the myCasties dictionary contains a &#8220;question&#8221; attribute and an &#8220;answerable&#8221; attribute. &#8220;answerable&#8221; is set to <code class="docutils literal"><span class="pre">True</span></code> if the Castie is ready to be answered.
+If <code class="docutils literal"><span class="pre">ids_only</span></code> is included in the request, myCasties will be returned as a list of Castie UUIDs.</p>
 <p><strong>Sample Response</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;profileInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -788,8 +793,13 @@ Each User object in the list contains:</p>
 <ul class="simple">
 <li>handle: <em>string</em>, the handle of the profile to be viewed</li>
 </ul>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li>ids_only: <em>boolean</em>, include this parameter as <code class="docutils literal"><span class="pre">/?=ids_only=True</span></code> to return only castie IDs in a myForecasts list</li>
+</ul>
 <p><strong>Returns</strong></p>
-<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myForecasts&#8221; entry mapping to a dictionary of forecast objects indexed by the ID of the forecast.</p>
+<p>A dictionary of dictionaries, with the &#8220;profileInfo&#8221; entry mapping to a dictionary of the basic profile data and the &#8220;myForecasts&#8221; entry mapping to a dictionary of forecast objects indexed by the ID of the forecast.
+If <code class="docutils literal"><span class="pre">ids_only</span></code> is included in the request, myForecast will be returned as a list of Castie UUIDs.</p>
 <p id="forecast-object"><strong>The Forecast Object</strong></p>
 <blockquote>
 <div><p><strong>Attributes</strong></p>
