@@ -76,7 +76,7 @@ Returns an array of `Notification Object`_ entitled "notifications". By default,
 
 To return notifications of a particular type, you may use the "notification_type" parameter to include one or more notification_types from the table above. For example, ``/?notification_type=group-approved&notification_type=castie-needs-answer/``, will return two lists of Notification Objects. One for "group-approved" notifications and one for "castie-needs-answer" notifications.
 
-Calling this enpoint sets all notificaitons to ``has_been_read = True``. So, only call this endpoint when the User clicks on the Activity tab. Or else it will interfere with the way I keep track of new notifications.
+Calling this enpoint sets all notificaitons to ``has_been_read = True`` (except for the "castie-needs-answer" notifications, which are always unread). So, only call this endpoint when the User clicks on the Activity tab. Or else it will interfere with the way we keep track of new notifications!
 
 
 **Definition**
