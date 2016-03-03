@@ -10,11 +10,8 @@ A User's username is the email address associated with their account. The email/
 Initialize
 ==========
 
-This must be called anytime a User opens the app. It returns the number of notifications the User has not yet seen and indicates if the User has Casties that can be answered.
+This should be called anytime a User opens the app or however often we need to refresh notifications. It returns the number of notifications the User has not yet seen and indicates if the User has Casties that can be answered.
 
-In order to get the number of notifications, the date of the most recent notification the user has seen should be sent in the request.
-
-Before/after making this request, make a request to `Home`_ to get the home Castie data. 
 
 .. note:: **Periodaclly Updating Notifications Count**
 
