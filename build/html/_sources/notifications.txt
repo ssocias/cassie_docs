@@ -72,7 +72,7 @@ Users may delete notifications by tapping the small 'x' in the right hand corner
 ---------------------
 Retrieve Notifcations
 ---------------------
-Returns arrays of `Notification Object`_ grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.
+Returns an array of `Notification Object`_ entitled "notifications". By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests).
 
 To return notifications of a particular type, you may use the "notification_type" parameter to include one or more notification_types from the table above. For example, ``/?notification_type=group-approved&notification_type=castie-needs-answer/``, will return two lists of Notification Objects. One for "group-approved" notifications and one for "castie-needs-answer" notifications.
 
@@ -95,21 +95,13 @@ None
 
 A list(s) of Notification Objects.
 
-    **If ALL notifications have been requested, multiple lists are returned. There is a separate list of Notification Objects for every notification_type, as specified in the table above.**
-
 **Sample Response**
 
 **No Filtering:** ::
 
     {
       "status": 200,
-      "castie-friend-forecasted": [],
-      "castie-forecasted": [],
-      "new-casties": [],
-      "friend-request-received": [],
-      "castie-answered": [],
-      "castie-friend-commented": [],
-      "group-access-granted": [
+      "notifications": [
         {
           "id": "56d52be599c809a029620b24",
           "url": "/categories/ism-6216-data-base/",
@@ -120,10 +112,7 @@ A list(s) of Notification Objects.
           "created_on_date": "2016-03-01",
           "has_been_read": false,
           "notification_type": "group-access-granted"
-        }
-      ],
-      "friend-request-accepted": [],
-      "castie-needs-answer": [
+        },
         {
           "id": null,
           "url": null,

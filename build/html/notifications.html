@@ -229,7 +229,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </table>
 <div class="section" id="retrieve-notifcations">
 <span id="retrieve-notifications"></span><h2>Retrieve Notifcations<a class="headerlink" href="#retrieve-notifcations" title="Permalink to this headline">¶</a></h2>
-<p>Returns arrays of <a class="reference internal" href="#notification-object">Notification Object</a> grouped by notification type for all notifications. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests). They are returned in arrays matching their notification type, listed in chronological order.</p>
+<p>Returns an array of <a class="reference internal" href="#notification-object">Notification Object</a> entitled &#8220;notifications&#8221;. By default, ALL types of notifications are returned (including Frodad Requests and Recently Accepted frodad requests).</p>
 <p>To return notifications of a particular type, you may use the &#8220;notification_type&#8221; parameter to include one or more notification_types from the table above. For example, <code class="docutils literal"><span class="pre">/?notification_type=group-approved&amp;notification_type=castie-needs-answer/</span></code>, will return two lists of Notification Objects. One for &#8220;group-approved&#8221; notifications and one for &#8220;castie-needs-answer&#8221; notifications.</p>
 <p>Calling this enpoint sets all notificaitons to <code class="docutils literal"><span class="pre">has_been_read</span> <span class="pre">=</span> <span class="pre">True</span></code>. So, only call this endpoint when the User clicks on the Activity tab. Or else it will interfere with the way I keep track of new notifications.</p>
 <p><strong>Definition</strong></p>
@@ -242,19 +242,11 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </ul>
 <p><strong>Returns</strong></p>
 <p>A list(s) of Notification Objects.</p>
-<blockquote>
-<div><strong>If ALL notifications have been requested, multiple lists are returned. There is a separate list of Notification Objects for every notification_type, as specified in the table above.</strong></div></blockquote>
 <p><strong>Sample Response</strong></p>
 <p><strong>No Filtering:</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;castie-friend-forecasted&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;castie-forecasted&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;new-casties&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;friend-request-received&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;castie-answered&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;castie-friend-commented&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;group-access-granted&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s">&quot;notifications&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;56d52be599c809a029620b24&quot;</span><span class="p">,</span>
       <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="s">&quot;/categories/ism-6216-data-base/&quot;</span><span class="p">,</span>
@@ -265,10 +257,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
       <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-01&quot;</span><span class="p">,</span>
       <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
       <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;group-access-granted&quot;</span>
-    <span class="p">}</span>
-  <span class="p">],</span>
-  <span class="s">&quot;friend-request-accepted&quot;</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="s">&quot;castie-needs-answer&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">},</span>
     <span class="p">{</span>
       <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
       <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
