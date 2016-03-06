@@ -104,35 +104,29 @@ A list(s) of Notification Objects.
       "notifications": [
         {
           "id": "56d52be599c809a029620b24",
-          "url": "/categories/ism-6216-data-base/",
           "created_on_time": "00:43:01",
           "message": "You have been approved to join the ISM 6216 Data Base group",
           "data": "ism-6216-data-base",
           "timesince_created": "seconds ago",
           "created_on_date": "2016-03-01",
-          "has_been_read": false,
           "notification_type": "group-access-granted"
         },
         {
           "id": null,
-          "url": null,
           "created_on_time": "11:57:00",
           "message": "Your Castie has ended- time to answer it!",
           "data": "0f05ac0abc714bcf896ce60a2cdd2b55",
           "timesince_created": "4 days ago",
           "created_on_date": "2016-02-25",
-          "has_been_read": false,
           "notification_type": "castie-needs-answer"
         },
         {
           "id": null,
-          "url": null,
           "created_on_time": "20:00:00",
           "message": "Your Castie has ended- time to answer it!",
           "data": "dacd33b5ffce4396a1b092c8901a8e08",
           "timesince_created": "6 months ago",
           "created_on_date": "2015-09-30",
-          "has_been_read": false,
           "notification_type": "castie-needs-answer"
         }
       ]
@@ -145,11 +139,9 @@ A list(s) of Notification Objects.
       "castie-needs-answer": [],
       "friend-request-accepted": [
         {
-          "url": "/profile/c71d8f8144f74a3498d279043182d600/",
           "notification_type": "friend-request-accepted",
           "id": "56c8d5969e4d5b596129cebe",
           "timesince_created": "an hour ago",
-          "has_been_read": true,
           "created_on_date": "2016-02-20",
           "data": "Luly",
           "message": "@Luly has accepted your friendship request",
@@ -193,41 +185,5 @@ None
 Delete an Individual Notification
 ---------------------------------
 
-**Definition**
-
-``POST https://cassieapp.com/api/notifications/delete/{notification_id}/``
-
-**Arguments**
-
-* **notification_id**: *string*, the Notification's uniquie id 
-
-**Sample Response** ::
-
-    {
-      'status': 200
-    }
-
-
-------------------------
-Delete all Notifications
-------------------------
-
-.. warning:: This "Delete All" functionality is not needed in the iOS app.
-
-Deletes all notifications except for any ``castie-needs-answer`` notifications. ``castie-needs-answer`` notifications can never be deleted. They are only "deleted" once the User answers the castie.
-
-**Definition**
-
-``POST https://cassieapp.com/api/notifications/delete/all/``
-
-**Arguments**
-
-None
-
-**Sample Response** ::
-
-  {
-    "status": 200,
-    "delete-all": "all notifications have been deleted"
-  }
+Not needed for v1!
 

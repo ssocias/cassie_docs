@@ -88,7 +88,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#retrieve-notifcations">Retrieve Notifcations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#retrieve-a-count-of-new-notifications">Retrieve a Count of New Notifications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#delete-an-individual-notification">Delete an Individual Notification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#delete-all-notifications">Delete all Notifications</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reporting-inappropriate-content.html">Reporting Inappropriate Content</a></li>
@@ -249,35 +248,29 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
   <span class="s">&quot;notifications&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;56d52be599c809a029620b24&quot;</span><span class="p">,</span>
-      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="s">&quot;/categories/ism-6216-data-base/&quot;</span><span class="p">,</span>
       <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;00:43:01&quot;</span><span class="p">,</span>
       <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;You have been approved to join the ISM 6216 Data Base group&quot;</span><span class="p">,</span>
       <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;ism-6216-data-base&quot;</span><span class="p">,</span>
       <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;seconds ago&quot;</span><span class="p">,</span>
       <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-01&quot;</span><span class="p">,</span>
-      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
       <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;group-access-granted&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
       <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
       <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;11:57:00&quot;</span><span class="p">,</span>
       <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Your Castie has ended- time to answer it!&quot;</span><span class="p">,</span>
       <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;0f05ac0abc714bcf896ce60a2cdd2b55&quot;</span><span class="p">,</span>
       <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;4 days ago&quot;</span><span class="p">,</span>
       <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-02-25&quot;</span><span class="p">,</span>
-      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
       <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;castie-needs-answer&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
       <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
       <span class="s">&quot;created_on_time&quot;</span><span class="p">:</span> <span class="s">&quot;20:00:00&quot;</span><span class="p">,</span>
       <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Your Castie has ended- time to answer it!&quot;</span><span class="p">,</span>
       <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;dacd33b5ffce4396a1b092c8901a8e08&quot;</span><span class="p">,</span>
       <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;6 months ago&quot;</span><span class="p">,</span>
       <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2015-09-30&quot;</span><span class="p">,</span>
-      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
       <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;castie-needs-answer&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
@@ -290,11 +283,9 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
   <span class="s">&quot;castie-needs-answer&quot;</span><span class="p">:</span> <span class="p">[],</span>
   <span class="s">&quot;friend-request-accepted&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="s">&quot;/profile/c71d8f8144f74a3498d279043182d600/&quot;</span><span class="p">,</span>
       <span class="s">&quot;notification_type&quot;</span><span class="p">:</span> <span class="s">&quot;friend-request-accepted&quot;</span><span class="p">,</span>
       <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;56c8d5969e4d5b596129cebe&quot;</span><span class="p">,</span>
       <span class="s">&quot;timesince_created&quot;</span><span class="p">:</span> <span class="s">&quot;an hour ago&quot;</span><span class="p">,</span>
-      <span class="s">&quot;has_been_read&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
       <span class="s">&quot;created_on_date&quot;</span><span class="p">:</span> <span class="s">&quot;2016-02-20&quot;</span><span class="p">,</span>
       <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;Luly&quot;</span><span class="p">,</span>
       <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;@Luly has accepted your friendship request&quot;</span><span class="p">,</span>
@@ -325,37 +316,7 @@ The &#8220;Notifications&#8221; tab contains all other notifications to the user
 </div>
 <div class="section" id="delete-an-individual-notification">
 <span id="delete-notification"></span><h2>Delete an Individual Notification<a class="headerlink" href="#delete-an-individual-notification" title="Permalink to this headline">¶</a></h2>
-<p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/{notification_id}/</span></code></p>
-<p><strong>Arguments</strong></p>
-<ul class="simple">
-<li><strong>notification_id</strong>: <em>string</em>, the Notification&#8217;s uniquie id</li>
-</ul>
-<p><strong>Sample Response</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-  <span class="s">&#39;status&#39;</span><span class="p">:</span> <span class="mi">200</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="delete-all-notifications">
-<h2>Delete all Notifications<a class="headerlink" href="#delete-all-notifications" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This &#8220;Delete All&#8221; functionality is not needed in the iOS app.</p>
-</div>
-<p>Deletes all notifications except for any <code class="docutils literal"><span class="pre">castie-needs-answer</span></code> notifications. <code class="docutils literal"><span class="pre">castie-needs-answer</span></code> notifications can never be deleted. They are only &#8220;deleted&#8221; once the User answers the castie.</p>
-<p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">POST</span> <span class="pre">https://cassieapp.com/api/notifications/delete/all/</span></code></p>
-<p><strong>Arguments</strong></p>
-<p>None</p>
-<p><strong>Sample Response</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;delete-all&quot;</span><span class="p">:</span> <span class="s">&quot;all notifications have been deleted&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<p>Not needed for v1!</p>
 </div>
 </div>
 
