@@ -527,6 +527,8 @@ There are four GET endpoints for this profile screen, corresponding to the four 
     * **city:** *string*, city
     * **state:** *string*, state
     * **profPic:** *string*, location where the User's profile picture is stored
+    * **image_last_updated_date:** *string*, date (YYYY-MM-DD) the profile image last updated
+    * **image_last_updated_time:**  *string*, time (HH:MM:SS.mmmmmm) the profile image last updated
     * **level:** *integer*, the profile's level
     * **adjective:** *string*, part of the User's ranking title (ranking title can include an adjective followed by a noun- ex. "rookie benchwarmer" )
     * **noun:** *string*, part of the User's ranking title (ranking title can include an adjective followed by a noun- ex. "rookie benchwarmer" )
