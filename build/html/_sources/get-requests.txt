@@ -1101,18 +1101,19 @@ Activity
 ========
 The Activity section is where Users receive notifications. See the :ref:`Notifications` section for more details. 
 
-Search - NEW
-============
+Search 
+=======
+Search Cassie users, casties, or groups. Send the User's query as a string. 
 
-Search Cassie users. Send the User's query as a string. Will return a list of User Objects (a User Object is the same as a `Frodad Object`_) but without the 'level' field.
+If searching for users: Will return a list of User Objects (a User Object is the same as a `Frodad Object`_) but without the 'level' field.
 
 **Definition**
 
-``GET https://cassieapp.com/api/search/people/?q=``
+``GET https://cassieapp.com/api/search/{search_type}/?q=``
 
 **Arguments**
 
-None
+* **search_type**: *string*, indicates which tab of the search page is being requested- "people", "groups", or "casties"
 
 **Parameters**
 
@@ -1120,49 +1121,7 @@ None
 
 **Returns**
 
-A list of User Objects entitled 'search_results' that meets the search criteria.
-
-**Sample Response** ::
-
-    {
-      "status": 200,
-      "search_results": [    
-        {
-          "handle": "csocias",
-          "first_name": "Christina",
-          "last_name": "Socias",
-          "profPic": "profiles/user-4/image_QPZAEEG.jpg",
-          "friend_status": "not-friends"
-        },
-        {
-          "handle": "alexsocias",
-          "first_name": "alex",
-          "last_name": "socias",
-          "profPic": "profiles/user-13/1427919205429.jpg",
-          "friend_status": "friends"
-        }
-      ]
-    }
-
-
-Search - OLD
-============
-
-The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.
-
-.. note:: For now, each request shouldn't take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).
-
-**Definition**
-
-``GET https://cassieapp.com/api/search/{search_type}/``
-
-**Arguments**
-
-* **search_type** (*optional*, default="people"): *string*, indicates which tab of the search page is being requested- "people", "groups", or "casties"
-
-**Returns**
-
-Either a list of dictionaries (for peopla and casties) or a dictionary of dictionaries, indexed by group slug, for groups. The main list/dictionary is entitled either "people", "groups", or "casties" depedning on what tab was selected. The people objects are ordered by last name. The group and castie objects are not ordered to save time.
+Either a list of dictionaries (for people) or a dictionary of dictionaries (for casties and groups); indexed by castie uuid for casties or indexed by group slug for groups. The main list/dictionary is entitled search_results. The people objects are ordered by last name. The group and castie objects are not ordered to save time.
 
 **Sample Response**
 
@@ -1170,7 +1129,7 @@ For **people**: ::
 
   {
     "status": 200,
-    "people": [
+    "search_results": [
       {
         "last_name": "Alvarez",
         "first_name": "Mark",
@@ -1202,7 +1161,7 @@ For **groups**: ::
 
   {
     "status": 200,
-    "groups": {
+    "search_results": {
       "uf-weekly-matchups": {
         "groupIcon": "category-bkgds/uf1.jpg",
         "friendsCount": 0,
@@ -1240,47 +1199,83 @@ If the User has forecasted the Castie and the Castie has been answered, use a gr
 
   {
     "status": 200,
-    "casties": [
-      {
-        "uuid": "cd993ecff27c46fa80bda9e3571e580c",
-        "is_active": false,
+    "search_results": {
+      "302257cd4fd14891885b8c427f861ce7": {
+        "forecast_options": [
+          {
+            "percentage": 66.66666666666666,
+            "answer_text": "No",
+            "answer_id": 1392
+          },
+          {
+            "percentage": 33.33333333333333,
+            "answer_text": "Yes",
+            "answer_id": 1393
+          }
+        ],
+        "endDate": null,
+        "createdAtTime": "01:44:22.071643",
+        "lastForecastedTime": "02:36:56.491136",
+        "showUsername": true,
+        "openEnded": true,
+        "allowWriteIn": false,
+        "uuid": "302257cd4fd14891885b8c427f861ce7",
+        "forecastsCount": 3,
+        "userForecast": {
+          "answer_id": 1392,
+          "forecast_text": "No",
+          "forecast_id": 4596,
+          "is_correct": false
+        },
+        "commentsCount": 2,
+        "answerSubmitted": false,
+        "question": "Obama to increase air attacks on ISIS as a result of Brussels attack? ",
+        "lastForecastedDate": "2016-03-24",
+        "setAnswered": true,
+        "groupSlug": "cassie-friends",
+        "is_answerable": true,
+        "createdAtDate": "2016-03-24",
+        "endTime": null,
+        "correctIndex": null,
+        "friendCount": 2,
+        "submitter": "ctime"
+      },
+      "3284ff61e23c440685202227d0766c90": {
+        "forecast_options": [
+          {
+            "percentage": 100,
+            "answer_text": "Yes",
+            "answer_id": 1383
+          },
+          {
+            "percentage": 0,
+            "answer_text": "No",
+            "answer_id": 1382
+          }
+        ],
+        "endDate": null,
+        "createdAtTime": "01:34:10.592191",
+        "lastForecastedTime": "02:28:52.645421",
+        "showUsername": true,
+        "openEnded": true,
+        "allowWriteIn": false,
+        "uuid": "3284ff61e23c440685202227d0766c90",
+        "forecastsCount": 3,
         "userForecast": null,
-        "showUsername": true,
-        "group": "General Pop Culture",
-        "forecastsCount": 0,
-        "answerSubmitted": true,
-        "groupIcon": "category-bkgds/pop_culture_final_jcGNqfM.png",
-        "userCorrect": null,
-        "question": "Another sample castie with set answer options, open",
-        "submitter": "steph"
-      },
-      {
-        "uuid": "371083f1c4694d30b8f2de0f3812a3e8",
-        "is_active": true,
-        "userForecast": true,
-        "showUsername": true,
-        "group": "General Pop Culture",
-        "forecastsCount": 1,
-        "answerSubmitted": true,
-        "groupIcon": "category-bkgds/pop_culture_final_jcGNqfM.png",
-        "userCorrect": null,
-        "question": "testing write-in answer forecasts",
-        "submitter": "steph"
-      },
-      {
-        "uuid": "f9428a64bf3642cc9e1f64e7314ed9ee",
-        "is_active": false,
-        "userForecast": true,
-        "showUsername": true,
-        "group": "General Pop Culture",
-        "forecastsCount": 1,
-        "answerSubmitted": true,
-        "groupIcon": "category-bkgds/pop_culture_final_jcGNqfM.png",
-        "userCorrect": true,
-        "question": "testing set answer option forecasts",
-        "submitter": "steph"
+        "commentsCount": 2,
+        "answerSubmitted": false,
+        "question": "Christina gonna join the US foreign service one day?!",
+        "lastForecastedDate": "2016-03-24",
+        "setAnswered": true,
+        "groupSlug": "cassie-friends",
+        "is_answerable": true,
+        "createdAtDate": "2016-03-24",
+        "endTime": null,
+        "correctIndex": null,
+        "friendCount": 2,
+        "submitter": "ctime"
       }
-    ]
+    }
   }
 
 

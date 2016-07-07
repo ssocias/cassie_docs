@@ -110,8 +110,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#activity">Activity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#search-new">Search - NEW</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#search-old">Search - OLD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search">Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hamburger-side-menu">Hamburger Side Menu</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-castie-group-list">Create Castie- Group List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#view-all-frodad-requests">View All Frodad Requests</a></li>
@@ -1237,62 +1236,27 @@ If <code class="docutils literal"><span class="pre">ids_only</span></code> is in
 <h2>Activity<a class="headerlink" href="#activity" title="Permalink to this headline">¶</a></h2>
 <p>The Activity section is where Users receive notifications. See the <a class="reference internal" href="notifications.html#notifications"><span>Notifications</span></a> section for more details.</p>
 </div>
-<div class="section" id="search-new">
-<h2>Search - NEW<a class="headerlink" href="#search-new" title="Permalink to this headline">¶</a></h2>
-<p>Search Cassie users. Send the User&#8217;s query as a string. Will return a list of User Objects (a User Object is the same as a <a class="reference internal" href="#frodad-object">Frodad Object</a>) but without the &#8216;level&#8217; field.</p>
+<div class="section" id="search">
+<h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p>Search Cassie users, casties, or groups. Send the User&#8217;s query as a string.</p>
+<p>If searching for users: Will return a list of User Objects (a User Object is the same as a <a class="reference internal" href="#frodad-object">Frodad Object</a>) but without the &#8216;level&#8217; field.</p>
 <p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/people/?q=</span></code></p>
+<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/{search_type}/?q=</span></code></p>
 <p><strong>Arguments</strong></p>
-<p>None</p>
+<ul class="simple">
+<li><strong>search_type</strong>: <em>string</em>, indicates which tab of the search page is being requested- &#8220;people&#8221;, &#8220;groups&#8221;, or &#8220;casties&#8221;</li>
+</ul>
 <p><strong>Parameters</strong></p>
 <ul class="simple">
 <li>q: <em>string</em>, the search query</li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>A list of User Objects entitled &#8216;search_results&#8217; that meets the search criteria.</p>
-<p><strong>Sample Response</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;search_results&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;csocias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Christina&quot;</span><span class="p">,</span>
-      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Socias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-4/image_QPZAEEG.jpg&quot;</span><span class="p">,</span>
-      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;not-friends&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="s">&quot;handle&quot;</span><span class="p">:</span> <span class="s">&quot;alexsocias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;alex&quot;</span><span class="p">,</span>
-      <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;socias&quot;</span><span class="p">,</span>
-      <span class="s">&quot;profPic&quot;</span><span class="p">:</span> <span class="s">&quot;profiles/user-13/1427919205429.jpg&quot;</span><span class="p">,</span>
-      <span class="s">&quot;friend_status&quot;</span><span class="p">:</span> <span class="s">&quot;friends&quot;</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="search-old">
-<h2>Search - OLD<a class="headerlink" href="#search-old" title="Permalink to this headline">¶</a></h2>
-<p>The actual search should be performed client-side. A request to any of the search endpoints will return the list of items to be searched.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For now, each request shouldn&#8217;t take too long. In the future, maybe we can store some the data client side so a new request is not needed each time (or, we can do server-side search).</p>
-</div>
-<p><strong>Definition</strong></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">https://cassieapp.com/api/search/{search_type}/</span></code></p>
-<p><strong>Arguments</strong></p>
-<ul class="simple">
-<li><strong>search_type</strong> (<em>optional</em>, default=&#8221;people&#8221;): <em>string</em>, indicates which tab of the search page is being requested- &#8220;people&#8221;, &#8220;groups&#8221;, or &#8220;casties&#8221;</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Either a list of dictionaries (for peopla and casties) or a dictionary of dictionaries, indexed by group slug, for groups. The main list/dictionary is entitled either &#8220;people&#8221;, &#8220;groups&#8221;, or &#8220;casties&#8221; depedning on what tab was selected. The people objects are ordered by last name. The group and castie objects are not ordered to save time.</p>
+<p>Either a list of dictionaries (for people) or a dictionary of dictionaries (for casties and groups); indexed by castie uuid for casties or indexed by group slug for groups. The main list/dictionary is entitled search_results. The people objects are ordered by last name. The group and castie objects are not ordered to save time.</p>
 <p><strong>Sample Response</strong></p>
 <p>For <strong>people</strong>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;people&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s">&quot;search_results&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="s">&quot;Alvarez&quot;</span><span class="p">,</span>
       <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="s">&quot;Mark&quot;</span><span class="p">,</span>
@@ -1324,7 +1288,7 @@ If <code class="docutils literal"><span class="pre">ids_only</span></code> is in
 <p>For <strong>groups</strong>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s">&quot;search_results&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">&quot;uf-weekly-matchups&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/uf1.jpg&quot;</span><span class="p">,</span>
       <span class="s">&quot;friendsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -1361,47 +1325,83 @@ If <code class="docutils literal"><span class="pre">ids_only</span></code> is in
 <p>If the User has forecasted the Castie and the Castie has been answered, use a green or red box to indicate if they were correct/incorrect.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
   <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="s">&quot;casties&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;cd993ecff27c46fa80bda9e3571e580c&quot;</span><span class="p">,</span>
-      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s">&quot;search_results&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;302257cd4fd14891885b8c427f861ce7&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;forecast_options&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mf">66.66666666666666</span><span class="p">,</span>
+          <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;No&quot;</span><span class="p">,</span>
+          <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">1392</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mf">33.33333333333333</span><span class="p">,</span>
+          <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Yes&quot;</span><span class="p">,</span>
+          <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">1393</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;01:44:22.071643&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastForecastedTime&quot;</span><span class="p">:</span> <span class="s">&quot;02:36:56.491136&quot;</span><span class="p">,</span>
+      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;302257cd4fd14891885b8c427f861ce7&quot;</span><span class="p">,</span>
+      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">1392</span><span class="p">,</span>
+        <span class="s">&quot;forecast_text&quot;</span><span class="p">:</span> <span class="s">&quot;No&quot;</span><span class="p">,</span>
+        <span class="s">&quot;forecast_id&quot;</span><span class="p">:</span> <span class="mi">4596</span><span class="p">,</span>
+        <span class="s">&quot;is_correct&quot;</span><span class="p">:</span> <span class="n">false</span>
+      <span class="p">},</span>
+      <span class="s">&quot;commentsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Obama to increase air attacks on ISIS as a result of Brussels attack? &quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastForecastedDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;groupSlug&quot;</span><span class="p">:</span> <span class="s">&quot;cassie-friends&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_answerable&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;ctime&quot;</span>
+    <span class="p">},</span>
+    <span class="s">&quot;3284ff61e23c440685202227d0766c90&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">&quot;forecast_options&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+          <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;Yes&quot;</span><span class="p">,</span>
+          <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">1383</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="s">&quot;percentage&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s">&quot;answer_text&quot;</span><span class="p">:</span> <span class="s">&quot;No&quot;</span><span class="p">,</span>
+          <span class="s">&quot;answer_id&quot;</span><span class="p">:</span> <span class="mi">1382</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="s">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;createdAtTime&quot;</span><span class="p">:</span> <span class="s">&quot;01:34:10.592191&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastForecastedTime&quot;</span><span class="p">:</span> <span class="s">&quot;02:28:52.645421&quot;</span><span class="p">,</span>
+      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;openEnded&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;allowWriteIn&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;3284ff61e23c440685202227d0766c90&quot;</span><span class="p">,</span>
+      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
       <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
-      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final_jcGNqfM.png&quot;</span><span class="p">,</span>
-      <span class="s">&quot;userCorrect&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Another sample castie with set answer options, open&quot;</span><span class="p">,</span>
-      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;371083f1c4694d30b8f2de0f3812a3e8&quot;</span><span class="p">,</span>
-      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
-      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final_jcGNqfM.png&quot;</span><span class="p">,</span>
-      <span class="s">&quot;userCorrect&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;testing write-in answer forecasts&quot;</span><span class="p">,</span>
-      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="s">&quot;f9428a64bf3642cc9e1f64e7314ed9ee&quot;</span><span class="p">,</span>
-      <span class="s">&quot;is_active&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-      <span class="s">&quot;userForecast&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;showUsername&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="s">&quot;General Pop Culture&quot;</span><span class="p">,</span>
-      <span class="s">&quot;forecastsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;groupIcon&quot;</span><span class="p">:</span> <span class="s">&quot;category-bkgds/pop_culture_final_jcGNqfM.png&quot;</span><span class="p">,</span>
-      <span class="s">&quot;userCorrect&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;testing set answer option forecasts&quot;</span><span class="p">,</span>
-      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;steph&quot;</span>
+      <span class="s">&quot;commentsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s">&quot;answerSubmitted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;question&quot;</span><span class="p">:</span> <span class="s">&quot;Christina gonna join the US foreign service one day?!&quot;</span><span class="p">,</span>
+      <span class="s">&quot;lastForecastedDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;setAnswered&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;groupSlug&quot;</span><span class="p">:</span> <span class="s">&quot;cassie-friends&quot;</span><span class="p">,</span>
+      <span class="s">&quot;is_answerable&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;createdAtDate&quot;</span><span class="p">:</span> <span class="s">&quot;2016-03-24&quot;</span><span class="p">,</span>
+      <span class="s">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;correctIndex&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;friendCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s">&quot;submitter&quot;</span><span class="p">:</span> <span class="s">&quot;ctime&quot;</span>
     <span class="p">}</span>
-  <span class="p">]</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
